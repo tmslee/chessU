@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {} from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -9,4 +9,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ChessNavbar from "../components/Navbar/ChessNavBar";
 
 storiesOf("ChessNavBar", module)
-  .add("default", () => <ChessNavbar> </ChessNavbar>);
+  .add("not logged in", () => 
+    <ChessNavbar
+      currentUser={null}
+    />)
+
+  .add("logged in", () => 
+    <ChessNavbar
+      currentUser={"user1"}
+    />)
