@@ -24,6 +24,7 @@ export default function ChessNavBar(props) {
         <Nav className="mr-auto">
 
           <Nav.Link href="#home">Profile</Nav.Link>
+          <Nav.Link href="#link">My Stats</Nav.Link>
           <Nav.Link href="#link">Community</Nav.Link>
 
           <NavDropdown title="Quick Play" id="basic-nav-dropdown">
