@@ -14,7 +14,7 @@ module.exports = db => {
     const {type, user1ID, user2ID} = req.body;
     try {
       const newMatch = await db.query(
-        `INSERT INTO matches (type, user1_id, uesr2_id) VALUES (
+        `INSERT INTO matches (type, user1_id, user2_id) VALUES (
           $1::text, $2::integer, $3::integer
         ) RETURNING *;`,
         [type, user1ID, user2ID]);
@@ -27,7 +27,7 @@ module.exports = db => {
   router.get('/matches/:matchID', async (req, res) => {
     const matchID = req.params.matchID;
     try {
-      const match = await db.query(`SELECT * FROM matches where id = $1;`, [`${matchID}`]);
+      const match = await db.query(`SELECT * FROM matches where id = $1;`, [matchID]);
       res.json(match.rows);
     } catch (err) {
       console.error(err.message);

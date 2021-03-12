@@ -20,12 +20,54 @@ module.exports = db => {
     }
   })
 
-  router.post('/users/:id', async (req, res) => {
-    const {id, name} = req.body.user;
-    db.query(
-      `INSERT INTO users (name) VALUES ($1);`, [name]
-    ).then(() => res.status(204).json({}))
+  router.post('/users', async (req, res) => {
+    const {username, email, password} = req.body;
+    try{
+      const newUser = await db.query(`
+        INSERT INTO users (username, email, password) 
+        VALUES ($1, $2, $3) 
+        RETURNING *;`, [username, email, password]
+      )
+      res.json(newUser.rows);
+    } catch (err){
+      console.error(err.message);
+    }
   })
+
+  
+  router.put('/users/:id', async (req, res) => {
+    const {username, email, password} = req.body;
+    const id = req.params.id;
+    try{
+      const editUser = await db.query(`
+      UPDATE users SET 
+        username=$1::text, 
+        email=$2::text, 
+        password=$3::text
+      WHERE id = $4::integer 
+      RETURNING *;`, [username, email, password, id]
+      )
+      res.json(editUser.rows);
+    } catch (err){
+      console.error(err.message);
+    }
+  });
+
+  router.delete('/users/:id', async (req, res) => {
+    const id = req.params.id;
+    try{
+      const deleteUser = await db.query(`
+      DELETE FROM users 
+      WHERE id = $1::integer
+      RETURNING *;
+      `, [id])
+      res.json(deleteUser.rows);
+    } catch (err){
+      console.error(err.message);
+    }
+  });
+
+
 
   return router;
 }
