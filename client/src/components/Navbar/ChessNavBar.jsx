@@ -1,9 +1,11 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 import "./styles/ChessNavbar.scss"
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 
 export default function ChessNavBar(props) {
+  const {currentUser} = props;
+
   return (
     <Navbar bg="light" expand="lg">
       
@@ -37,8 +39,18 @@ export default function ChessNavBar(props) {
           </NavDropdown>
         </Nav>
 
-        <Button variant="outline-success">Sign up</Button>
-        <Button variant="outline-success">Log in</Button>
+        {currentUser && 
+          <Fragment>
+            <p>Logged in as: {currentUser}</p>
+            <Button variant="outline-success">Log out</Button>
+          </Fragment>
+        }
+        {!currentUser && 
+        <Fragment>
+          <Button variant="outline-success">Sign up</Button>
+          <Button variant="outline-success">Log in</Button>
+        </Fragment>
+        } 
       </Navbar.Collapse>
     </Navbar>
   )
