@@ -8,12 +8,12 @@ const loginUser = async function(credentials) {
   const usersData = users.data
   for (let user of usersData) {
     if (credentials.username === user.username && credentials.password === user.password) {
-      return true
-    }
-  }
-}
+      return true;
+    };
+  };
+};
 
-export default function Login() {
+export default function LoginForm( {setCookie} ) {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -21,9 +21,10 @@ export default function Login() {
   const handleSubmit = async function(e) {
     e.preventDefault();
     const validLogin = await loginUser( {username, password})
-
+    console.log(validLogin)
     if (validLogin) {
       //set cookie
+      setCookie(true)
     }
   }
 
@@ -31,7 +32,7 @@ export default function Login() {
     <div className="modal-bg1 bg-active">
     <div className="modal-login">
       <div className="modal-login-content">
-      <h1>Please Log In</h1>
+      <h1>Log In</h1>
       <form className="modal-login-form" onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
