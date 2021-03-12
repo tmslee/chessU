@@ -1,9 +1,31 @@
-var express = require('express');
-var router = express.Router();
+const router = require("express").Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+module.exports = db => {
+  router.get('/users', async (req, res) => {
+    try {
+      const allUsers = await db.query(`SELECT * FROM users;`);
+      res.json(allUsers.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
 
-module.exports = router;
+  router.get('/users/:id', async (req, res) => {
+    user_id = req.params.id;
+    try {
+      const individualUser = await db.query(`SELECT * FROM users where id = $1;`, [`${user_id}`]);
+      res.json(individualUser.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+
+  router.post('/users/:id', async (req, res) => {
+    const {id, name} = req.body.user;
+    db.query(
+      `INSERT INTO users (name) VALUES ($1);`, [name]
+    ).then(() => res.status(204).json({}))
+  })
+
+  return router;
+}

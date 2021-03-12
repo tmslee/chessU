@@ -9,13 +9,14 @@ CREATE TABLE users (
   username varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
-  profile_img TEXT DEFAULT "../../../../client/public/images/profile-hex.png",
-  elo int DEFAULT 1500
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  profile_img TEXT DEFAULT NULL,
+  elo int DEFAULT 1500,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE "matches" (
   id SERIAL PRIMARY KEY NOT NULL,
+  type varchar(255) NOT NULL,
   user1_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   user2_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   winner INTEGER REFERENCES users(id) ON DELETE CASCADE DEFAULT NULL,
@@ -35,5 +36,5 @@ CREATE TABLE "action_logs" (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   match_id INTEGER REFERENCES matches(id) ON DELETE CASCADE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  action varchar(255) NOT NULL
+  action varchar(1000)
 );

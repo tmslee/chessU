@@ -18,3 +18,7 @@
 
 /api/chat (POST)
 /api/chat/:match_id(GET)
+
+/api/users (GET)
+/api/users/:id (POST)
+
