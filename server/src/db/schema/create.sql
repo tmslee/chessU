@@ -11,7 +11,8 @@ CREATE TABLE users (
   password varchar(255) NOT NULL,
   profile_img TEXT DEFAULT NULL,
   elo int DEFAULT 1500,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT UC_users UNIQUE (username)
 );
 
 CREATE TABLE "matches" (
