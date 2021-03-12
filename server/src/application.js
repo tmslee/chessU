@@ -49,6 +49,8 @@ module.exports = function application(
   app.use("/api", action(db));
   app.use("/api", matches(db));
   app.use("/api", chatLogs(db));
+
+
   
   if (ENV === "development" || ENV === "test") {
     Promise.all([
