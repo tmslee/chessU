@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS chat_logs CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  username varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
-  password varchar(255) NOT NULL,
+  username varchar(255) NOT NULL CHECK (username <> ''),
+  email varchar(255) NOT NULL CHECK (email <> ''),
+  password varchar(255) NOT NULL CHECK (password <> ''),
   profile_img TEXT DEFAULT NULL,
   elo int DEFAULT 1500,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
