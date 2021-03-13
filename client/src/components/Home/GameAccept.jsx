@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 
 import "./styles/HomeMenu.scss"
+
+import AcceptTimer from "./AcceptTimer"
 import {Button, Modal, Form} from "react-bootstrap";
 
 const RANKED = "RANKED";
@@ -13,8 +15,7 @@ export default function GameAccept(props) {
   return (
     <>
       <Modal.Body>
-        {/* implement countdown timer here */}
-        Opponent found!
+        <AcceptTimer/>
       </Modal.Body>
 
       <Modal.Footer>
