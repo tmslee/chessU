@@ -4,13 +4,16 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
+import Popup from './Popup';
 
 function Game() {
   const [state, setState] = useState({
     position: "start",
     isBlackRunning: false,
     isWhiteRunning: true,
-    isGameOver: false
+    isGameOver: false,
+    modalShow: false,
+    reset: false
   })
 
   // set current positions from Chess.js
@@ -56,20 +59,46 @@ function Game() {
       setState(prev => ({...prev,
         isWhiteRunning: false,
         isBlackRunning: false,
-        isGameOver: true
+        isGameOver: true,
+        modalShow: true
       }));
     }
+  }
+
+  const setModalShow = function(bool){
+    setState(prev => ({...prev, modalShow: bool }));
+  }
+
+  const regame = function(){
+    setState(prev => ({...prev, 
+      position: "start",
+      isBlackRunning: false,
+      isWhiteRunning: true,
+      isGameOver: false,
+      modalShow: false
+    }));
   }
 
   return (
     <div className="gameView">
       <div className="countdown">
-      <Countdown color={"white"} username={usernameWhite} isRunning={state.isWhiteRunning}/>
-      <Countdown color={"black"} username={usernameBlack} isRunning={state.isBlackRunning}/>
+      <Countdown color={"white"} 
+      username={usernameWhite}
+      isGameOver={state.isGameOver}
+      isRunning={state.isWhiteRunning}/>
+      <Countdown color={"black"}
+      username={usernameBlack}
+      isGameOver={state.isGameOver}
+      isRunning={state.isBlackRunning}/>
       </div>
       <div style={{width: "560px"}}>
         <ChessBoard position={state.position} onDrop={onDrop} />
       </div>
+      <Popup
+        show={state.modalShow}
+        onHide={() => setModalShow(false)}
+        regame={regame}
+      />
     </div>
   );
 }
