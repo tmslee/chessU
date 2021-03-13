@@ -1,0 +1,22 @@
+.gameView {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  margin: 1em;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer{
+  margin: 1em;
+}
+
+.countdown{
+  width: 100%;
+  display: flex;
+  text-align: center;
+  margin: 1em;
+  justify-content: center;
+  align-items: center;
+}

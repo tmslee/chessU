@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import '../Common/styles/LoginForm.scss';
 import axios from 'axios';
 
-const loginUser = async function(credentials) {
+const loginUser = async function(username, password) {
   const users = await axios.get('http://localhost:8001/api/users')
   const usersData = users.data
   for (let user of usersData) {
-    if (credentials.username === user.username && credentials.password === user.password) {
+    if (username === user.username && password === user.password) {
       return true;
     };
   };
@@ -20,7 +20,7 @@ export default function LoginForm( {setCookie} ) {
 
   const handleSubmit = async function(e) {
     e.preventDefault();
-    const validLogin = await loginUser( {username, password})
+    const validLogin = await loginUser(username, password)
     console.log(validLogin)
     if (validLogin) {
       //set cookie
