@@ -29,7 +29,7 @@ export default function RegisterForm(props) {
       if (!Array.isArray(result.data)) {
         setError({ ...error, active:true })
       } else {
-        // setActive({...active, login: false  })
+        setActive({...active, register: false  })
       }
     })
   };
