@@ -35,7 +35,8 @@ export default function Application() {
       {active.login && 
       <LoginForm 
       setActive={setActive}
-      active={active}  
+      active={active}
+      setCookie={setCookie}  
       /> }
       {active.register && 
       <RegisterForm 
