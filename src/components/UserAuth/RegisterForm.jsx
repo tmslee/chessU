@@ -4,8 +4,10 @@ import FormError from '../Errors/FormError';
 import '../Common/styles/RegisterForm.scss'
 
 
-export default function RegisterForm() {
+export default function RegisterForm(props) {
   
+  const {setActive, active} = props;
+
   const [error, setError] = useState({
     active: false,
     message: 'Username Already Exists'
@@ -80,6 +82,7 @@ export default function RegisterForm() {
         </div>
       </form>
       </div>
+      <button onClick={() => setActive({...active, register: false  })} className="modal-close">X</button>
     </div>
     </div>
   )
