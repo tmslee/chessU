@@ -1,0 +1,8 @@
+@import "./../../../styles/variables.scss";
+@import "./../../../styles/mixins.scss";
+@import "./../../../styles/animations.scss";
+
+.load__status-image {
+  margin-right: 2rem;
+  animation: rotate 1s linear infinite;
+}
