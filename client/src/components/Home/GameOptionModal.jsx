@@ -48,6 +48,11 @@ export default function GameOptionsModal(props) {
     leaveQueue();
     goToView(SELECT_OPTIONS);
   }
+
+  const returnToMenu = function () {
+    leaveQueue();
+    hide();
+  }
   // useEffect(() => {
    //   goToView(SELECT_OPTIONS);
   //   //also need to get off the queue.
@@ -76,7 +81,7 @@ export default function GameOptionsModal(props) {
       }
       {mode === ACCEPT_MATCH && 
         <GameAccept
-
+          returnToGameOptions={returnToGameOptions}
         />
       }      
       {mode === LOADING && 
@@ -86,7 +91,7 @@ export default function GameOptionsModal(props) {
       }
       {mode === ERROR && 
         <Error
-          gameType={gameType}
+          returnToMenu={returnToMenu}
         />
       }  
     </Modal>
