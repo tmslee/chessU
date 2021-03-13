@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LoginForm from "./UserAuth/LoginForm"
+import RegisterForm from "./UserAuth/RegisterForm"
 
 export default function Application() {
 
@@ -14,7 +15,7 @@ export default function Application() {
   return (
     <main>
     <h1>hi</h1>
-    <LoginForm setCookie={setCookie} />
+    <RegisterForm />
     </main>
   );
 
