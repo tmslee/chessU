@@ -1,45 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
 
-import "./styles/ChessNavbar.scss"
-import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
+import "./styles/HomeMenu.scss"
+import {Button, Modal} from "react-bootstrap";
 
-export default function ChessNavBar(props) {
+import GameOptionsModal from "./GameOptionModal";
+
+const RANKED = "RANKED";
+const CASUAL = "CASUAL";
+const AI = "AI";
+
+export default function HomeMenu(props) {
+  const [state, setState] = useState({
+    show:false,
+    gameType: null
+  });
+  const showModal = (gameType) => setState( prev => ({...prev, show:true, gameType}));
+  const closeModal = () => setState( prev => ({...prev, show:false, gameType:null}));
+
   return (
-    <Navbar bg="light" expand="lg">
-      
-      <Navbar.Brand href="#home">
-        <img
-          alt=""
-          src="http://shorturl.at/howPQ"
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-        />{' '}
-        ChessU
-      </Navbar.Brand>
-
-
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-
-          <Nav.Link href="#home">Profile</Nav.Link>
-          <Nav.Link href="#link">My Stats</Nav.Link>
-          <Nav.Link href="#link">Community</Nav.Link>
-
-          <NavDropdown title="Quick Play" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Ranked</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Casual</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">vs AI</NavDropdown.Item>
-
-            {/* <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
-          </NavDropdown>
-        </Nav>
-
-        <Button variant="outline-success">Sign up</Button>
-        <Button variant="outline-success">Log in</Button>
-      </Navbar.Collapse>
-    </Navbar>
-  )
+    <>
+      <header>Queue up for a game</header>
+      <div>
+        <Button variant="primary" onClick={() => {showModal(RANKED)}}>
+          Ranked
+        </Button>
+        <Button variant="primary" onClick={() => {showModal(CASUAL)}}>
+          Casual
+        </Button>
+        <Button variant="primary" onClick={() => {showModal(AI)}}>
+          vs AI
+        </Button>
+      </div>
+  
+      <GameOptionsModal
+        show={state.show}
+        gameType={state.gameType}
+        hide={closeModal}
+      />
+    </>
+  );
 }
