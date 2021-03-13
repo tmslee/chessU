@@ -29,6 +29,7 @@ export default function LoginForm( props ) {
     if (validLogin) {
       //set cookie
       setCookie(true);
+      setActive({...active, login: false  })
     } else {
       setError(true);
     }
