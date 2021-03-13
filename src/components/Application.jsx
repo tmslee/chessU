@@ -13,7 +13,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Application() {
 
-  
+  const [active, setActive] = useState({
+    login: false,
+    register: false
+  });
   const [cookie, setCookie] = useState(null);
   // if (!cookie) {
   //   return (
@@ -23,9 +26,22 @@ export default function Application() {
 
   return (
     <>
-    <ChessNavBar/>
+    <ChessNavBar 
+    setActive={setActive} 
+    active={active} 
+    />
     <Router>
     <main>
+      {active.login && 
+      <LoginForm 
+      setActive={setActive}
+      active={active}  
+      /> }
+      {active.register && 
+      <RegisterForm 
+      setActive={setActive}
+      active={active} 
+      /> }
       <Switch>
         <Route path="/" exact component={HomeMenu} />
         <Route path="/game" component={Game} />
