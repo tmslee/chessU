@@ -7,6 +7,7 @@ export default function Countdown(props) {
   const username = props.username;
   const isRunning = props.isRunning;
   const color = props.color;
+  const isGameOver = props.isGameOver;
 
   return (
     <div className = "timer">
@@ -16,12 +17,13 @@ export default function Countdown(props) {
           initialTime={60*1000}
           direction="backward"
           timeToUpdate={1000}
-          chechpoints={[{time: 0, callback: () => setCol("danger")},]}
+          chechpoints={{time: 0, callback: () => setCol("danger")}}
           >
-      {({ resume, pause }) => (
+      {({ resume, pause, reset }) => (
             <span>
               <span><Timer.Minutes /> minutes</span>
               <span><Timer.Seconds /> seconds</span>
+              {isGameOver && reset()}
               {isRunning ? resume() : pause()}
             </span>
         )}
