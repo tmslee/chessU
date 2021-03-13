@@ -9,7 +9,7 @@ export default function ChessNavBar(props) {
   return (
     <Navbar bg="light" expand="lg">
       
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         <img
           alt=""
           src="http://shorturl.at/howPQ"
@@ -25,9 +25,9 @@ export default function ChessNavBar(props) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
 
-          <Nav.Link href="#home">Profile</Nav.Link>
-          <Nav.Link href="#link">My Stats</Nav.Link>
-          <Nav.Link href="#link">Community</Nav.Link>
+          <Nav.Link href="/profile">Profile</Nav.Link>
+          <Nav.Link href="/">My Stats</Nav.Link>
+          <Nav.Link href="/community">Community</Nav.Link>
 
           <NavDropdown title="Quick Play" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Ranked</NavDropdown.Item>

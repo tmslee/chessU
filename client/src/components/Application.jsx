@@ -4,6 +4,7 @@ import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
+import ChessNavBar from "./Navbar/ChessNavBar";
 
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,6 +20,8 @@ export default function Application() {
   // }
 
   return (
+    <>
+    <ChessNavBar/>
     <Router>
     <main>
       <Switch>
@@ -29,6 +32,7 @@ export default function Application() {
       </Switch>
     </main>
     </Router>
+    </>
   );
 
 }
