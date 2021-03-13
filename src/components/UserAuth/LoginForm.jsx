@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import '../Common/styles/LoginForm.scss';
+import FormError from '../Errors/FormError';
 import axios from 'axios';
 
 const loginUser = async function(username, password) {
@@ -17,6 +18,7 @@ export default function LoginForm( {setCookie} ) {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState(false);
 
   const handleSubmit = async function(e) {
     e.preventDefault();
@@ -24,7 +26,9 @@ export default function LoginForm( {setCookie} ) {
     console.log(validLogin)
     if (validLogin) {
       //set cookie
-      setCookie(true)
+      setCookie(true);
+    } else {
+      setError(true);
     }
   }
 
@@ -34,13 +38,22 @@ export default function LoginForm( {setCookie} ) {
       <div className="modal-login-content">
       <h1>Log In</h1>
       <form className="modal-login-form" onSubmit={handleSubmit}>
+      {error && <FormError message="Invalid username/password" />}
         <label>
           <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)}/>
+          <input 
+          type="text" 
+          onChange={e => setUserName(e.target.value)}
+          required
+          />
         </label>
         <label>
           <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)}/>
+          <input 
+          type="password" 
+          onChange={e => setPassword(e.target.value)}
+          required
+          />
         </label>
         <div>
           <button type="submit">Submit</button>
