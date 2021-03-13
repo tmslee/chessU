@@ -30,8 +30,16 @@ module.exports = db => {
       )
       res.json(newUser.rows);
     } catch (err){
-      console.error(err.message);
+      res.send(err.message);
     }
+
+    // db.query(`
+    // INSERT INTO users (username, email, password) 
+    // VALUES ($1, $2, $3) 
+    // RETURNING *;`, [username, email, password]
+    // )
+    // .then( user => res.json(user.rows))
+    // .catch( err => res.send(err.message))
   })
 
   
