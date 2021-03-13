@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
 
@@ -13,7 +14,9 @@ export default function Popup(props){
       <Modal.Header closeButton><h4>Game Over! Name Win!</h4></Modal.Header>
       <Modal.Footer>
         <Button variant="outline-success" onClick={regame}>Play once again</Button>
-        <Button variant="outline-info" onClick={props.onHide}>Back to Home</Button>
+        <Link to={{pathname: "/"}} >
+          <Button variant="outline-info" type="button">Back to Home</Button>
+        </Link>
       </Modal.Footer>
     </Modal>
   )
