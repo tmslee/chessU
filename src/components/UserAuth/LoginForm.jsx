@@ -14,7 +14,9 @@ const loginUser = async function(username, password) {
   };
 };
 
-export default function LoginForm( {setCookie} ) {
+export default function LoginForm( props ) {
+
+  const {setCookie, setActive, active} = props;
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -60,6 +62,7 @@ export default function LoginForm( {setCookie} ) {
         </div>
       </form>
       </div>
+      <button onClick={() => setActive({...active, login: false  })} className="modal-close">X</button>
     </div>
     </div>
   )
