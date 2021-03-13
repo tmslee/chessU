@@ -13,7 +13,8 @@ export default function GameAccept(props) {
   return (
     <>
       <Modal.Body>
-
+        {/* implement countdown timer here */}
+        Opponent found!
       </Modal.Body>
 
       <Modal.Footer>
