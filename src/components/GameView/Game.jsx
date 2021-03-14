@@ -46,17 +46,20 @@ function Game() {
       chessmoves.unshift({player: usernameWhite, from: sourceSquare, to: targetSquare})
     }
 
-    setState(prev => ({...prev, position: game.current.fen(), chessmoves}));
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
         setState(prev => ({...prev,
           isWhiteRunning: false,
           isBlackRunning: true,
+          position: game.current.fen(),
+          chessmoves
         }));
       } else {
         setState(prev => ({...prev,
           isWhiteRunning: true,
           isBlackRunning: false,
+          position: game.current.fen(),
+          chessmoves
         }));
       }
     } else {
@@ -73,6 +76,15 @@ function Game() {
         modalShow: true,
       }));
     }
+  }
+
+  const timeout = function(){
+    setState(prev => ({...prev,
+      isWhiteRunning: false,
+      isBlackRunning: false,
+      isGameOver: true,
+      modalShow: true,
+    }));
   }
   
   const setModalShow = function(bool){
@@ -96,11 +108,13 @@ function Game() {
         <Countdown color={"white"} 
         username={usernameWhite}
         isGameOver={state.isGameOver}
-        isRunning={state.isWhiteRunning}/>
+        isRunning={state.isWhiteRunning}
+        timeout={timeout}/>
         <Countdown color={"black"}
         username={usernameBlack}
         isGameOver={state.isGameOver}
-        isRunning={state.isBlackRunning}/>
+        isRunning={state.isBlackRunning}
+        timeout={timeout}/>
       </div>
       <div className="chessboard">
         <ChessBoard position={state.position} onDrop={onDrop} />

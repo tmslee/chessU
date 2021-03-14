@@ -11,7 +11,7 @@ export default function Popup(props){
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered>
-      <Modal.Header closeButton><h4>Game Over! Name Win!</h4></Modal.Header>
+      <Modal.Header closeButton><h4>Game Over!</h4></Modal.Header>
       <Modal.Footer>
         <Button variant="outline-success" onClick={regame}>Play once again</Button>
         <Link to={{pathname: "/"}} >
