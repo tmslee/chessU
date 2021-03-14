@@ -7,7 +7,6 @@ import Profile from "./Profile/index";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
-import Chat from "./ChatRoom/Chat";
 
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -50,7 +49,6 @@ export default function Application() {
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={Profile} />
-        <Route path="/chat" component={Chat}/>
       </Switch>
     </main>
     </Router>
