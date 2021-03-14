@@ -67,9 +67,9 @@ function Game() {
       }
     } else {
       if (game.current.turn() === 'b'){
-        gameover('white');
+        gameover('White');
       } else {
-        gameover('black');
+        gameover('Black');
       }
     }
   }
