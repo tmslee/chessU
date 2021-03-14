@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import "./styles/GameQueue.scss"
-import {Button, Modal, Form} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 
 const RANKED = "RANKED";
 const CASUAL = "CASUAL";
@@ -12,13 +12,13 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 export default function GameQueue(props) {
   const {gameOptions, setGameOptions, goToView, returnToGameOptions} = props;
   
-  const [opponent, setOpponent] = useState(gameOptions.opponent);
+  const [opponentID, setOpponentID] = useState(gameOptions.opponentID);
 
   const findOpponent = function(gameOptions) {
-    //implement this: go into db and grab an opponent from queue
+    //implement this: go into db and grab an opponent from queue. returns opponentID
     console.log("finding opponent for game: ...");
     console.log(gameOptions);
-    return "tempOpponent";
+    return 1; 
   };
 
   const inviteOpponent = function (gameOptions) {
@@ -31,18 +31,20 @@ export default function GameQueue(props) {
   // }, []);
 
   useEffect(() => {
-    if(!opponent) {
-      const foundOpponent = findOpponent(gameOptions);
-      //setOpponent(foundOpponent);
+    if(!opponentID) {
+      const foundOpponentID = findOpponent(gameOptions);
+      // uncomment line below if you want to use findOpponent.
+      // keep it commented if you want to change the opponent in chrome dev tools manually
+      //setOpponent(foundOpponentID);
     }
     else {
-      console.log(`opponent found! setting opponent as: ${opponent}`);
-      setGameOptions({...gameOptions, opponent});
-      console.log(`opponent set - inviting ${opponent} to a game`);
+      console.log(`opponent found! setting opponent as: ${opponentID}`);
+      setGameOptions({...gameOptions, opponentID});
+      console.log(`opponent set - inviting ${opponentID} to a game`);
       inviteOpponent(gameOptions);
       goToView(ACCEPT_MATCH);
     }
-  }, [opponent]);
+  }, [opponentID]);
 
   return (
     <>
