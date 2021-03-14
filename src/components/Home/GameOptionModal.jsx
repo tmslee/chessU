@@ -54,11 +54,13 @@ export default function GameOptionsModal(props) {
   };
 
   const enqueue = async function (gameOptions) {
+    //might want to make gameOptions only give currentUserID, type, when you do enqueue(gameOptions)
     console.log("joining queue...");
     console.log(gameOptions);
     
     const { currentUserID, type } = gameOptions;
     //might need a try catch here
+    //grabbing userInfo to get username/elo
     const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
 
     console.log(userInfo.data, "userinfo")
@@ -66,7 +68,7 @@ export default function GameOptionsModal(props) {
     const { username, elo } = userInfo.data;
     const queueInfo = { currentUserID, type, username, elo }
 
-    //need to implement actual enqueue here
+    //adds user to queue
     axios.post('http://localhost:8001/api/queues', queueInfo)
     .then( () => goToView(IN_Q) )
   }
