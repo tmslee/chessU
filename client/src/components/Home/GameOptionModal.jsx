@@ -59,10 +59,11 @@ export default function GameOptionsModal(props) {
     
     const { currentUserID, type } = gameOptions;
     //might need a try catch here
-    const userInfo = axios.get(`http://localhost:8001/api/users/${currentUserID}`)
-    .then ( res => res.data)
+    const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
 
-    const { username, elo } = userInfo;
+    console.log(userInfo.data, "userinfo")
+
+    const { username, elo } = userInfo.data;
     const queueInfo = { currentUserID, type, username, elo }
 
     //need to implement actual enqueue here
@@ -79,7 +80,7 @@ export default function GameOptionsModal(props) {
   }
 
   const returnToGameOptions = function () {
-    leaveQueue(gameOptions);
+    leaveQueue(gameOptions.currentUserID);
     console.log("returning to game settings...");
     console.log("setting opponent to null");
     setGameOptions({...gameOptions, opponentID: null});
