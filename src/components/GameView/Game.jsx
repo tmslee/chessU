@@ -70,22 +70,23 @@ function Game() {
         isWhiteRunning: false,
         isBlackRunning: false,
         isGameOver: true,
-        modalShow: true
+        modalShow: true,
       }));
     }
   }
-
+  
   const setModalShow = function(bool){
     setState(prev => ({...prev, modalShow: bool }));
   }
-
+  
   const regame = function(){
     setState(prev => ({...prev, 
       position: "start",
       isBlackRunning: false,
       isWhiteRunning: true,
       isGameOver: false,
-      modalShow: false
+      modalShow: false,
+      chessmoves: []
     }));
   }
 
