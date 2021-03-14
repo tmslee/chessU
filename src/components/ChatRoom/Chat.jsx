@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 
 import "./ChatRoom.css";
-import useChat from "./useChat";
+import useChat from "../../hooks/chat";
 
-const Chat = () => {
-  const roomId = 1;
+const Chat = (props) => {
+  const roomId = props.roomId;
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = useState("");
 
