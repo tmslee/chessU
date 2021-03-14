@@ -7,6 +7,7 @@ import Countdown from './Timer';
 import Popup from './Popup';
 import MovesLog from "./MovesLog"
 import Chat from "../ChatRoom/Chat"
+import useMove from "../../hooks/moves"
 
 function Game() {
   const [state, setState] = useState({
@@ -17,14 +18,30 @@ function Game() {
     modalShow: false,
     reset: false,
     chessmoves: [],
-    winner:''
+    winner:'',
+    roomId: 1
   })
+
+  const roomId = state.roomId;
+  const { currentMove, sendMove } = useMove(roomId);
+  console.log(currentMove);
 
   // set current positions from Chess.js
   let game = useRef(null);
-
   if (state.position === "start"){
     game.current = new Chess();
+  }
+
+  // if the move is made by current user
+  // reset the chessboard based on received layout
+  if(!currentMove.movedByCurrentUser && state.position !== "start"){
+    console.log('not my move');
+    const from = currentMove.from;
+    const to = currentMove.to;
+    game.current.move({ from, to });
+    setState(prev => ({...prev,
+      position: game.current.fen(),
+    }))
   }
 
   // should get them by axios
@@ -40,15 +57,18 @@ function Game() {
       to: targetSquare
     });
     if (!move) return;
+
+    const move_black = {player: usernameBlack, from: sourceSquare, to: targetSquare};
+    const move_white = {player: usernameWhite, from: sourceSquare, to: targetSquare};
     
     let chessmoves = state.chessmoves;
     if(state.isBlackRunning){
-      chessmoves.unshift({player: usernameBlack, from: sourceSquare, to: targetSquare})
+      chessmoves.unshift(move_black);
+      sendMove(move_black);
     } else {
-      chessmoves.unshift({player: usernameWhite, from: sourceSquare, to: targetSquare})
+      chessmoves.unshift(move_white);
+      sendMove(move_white)
     }
-
-    console.log(game.current.in_checkmate(), game.current.turn());
 
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
@@ -116,9 +136,9 @@ function Game() {
         timeout={gameover}/>
       </div>
       <div className="chessboard">
-        <ChessBoard position={state.position} onDrop={onDrop} />
-        <MovesLog moves={state.chessmoves}/>
-        <Chat />
+        <ChessBoard position={state.position} onDrop={onDrop} roomId={state.roomId}/>
+        <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+        <Chat roomId={state.roomId}/>
       </div>
       <Popup
         show={state.modalShow}
