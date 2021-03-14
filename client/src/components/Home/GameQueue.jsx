@@ -7,8 +7,29 @@ const RANKED = "RANKED";
 const CASUAL = "CASUAL";
 const AI = "AI";
 
+const ACCEPT_MATCH = "ACCEPT_MATCH";
+
 export default function GameQueue(props) {
-  const {returnToGameOptions} = props;
+  const {gameOptions, setGameOptions, goToView, returnToGameOptions} = props;
+  
+  const [opponent, setOpponent] = useState(null);
+
+  const findOpponent = function(gameOptions) {
+    //implement this: go into db and grab an opponent from queue
+    console.log("finding opponent for game: ...");
+    console.log(gameOptions);
+  };
+
+  useEffect(() => {
+    findOpponent(gameOptions);
+  }, []);
+
+  useEffect(() => {
+    if(opponent) {
+      setGameOptions({...gameOptions, opponent});
+      goToView(ACCEPT_MATCH);
+    }
+  }, [opponent]);
 
   return (
     <>
