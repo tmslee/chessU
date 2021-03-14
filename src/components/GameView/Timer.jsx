@@ -23,15 +23,15 @@ export default function Countdown(props) {
           checkpoints={[{
             time: 0,
             callback: () => {
-              console.log('Checkpoint')
+              console.log('run our of time!')
               timeout();
             },}
         ]}>
-      {({ resume, pause, reset }) => (
+      {({ resume, pause, reset, start }) => (
             <span>
               <span><Timer.Minutes /> minutes</span>
               <span><Timer.Seconds /> seconds</span>
-              {isGameOver && reset()}
+              {isGameOver ? reset() : start()}
               {isRunning ? resume() : pause()}
             </span>
         )}

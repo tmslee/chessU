@@ -68,17 +68,6 @@ function Game() {
   }
 
   const gameover = function(){
-    if (game.current && game.current.game_over()){
-      setState(prev => ({...prev,
-        isWhiteRunning: false,
-        isBlackRunning: false,
-        isGameOver: true,
-        modalShow: true,
-      }));
-    }
-  }
-
-  const timeout = function(){
     setState(prev => ({...prev,
       isWhiteRunning: false,
       isBlackRunning: false,
@@ -92,14 +81,14 @@ function Game() {
   }
   
   const regame = function(){
-    setState(prev => ({...prev, 
+    setState({ 
       position: "start",
       isBlackRunning: false,
       isWhiteRunning: true,
       isGameOver: false,
       modalShow: false,
       chessmoves: []
-    }));
+    });
   }
 
   return (
@@ -109,12 +98,12 @@ function Game() {
         username={usernameWhite}
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
-        timeout={timeout}/>
+        timeout={gameover}/>
         <Countdown color={"black"}
         username={usernameBlack}
         isGameOver={state.isGameOver}
         isRunning={state.isBlackRunning}
-        timeout={timeout}/>
+        timeout={gameover}/>
       </div>
       <div className="chessboard">
         <ChessBoard position={state.position} onDrop={onDrop} />
