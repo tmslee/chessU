@@ -17,22 +17,18 @@ const Chat = () => {
     setNewMessage("");
   };
 
+  const messageShow = function(){
+    return messages.map((message, i) => (
+      <li key={i}
+        className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message"}`}>
+        {message.body}
+      </li>
+    ))
+  }
   return (
     <div className="chat-room-container">
-      <h1 className="room-name">Room: {roomId}</h1>
       <div className="messages-container">
-        <ol className="messages-list">
-          {messages.map((message, i) => (
-            <li
-              key={i}
-              className={`message-item ${
-                message.ownedByCurrentUser ? "my-message" : "received-message"
-              }`}
-            >
-              {message.body}
-            </li>
-          ))}
-        </ol>
+        <ol className="messages-list">{messageShow()}</ol>
       </div>
       <textarea
         value={newMessage}

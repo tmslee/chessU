@@ -6,6 +6,7 @@ import Chess from "chess.js";
 import Countdown from './Timer';
 import Popup from './Popup';
 import MovesLog from "./MovesLog"
+import Chat from "../ChatRoom/Chat"
 
 function Game() {
   const [state, setState] = useState({
@@ -117,6 +118,7 @@ function Game() {
       <div className="chessboard">
         <ChessBoard position={state.position} onDrop={onDrop} />
         <MovesLog moves={state.chessmoves}/>
+        <Chat />
       </div>
       <Popup
         show={state.modalShow}
