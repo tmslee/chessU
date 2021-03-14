@@ -32,7 +32,7 @@ export default function AcceptTimer(props) {
               timeToUpdate={1000}
               checkpoints={[
                 {time: 6000, callback: () => setCol("danger")},
-                {time: 0, callback: () => returnToGameOptions()}
+                //{time: 0, callback: () => returnToGameOptions()}
               ]}
             >
               <span><Timer.Seconds /> seconds</span>
