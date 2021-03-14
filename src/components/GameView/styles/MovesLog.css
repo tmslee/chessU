@@ -1,11 +1,12 @@
 .moveLogTable{
-  width: 560px;
-  height: 100%;
   margin: 1em;
+  border: 3px solid black;
 }
 
-.Table{
-  height: 400px;
+.table{
+  width: 560px;
+  display: block;
+  height: 540px;
   overflow-y: auto;
   overflow-x: hidden;
 }
