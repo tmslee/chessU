@@ -8,17 +8,25 @@ export default function Countdown(props) {
   const isRunning = props.isRunning;
   const color = props.color;
   const isGameOver = props.isGameOver;
+  const timeout = props.timeout;
 
   return (
     <div className = "timer">
       <Alert variant={col}>
         <Alert.Heading>{color}: {username} </Alert.Heading>
         <Alert.Heading>Countdown: <Timer 
-          initialTime={60*1000}
+          initialTime={10*1000}
           direction="backward"
           timeToUpdate={1000}
           onResume={() => setCol("danger")}
-          onPause={() => setCol("success")}>
+          onPause={() => setCol("success")}
+          checkpoints={[{
+            time: 0,
+            callback: () => {
+              console.log('Checkpoint')
+              timeout();
+            },}
+        ]}>
       {({ resume, pause, reset }) => (
             <span>
               <span><Timer.Minutes /> minutes</span>
