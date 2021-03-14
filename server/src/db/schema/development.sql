@@ -82,7 +82,7 @@ INSERT INTO action_logs (user_id, match_id, created_at, action) VALUES (
 
 INSERT INTO queues (user_id, username, elo, game_type, created_at)
 VALUES (
-  1, 'alvin', 1800 , 'classic', '2001-11-13 12:45:00' 
+  1, 'alvin', 1800 , 'casual', '2001-11-13 12:45:00' 
 );
 
 INSERT INTO queues (user_id, username, elo, game_type, created_at)

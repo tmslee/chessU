@@ -29,12 +29,12 @@ module.exports = db => {
   router.post('/queues', async (req, res) => {
     //body contains userId and game Type 
     //
-    const { userID, gameType, username, elo } = req.body;
+    const { currentUserID, type, username, elo } = req.body;
     try {
       const newQueue = await db.query(
         `INSERT INTO queues (user_id, username, elo, game_type) 
         VALUES($1, $2, $3, $4) RETURNING *;`,
-        [userID, username, elo, gameType])
+        [currentUserID, username, elo, type])
       res.json(newQueue.rows)
     } catch (err) {
         console.error(err.message);
