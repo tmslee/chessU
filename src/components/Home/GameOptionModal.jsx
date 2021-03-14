@@ -26,8 +26,8 @@ const EMPTY_GAME = {
   type:null,
   timelimit:null,
   difficulty:null,
-  currentUser:null,
-  Opponent:null
+  currentUserID:null,
+  opponentID:null
 };
 
 export default function GameOptionsModal(props) {
@@ -69,7 +69,7 @@ export default function GameOptionsModal(props) {
     leaveQueue(gameOptions);
     console.log("returning to game settings...");
     console.log("setting opponent to null");
-    setGameOptions({...gameOptions, opponent:null});
+    setGameOptions({...gameOptions, opponentID: null});
     console.log(gameOptions);
     goToView(SELECT_OPTIONS);
   }
