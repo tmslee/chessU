@@ -1,5 +1,5 @@
 import React from 'react';
-import "../Common/styles/UserInfo.scss"
+import "./styles/UserInfo.scss"
 
 export default function UserInfo (props) {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../Common/styles/Settings.scss"
+import "./styles/Settings.scss"
 import axios from "axios";
 
 const updateUser = function(newUserInfo, id) {
