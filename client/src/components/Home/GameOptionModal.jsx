@@ -70,14 +70,12 @@ export default function GameOptionsModal(props) {
     console.log("returning to game settings...");
     console.log("setting opponent to null");
     setGameOptions({...gameOptions, opponentID: null});
-    console.log(gameOptions);
     goToView(SELECT_OPTIONS);
   }
 
   const returnToMenu = function () {
     console.log("returning to home page...");
     closeModal();
-    console.log(gameOptions);
   }
   
   // useEffect(() => {

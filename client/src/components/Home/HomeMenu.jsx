@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import "./styles/HomeMenu.scss"
 import {Button, Modal} from "react-bootstrap";
@@ -37,6 +37,13 @@ export default function HomeMenu(props) {
     setGameOptions({...EMPTY_GAME});
   };
 
+  useEffect(() => {
+    console.log("==== options changed ====")
+    console.log(gameOptions);
+    console.log("==========================")
+
+  }, [gameOptions]) 
+  
   return (
     <>
       <header>Queue up for a game</header>
