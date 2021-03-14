@@ -46,6 +46,7 @@ module.exports = db => {
   router.put('/users/:id', async (req, res) => {
     const {username, email, password} = req.body;
     const id = req.params.id;
+    console.log(id, 'ID IS HERE')
     try{
       const editUser = await db.query(`
       UPDATE users SET 
