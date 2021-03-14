@@ -10,7 +10,7 @@ export default function Popup(props){
     if (winner){
       return (winner + ' wins!')
     }
-    return 'timeout!'
+    return 'Timeout!'
   }
   return (
     <Modal
