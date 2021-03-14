@@ -13,7 +13,7 @@ const EMPTY_GAME = {
   type:null,
   timeLimit:null,
   difficulty:null,
-  currentUserID:null,
+  currentUserID: 2,
   opponentID:null
 };
 
