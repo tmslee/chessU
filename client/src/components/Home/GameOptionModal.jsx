@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 
-import "./styles/GameOptionModal.scss"
+import "./styles/GameOptionModal.scss";
 import {Modal} from "react-bootstrap";
+import axios from "axios";
 
 import useEnqueueFlow from "./../../hooks/useEnqueueFlow";
 
@@ -45,16 +46,19 @@ export default function GameOptionsModal(props) {
   } = useEnqueueFlow(SELECT_OPTIONS);
 
 
-  const leaveQueue = function (gameOptions) {
+  const leaveQueue = function (userID) {
     //implement getting off queue here
     console.log("leaving queue...");
+    axios.delete(`http://localhost:8001/api/queues/${userID}`)
+    .then( res => console.log(res) )
   };
 
   const enqueue = function (gameOptions) {
     console.log("joining queue...");
     console.log(gameOptions);
     //need to implement actual enqueue here
-    goToView(IN_Q);
+    axios.post('http://localhost:8001/api/queues', gameOptions)
+    .then( () => goToView(IN_Q) )
   }
 
   const loadGame = function (gameOptions) {
@@ -84,6 +88,9 @@ export default function GameOptionsModal(props) {
    //   goToView(SELECT_OPTIONS);
   //   //also need to get off the queue.
   // },[show])
+
+
+  console.log(gameOptions, "HERE")
 
   return (
     <Modal show={showState} onHide={closeModal} backdrop="static" keyboard={false}>
