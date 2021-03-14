@@ -7,7 +7,7 @@ import Profile from "./Profile/index";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
-import Chat from "./Chat/Chat";
+import Chat from "./ChatRoom/Chat";
 
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
