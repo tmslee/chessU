@@ -9,13 +9,38 @@ const RANKED = "RANKED";
 const CASUAL = "CASUAL";
 const AI = "AI";
 
+const EMPTY_GAME = {
+  type:null,
+  timeLimit:null,
+  difficulty:null,
+  currentUser:null,
+  opponent:null
+};
+
 export default function HomeMenu(props) {
   const [state, setState] = useState({
     show:false,
-    gameType: null
+    gameOptions: {...EMPTY_GAME}
   });
-  const showModal = (gameType) => setState( prev => ({...prev, show:true, gameType}));
-  const closeModal = () => setState( prev => ({...prev, show:false, gameType:null}));
+
+  const showModal = (type) => setState( prev => {
+    const gameOptions = {...prev.gameOptions, type};
+    return {...prev, show:true, gameOptions}
+  });
+
+  const closeModal = () => setState( prev => {
+    return {...prev, show: false, gameOptions:{...EMPTY_GAME}};
+  });
+
+  const setGameOptions = (gameOptions) => setState(prev => {
+    return {...prev, gameOptions};
+  });
+
+  const resetGameOptions = function () {
+    setState(prev => {
+      return {...prev, gameOptions:{...EMPTY_GAME}};
+    });
+  };
 
   return (
     <>
@@ -33,9 +58,11 @@ export default function HomeMenu(props) {
       </div>
   
       <GameOptionsModal
-        show={state.show}
-        gameType={state.gameType}
-        hide={closeModal}
+        showState={state.show}
+        gameOptions={state.gameOptions}
+        setGameOptions={setGameOptions}
+        resetGameOptions={resetGameOptions}
+        closeModal={closeModal}
       />
     </>
   );

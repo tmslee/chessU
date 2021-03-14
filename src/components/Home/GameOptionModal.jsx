@@ -4,6 +4,8 @@ import "./styles/GameOptionModal.scss"
 import {Modal} from "react-bootstrap";
 
 import useEnqueueFlow from "./../../hooks/useEnqueueFlow";
+
+
 import GameForm from "./GameForm";
 import GameQueue from './GameQueue';
 import GameAccept from './GameAccept';
@@ -20,38 +22,59 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 const LOADING = "LOADING";
 const ERROR = "ERROR";
 
+const EMPTY_GAME = {
+  type:null,
+  timelimit:null,
+  difficulty:null,
+  currentUser:null,
+  Opponent:null
+};
+
 export default function GameOptionsModal(props) {
   
-  const {show, gameType, hide} = props;
+  const {
+    showState,
+    gameOptions, 
+    setGameOptions, 
+    resetGameOptions, 
+    closeModal
+  } = props;
+
   const {
     mode,
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
-  const leaveQueue = function () {
 
+  const leaveQueue = function (gameOptions) {
+    //implement getting off queue
+    console.log("leaving queue...");
   };
 
-  const enqueue = function (params) {
-    console.log(params);
+  const enqueue = function (gameOptions) {
+    console.log("joining queue...");
+    console.log(gameOptions);
     //need to implement actual enqueue
     goToView(IN_Q);
   }
 
-  const loadGame = function (params) {
-    console.log(params);
-    //need to implement actual loadGame
+  const loadGame = function (gameOptions) {
+    console.log("loading game...");
+    console.log(gameOptions);
     goToView(LOADING);
+    //need to implement actual loadGame
   }
 
   const returnToGameOptions = function () {
     leaveQueue();
+    console.log("returning to game settings...");
     goToView(SELECT_OPTIONS);
   }
 
   const returnToMenu = function () {
-    leaveQueue();
-    hide();
+    console.log("returning to home page...");
+    closeModal();
+    console.log(gameOptions);
   }
   // useEffect(() => {
    //   goToView(SELECT_OPTIONS);
@@ -59,34 +82,39 @@ export default function GameOptionsModal(props) {
   // },[show])
 
   return (
-    <Modal show={show} onHide={hide} backdrop="static" keyboard={false}>
+    <Modal show={showState} onHide={closeModal} backdrop="static" keyboard={false}>
       <Modal.Header>
-        {gameType === RANKED && <Modal.Title>Ranked Mode </Modal.Title>}
-        {gameType === CASUAL && <Modal.Title>Casual Mode </Modal.Title>}
-        {gameType === AI && <Modal.Title>VS AI </Modal.Title>}        
+        {gameOptions.type === RANKED && <Modal.Title>Ranked Mode </Modal.Title>}
+        {gameOptions.type === CASUAL && <Modal.Title>Casual Mode </Modal.Title>}
+        {gameOptions.type === AI && <Modal.Title>VS AI </Modal.Title>}        
       </Modal.Header>
 
       {mode === SELECT_OPTIONS && 
         <GameForm
-          gameType = {gameType}
+          gameOptions = {gameOptions}
+          setGameOptions = {setGameOptions}
           enqueue = {enqueue}
           loadGame = {loadGame}
-          hide = {hide}
+          returnToMenu = {returnToMenu}
         />
       }
       {mode === IN_Q && 
         <GameQueue
+          gameOptions = {gameOptions}
+          setGameOptions = {setGameOptions}
+          goToView = {goToView}
           returnToGameOptions={returnToGameOptions}
         />
       }
       {mode === ACCEPT_MATCH && 
         <GameAccept
+          gameOptions = {gameOptions}
+          loadGame = {loadGame}
           returnToGameOptions={returnToGameOptions}
         />
       }      
       {mode === LOADING && 
         <Loading
-          returnToGameOptions={returnToGameOptions}
         />
       }
       {mode === ERROR && 
