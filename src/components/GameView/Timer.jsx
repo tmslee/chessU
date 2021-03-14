@@ -14,11 +14,11 @@ export default function Countdown(props) {
       <Alert variant={col}>
         <Alert.Heading>{color}: {username} </Alert.Heading>
         <Alert.Heading>Countdown: <Timer 
-          initialTime={60*1000}
+          initialTime={10*1000}
           direction="backward"
           timeToUpdate={1000}
-          chechpoints={{time: 0, callback: () => setCol("danger")}}
-          >
+          onResume={() => setCol("danger")}
+          onPause={() => setCol("success")}>
       {({ resume, pause, reset }) => (
             <span>
               <span><Timer.Minutes /> minutes</span>
@@ -27,6 +27,7 @@ export default function Countdown(props) {
               {isRunning ? resume() : pause()}
             </span>
         )}
+        {}
           </Timer>
         </Alert.Heading>
       </Alert>
