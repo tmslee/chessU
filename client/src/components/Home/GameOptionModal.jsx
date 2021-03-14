@@ -53,16 +53,25 @@ export default function GameOptionsModal(props) {
     .then( res => console.log(res) )
   };
 
-  const enqueue = function (gameOptions) {
+  const enqueue = async function (gameOptions) {
     console.log("joining queue...");
     console.log(gameOptions);
+    
+    const { currentUserID, type } = gameOptions;
+    //might need a try catch here
+    const userInfo = axios.get(`http://localhost:8001/api/users/${currentUserID}`)
+    .then ( res => res.data)
+
+    const { username, elo } = userInfo;
+    const queueInfo = { currentUserID, type, username, elo }
+
     //need to implement actual enqueue here
-    axios.post('http://localhost:8001/api/queues', gameOptions)
+    axios.post('http://localhost:8001/api/queues', queueInfo)
     .then( () => goToView(IN_Q) )
   }
 
   const loadGame = function (gameOptions) {
-    leaveQueue(gameOptions);
+    leaveQueue(gameOptions.currentUserID);
     console.log("loading game...");
     console.log(gameOptions);
     goToView(LOADING);
