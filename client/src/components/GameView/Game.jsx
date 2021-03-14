@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
 import Popup from './Popup';
+import MovesLog from "./MovesLog"
 
 function Game() {
   const [state, setState] = useState({
@@ -13,7 +14,8 @@ function Game() {
     isWhiteRunning: true,
     isGameOver: false,
     modalShow: false,
-    reset: false
+    reset: false,
+    chessmoves: []
   })
 
   // set current positions from Chess.js
@@ -36,7 +38,15 @@ function Game() {
       to: targetSquare
     });
     if (!move) return;
-    setState(prev => ({...prev, position: game.current.fen()}));
+    
+    let chessmoves = state.chessmoves;
+    if(state.isBlackRunning){
+      chessmoves.unshift({player: usernameBlack, from: sourceSquare, to: targetSquare})
+    } else {
+      chessmoves.unshift({player: usernameWhite, from: sourceSquare, to: targetSquare})
+    }
+
+    setState(prev => ({...prev, position: game.current.fen(), chessmoves}));
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
         setState(prev => ({...prev,
@@ -82,17 +92,18 @@ function Game() {
   return (
     <div className="gameView">
       <div className="countdown">
-      <Countdown color={"white"} 
-      username={usernameWhite}
-      isGameOver={state.isGameOver}
-      isRunning={state.isWhiteRunning}/>
-      <Countdown color={"black"}
-      username={usernameBlack}
-      isGameOver={state.isGameOver}
-      isRunning={state.isBlackRunning}/>
+        <Countdown color={"white"} 
+        username={usernameWhite}
+        isGameOver={state.isGameOver}
+        isRunning={state.isWhiteRunning}/>
+        <Countdown color={"black"}
+        username={usernameBlack}
+        isGameOver={state.isGameOver}
+        isRunning={state.isBlackRunning}/>
       </div>
-      <div style={{width: "560px"}}>
+      <div className="chessboard" style={{width: "560px"}}>
         <ChessBoard position={state.position} onDrop={onDrop} />
+        <MovesLog moves={state.chessmoves}/>
       </div>
       <Popup
         show={state.modalShow}
