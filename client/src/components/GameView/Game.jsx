@@ -101,7 +101,7 @@ function Game() {
         isGameOver={state.isGameOver}
         isRunning={state.isBlackRunning}/>
       </div>
-      <div className="chessboard" style={{width: "560px"}}>
+      <div className="chessboard">
         <ChessBoard position={state.position} onDrop={onDrop} />
         <MovesLog moves={state.chessmoves}/>
       </div>

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
 import "./styles/MovesLog.css"
 import Move from "./Move"
 
@@ -8,8 +7,8 @@ export default function MovesLog(props){
     move => { return( <Move move={move}/> ) }
   )
   return(
-    <div className="moveLogTable">
-      <Table responsive striped bordered hover >
+    <div className="moveLogTable table-responsive">
+      <table className="table table-striped table-hover">
         <thead>
           <tr>
             <th>Player</th>
@@ -20,7 +19,7 @@ export default function MovesLog(props){
         <tbody>
           { moves && moves }
         </tbody>
-      </Table>
+      </table>
     </div>
   )
 }
