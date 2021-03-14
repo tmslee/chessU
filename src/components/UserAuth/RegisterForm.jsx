@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, {useState} from "react";
 import FormError from '../Errors/FormError';
-import '../Common/styles/RegisterForm.scss'
+import './styles/RegisterForm.scss'
 
 
 export default function RegisterForm(props) {
   
-  const {setActive, active} = props;
+  const {
+    setActive, 
+    active
+  } = props;
 
   const [error, setError] = useState({
     active: false,
