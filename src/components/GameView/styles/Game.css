@@ -2,21 +2,28 @@
   width: 100%;
   display: flex;
   text-align: center;
-  margin: 1em;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .timer{
-  margin: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 1em;
 }
 
 .countdown{
   width: 100%;
   display: flex;
   text-align: center;
-  margin: 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.chessboard{
+  display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
 }

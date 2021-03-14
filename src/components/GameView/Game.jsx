@@ -4,13 +4,18 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
+import Popup from './Popup';
+import MovesLog from "./MovesLog"
 
 function Game() {
   const [state, setState] = useState({
     position: "start",
     isBlackRunning: false,
     isWhiteRunning: true,
-    isGameOver: false
+    isGameOver: false,
+    modalShow: false,
+    reset: false,
+    chessmoves: []
   })
 
   // set current positions from Chess.js
@@ -33,17 +38,28 @@ function Game() {
       to: targetSquare
     });
     if (!move) return;
-    setState(prev => ({...prev, position: game.current.fen()}));
+    
+    let chessmoves = state.chessmoves;
+    if(state.isBlackRunning){
+      chessmoves.unshift({player: usernameBlack, from: sourceSquare, to: targetSquare})
+    } else {
+      chessmoves.unshift({player: usernameWhite, from: sourceSquare, to: targetSquare})
+    }
+
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
         setState(prev => ({...prev,
           isWhiteRunning: false,
           isBlackRunning: true,
+          position: game.current.fen(),
+          chessmoves
         }));
       } else {
         setState(prev => ({...prev,
           isWhiteRunning: true,
           isBlackRunning: false,
+          position: game.current.fen(),
+          chessmoves
         }));
       }
     } else {
@@ -52,24 +68,52 @@ function Game() {
   }
 
   const gameover = function(){
-    if (game.current && game.current.game_over()){
-      setState(prev => ({...prev,
-        isWhiteRunning: false,
-        isBlackRunning: false,
-        isGameOver: true
-      }));
-    }
+    setState(prev => ({...prev,
+      isWhiteRunning: false,
+      isBlackRunning: false,
+      isGameOver: true,
+      modalShow: true,
+    }));
+  }
+  
+  const setModalShow = function(bool){
+    setState(prev => ({...prev, modalShow: bool }));
+  }
+  
+  const regame = function(){
+    setState({ 
+      position: "start",
+      isBlackRunning: false,
+      isWhiteRunning: true,
+      isGameOver: false,
+      modalShow: false,
+      chessmoves: []
+    });
   }
 
   return (
     <div className="gameView">
       <div className="countdown">
-      <Countdown color={"white"} username={usernameWhite} isRunning={state.isWhiteRunning}/>
-      <Countdown color={"black"} username={usernameBlack} isRunning={state.isBlackRunning}/>
+        <Countdown color={"white"} 
+        username={usernameWhite}
+        isGameOver={state.isGameOver}
+        isRunning={state.isWhiteRunning}
+        timeout={gameover}/>
+        <Countdown color={"black"}
+        username={usernameBlack}
+        isGameOver={state.isGameOver}
+        isRunning={state.isBlackRunning}
+        timeout={gameover}/>
       </div>
-      <div style={{width: "560px"}}>
+      <div className="chessboard">
         <ChessBoard position={state.position} onDrop={onDrop} />
+        <MovesLog moves={state.chessmoves}/>
       </div>
+      <Popup
+        show={state.modalShow}
+        onHide={() => setModalShow(false)}
+        regame={regame}
+      />
     </div>
   );
 }
