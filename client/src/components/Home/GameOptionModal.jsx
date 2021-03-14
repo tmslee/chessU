@@ -36,7 +36,6 @@ export default function GameOptionsModal(props) {
     showState,
     gameOptions, 
     setGameOptions, 
-    resetGameOptions, 
     closeModal
   } = props;
 
@@ -47,27 +46,31 @@ export default function GameOptionsModal(props) {
 
 
   const leaveQueue = function (gameOptions) {
-    //implement getting off queue
+    //implement getting off queue here
     console.log("leaving queue...");
   };
 
   const enqueue = function (gameOptions) {
     console.log("joining queue...");
     console.log(gameOptions);
-    //need to implement actual enqueue
+    //need to implement actual enqueue here
     goToView(IN_Q);
   }
 
   const loadGame = function (gameOptions) {
+    leaveQueue(gameOptions);
     console.log("loading game...");
     console.log(gameOptions);
     goToView(LOADING);
-    //need to implement actual loadGame
+    //need to implement actual loadGame here
   }
 
   const returnToGameOptions = function () {
-    leaveQueue();
+    leaveQueue(gameOptions);
     console.log("returning to game settings...");
+    console.log("setting opponent to null");
+    setGameOptions({...gameOptions, opponent:null});
+    console.log(gameOptions);
     goToView(SELECT_OPTIONS);
   }
 
@@ -76,6 +79,7 @@ export default function GameOptionsModal(props) {
     closeModal();
     console.log(gameOptions);
   }
+  
   // useEffect(() => {
    //   goToView(SELECT_OPTIONS);
   //   //also need to get off the queue.

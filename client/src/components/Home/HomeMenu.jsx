@@ -19,28 +19,27 @@ const EMPTY_GAME = {
 
 export default function HomeMenu(props) {
   const [state, setState] = useState({
+    //initialize with currentUser here
     show:false,
     gameOptions: {...EMPTY_GAME}
   });
 
+  //maybe need to useEffect here whenever currentUser changes we update game Options
+  
   const showModal = (type) => setState( prev => {
     const gameOptions = {...prev.gameOptions, type};
     return {...prev, show:true, gameOptions}
   });
 
+  //this function resets gameOptions too
   const closeModal = () => setState( prev => {
+    console.log("options reset")
     return {...prev, show: false, gameOptions:{...EMPTY_GAME}};
   });
 
   const setGameOptions = (gameOptions) => setState(prev => {
     return {...prev, gameOptions};
   });
-
-  const resetGameOptions = function () {
-    setState(prev => {
-      return {...prev, gameOptions:{...EMPTY_GAME}};
-    });
-  };
 
   return (
     <>
@@ -61,7 +60,6 @@ export default function HomeMenu(props) {
         showState={state.show}
         gameOptions={state.gameOptions}
         setGameOptions={setGameOptions}
-        resetGameOptions={resetGameOptions}
         closeModal={closeModal}
       />
     </>

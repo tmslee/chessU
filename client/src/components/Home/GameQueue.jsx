@@ -12,21 +12,34 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 export default function GameQueue(props) {
   const {gameOptions, setGameOptions, goToView, returnToGameOptions} = props;
   
-  const [opponent, setOpponent] = useState(null);
+  const [opponent, setOpponent] = useState(gameOptions.opponent);
 
   const findOpponent = function(gameOptions) {
     //implement this: go into db and grab an opponent from queue
     console.log("finding opponent for game: ...");
     console.log(gameOptions);
+    return "tempOpponent";
   };
 
-  useEffect(() => {
-    findOpponent(gameOptions);
-  }, []);
+  const inviteOpponent = function (gameOptions) {
+    console.log("sending accept invitation to opponent...");
+    //actually send an invitation here
+  }
+
+  // useEffect(() => {
+  //   findOpponent(gameOptions);
+  // }, []);
 
   useEffect(() => {
-    if(opponent) {
+    if(!opponent) {
+      const foundOpponent = findOpponent(gameOptions);
+      //setOpponent(foundOpponent);
+    }
+    else {
+      console.log(`opponent found! setting opponent as: ${opponent}`);
       setGameOptions({...gameOptions, opponent});
+      console.log(`opponent set - inviting ${opponent} to a game`);
+      inviteOpponent(gameOptions);
       goToView(ACCEPT_MATCH);
     }
   }, [opponent]);
