@@ -14,7 +14,7 @@ module.exports = db => {
     user_id = req.params.id;
     try {
       const individualUser = await db.query(`SELECT * FROM users where id = $1;`, [`${user_id}`]);
-      res.json(individualUser.rows);
+      res.json(individualUser.rows[0]);
     } catch (err) {
       console.error(err.message);
     }
