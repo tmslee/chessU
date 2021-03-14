@@ -3,8 +3,8 @@ import React, {useState} from "react";
 import "./ChatRoom.css";
 import useChat from "./useChat";
 
-const Chat = (props) => {
-  const { roomId } = 1;
+const Chat = () => {
+  const roomId = 1;
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = useState("");
 
