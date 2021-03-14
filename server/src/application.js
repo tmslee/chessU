@@ -17,7 +17,8 @@ const db = require("./db");
 const users = require("./routes/users");
 const action = require("./routes/actions");
 const matches = require("./routes/matches");
-const chatLogs = require("./routes/chatLogs")
+const chatLogs = require("./routes/chatLogs");
+const queues = require("./routes/queues");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -49,6 +50,7 @@ module.exports = function application(
   app.use("/api", action(db));
   app.use("/api", matches(db));
   app.use("/api", chatLogs(db));
+  app.use("/api", queues(db));
 
 
   
