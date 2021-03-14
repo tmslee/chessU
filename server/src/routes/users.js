@@ -30,14 +30,23 @@ module.exports = db => {
       )
       res.json(newUser.rows);
     } catch (err){
-      console.error(err.message);
+      res.send(err.message);
     }
+
+    // db.query(`
+    // INSERT INTO users (username, email, password) 
+    // VALUES ($1, $2, $3) 
+    // RETURNING *;`, [username, email, password]
+    // )
+    // .then( user => res.json(user.rows))
+    // .catch( err => res.send(err.message))
   })
 
   
   router.put('/users/:id', async (req, res) => {
     const {username, email, password} = req.body;
     const id = req.params.id;
+    console.log(id, 'ID IS HERE')
     try{
       const editUser = await db.query(`
       UPDATE users SET 
@@ -65,6 +74,45 @@ module.exports = db => {
     } catch (err){
       console.error(err.message);
     }
+  });
+
+  // -------------------- LOGIN -------------------
+
+  const getUserWithName = function(name) {
+    return db.query(`
+    SELECT * FROM users
+    where username = $1`
+    , [name])
+      .then(res => res.rows[0]);
+  };
+
+  const login =  function(name, password) {
+    return getUserWithName(name)
+      .then(user => {
+        if (user) {
+          // if (bcrypt.compareSync(password, user.password)) {
+          if (password === user.password) {
+            return user;
+          }
+        }
+        return null;
+      });
+  };
+
+  router.post('/login', (req, res) => {
+    const {username, password} = req.body;
+    login(username, password)
+      .then(user => {
+        if (!user) {
+          res.status(401).send("Invalid Email/Password");
+          // res.send({error: "error"});
+          return;
+        }
+        // req.session.userId = user.id;
+        // console.log(req.session.userId)
+        res.json({user: {username: user.username, email: user.email, id: user.id}});
+      })
+      .catch(e => res.send(e));
   });
 
 
