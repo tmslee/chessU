@@ -11,16 +11,10 @@ export default function GameForm(props) {
   const {
     gameOptions, 
     setGameOptions, 
-    enqueue, loadGame, 
+    enqueue, 
+    loadGame, 
     returnToMenu
   } = props;
-
-  // const [gameOptions, setGameOptions] = useState({
-  //   gameType,
-  //   timeLimit: null,
-  //   opponent: null,
-  //   difficulty: null
-  // });
 
   let newGameOptions = {...gameOptions};
 
@@ -29,8 +23,8 @@ export default function GameForm(props) {
     setGameOptions(newGameOptions);
   };
 
-  const setOpponent = (opponent) => {    
-    newGameOptions = {...newGameOptions, opponent};
+  const setOpponent = (opponentID) => {    
+    newGameOptions = {...newGameOptions, opponentID};
     setGameOptions(newGameOptions);
   };
   
