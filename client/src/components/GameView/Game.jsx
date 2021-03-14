@@ -15,7 +15,8 @@ function Game() {
     isGameOver: false,
     modalShow: false,
     reset: false,
-    chessmoves: []
+    chessmoves: [],
+    winner:''
   })
 
   // set current positions from Chess.js
@@ -46,6 +47,8 @@ function Game() {
       chessmoves.unshift({player: usernameWhite, from: sourceSquare, to: targetSquare})
     }
 
+    console.log(game.current.in_checkmate(), game.current.turn());
+
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
         setState(prev => ({...prev,
@@ -63,16 +66,21 @@ function Game() {
         }));
       }
     } else {
-      gameover();
+      if (game.current.turn() === 'b'){
+        gameover('white');
+      } else {
+        gameover('black');
+      }
     }
   }
 
-  const gameover = function(){
+  const gameover = function(winner){
     setState(prev => ({...prev,
       isWhiteRunning: false,
       isBlackRunning: false,
       isGameOver: true,
       modalShow: true,
+      winner
     }));
   }
   
@@ -87,7 +95,8 @@ function Game() {
       isWhiteRunning: true,
       isGameOver: false,
       modalShow: false,
-      chessmoves: []
+      chessmoves: [],
+      winner:''
     });
   }
 
@@ -113,6 +122,7 @@ function Game() {
         show={state.modalShow}
         onHide={() => setModalShow(false)}
         regame={regame}
+        winner={state.winner}
       />
     </div>
   );
