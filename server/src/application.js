@@ -41,7 +41,7 @@ module.exports = function application(
 ) {
   app.use(cookieSession({
     name: 'session',
-    keys: ['key1', 'key2'],
+    keys: ['key1', 'key2']
   }));
   app.use(cors());
   app.use(helmet());

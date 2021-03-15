@@ -110,8 +110,8 @@ module.exports = db => {
           return;
         }
         req.session.userId = user.id;
-        console.log(req.session.userId, "COOOOKIE?")
-        // console.log(req.session.userId)
+        console.log(req.session.userId, "COOOOKIE?");
+        console.log(req.session);
         res.json({user: {username: user.username, email: user.email, id: user.id}});
       })
       .catch(e => res.send(e));
