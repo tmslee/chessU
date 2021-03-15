@@ -161,7 +161,8 @@ function Game() {
       isGameOver: false,
       modalShow: false,
       chessmoves: [],
-      winner:''
+      winner:'',
+      isReceived: true
     });
   }
 
