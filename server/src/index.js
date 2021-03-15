@@ -4,6 +4,8 @@ const ENV = require("./environment");
 const app = require("./application")(ENV, { updateAppointment });
 const server = require("http").Server(app);
 
+const db = {}
+
 const io = require("socket.io")(server);
 io.on("connection", socket => {
   socket.onmessage = event => {
@@ -12,6 +14,11 @@ io.on("connection", socket => {
       socket.send(JSON.stringify("pong"));
     }
   }
+
+  
+  
+
+
 });
 
 
