@@ -1,7 +1,7 @@
 import './styles/Game.css';
 import ChessBoard from "chessboardjsx";
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
 import Popup from './Popup';
@@ -35,6 +35,9 @@ function Game() {
     game.current = new Chess();
   }
 
+  // let rerender = useRef(true);
+
+  console.log('re-render');
   console.log(currentMove);
 
   // if the move is not made by current user
@@ -42,13 +45,12 @@ function Game() {
   if(!currentMove.movedByCurrentUser && currentMove.length !== 0){
     console.log('not my move');
     console.log(currentMove);
+
     currentMove.movedByCurrentUser = true;
     const from = currentMove.body.from;
     const to = currentMove.body.to;
     game.current.move({ from, to });
-
     let moveReceived = {from, to};
-    console.log(moveReceived);
 
     let chessmoves = state.chessmoves;
     if(state.isBlackRunning){
@@ -60,9 +62,7 @@ function Game() {
       chessmoves.unshift(moveReceived);
       sendMove(moveReceived);
     }
-
-    console.log('chessmoves', chessmoves);
-
+    
     if (state.isWhiteRunning){
       setState(prev => ({...prev,
         isWhiteRunning: false,
@@ -77,9 +77,11 @@ function Game() {
         position: game.current.fen(),
         chessmoves
       }));
+
+      // console.log(rerender.current);
+      // rerender.current = false;
     }
   }
-
 
   // user makes a move
   //The logic to be performed on piece drop. See chessboardjsx.com/integrations for examples.
