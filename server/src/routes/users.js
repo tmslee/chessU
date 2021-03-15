@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require('jsonwebtoken');
 
 module.exports = db => {
   router.get('/users', async (req, res) => {
@@ -109,10 +110,10 @@ module.exports = db => {
           // res.send({error: "error"});
           return;
         }
-        req.session.userId = user.id;
-        console.log(req.session.userId, "COOOOKIE?")
-        // console.log(req.session.userId)
-        res.json({user: {username: user.username, email: user.email, id: user.id}});
+        const token = jwt.sign({ userId:user.id}, 'shhhhh');
+        res.json({user: {username: user.username, email: user.email, id: user.id},
+          token
+        });
       })
       .catch(e => res.send(e));
   });
@@ -120,8 +121,10 @@ module.exports = db => {
   // ----------------- ME ----------------
 
   router.get('/me', async (req, res) => {
-    const userId = req.session.userId;
-    console.log(req.session)
+    console.log(req.headers)
+    const decoded = jwt.verify(req.headers.authorization, 'shhhhh');
+    console.log(decoded, "decoded");
+    const userId = decoded.userId
     if (!userId) {
       res.status(404).send({error: "not logged in"});
       return;

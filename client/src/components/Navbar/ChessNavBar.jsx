@@ -1,11 +1,35 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
 
 import "./styles/ChessNavbar.scss"
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 
 
 export default function ChessNavBar(props) {
-  const {currentUser, setActive, active} = props;
+  const {
+    setActive,
+    active, 
+    getCurrentUser,
+    token
+  } = props;
+
+  let currentUser = null;
+  console.log(`current token: ${token}`);
+  // if(token) {
+  //   currentUser = getCurrentUser(token);
+  // }
+
+  useEffect( async () => {
+    if (token) {
+      try {
+        currentUser = await getCurrentUser(token)
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      currentUser = null;
+    }
+    console.log(currentUser);
+  }, [token])
 
   return (
     <Navbar bg="light" expand="lg">
