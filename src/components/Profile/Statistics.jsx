@@ -1,5 +1,5 @@
 import React from 'react';
-import "../Common/styles/Statistics.scss"
+import "./styles/Statistics.scss"
 
 export default function Statistics() {
 
