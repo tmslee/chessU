@@ -19,7 +19,7 @@
     "express": "^4.16.4",
     "helmet": "^3.18.0",
     "pg": "^8.5.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.1",
     "ws": "^7.0.0"
   },
   "devDependencies": {
