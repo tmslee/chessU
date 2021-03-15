@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ChessNavbar from "../components/Navbar/ChessNavBar";
 import HomeMenu from "../components/Home/HomeMenu";
+import GameAccept from "../components/Home/GameAccept";
 
 storiesOf("ChessNavBar", module)
   .add("not logged in", () => 
@@ -24,5 +25,12 @@ storiesOf("ChessNavBar", module)
 storiesOf("HomeMenu", module)
   .add("default", () => 
     <HomeMenu
+      currentUser={null}
+    />)
+
+
+storiesOf("GameAccept", module)
+  .add("default", () => 
+    <GameAccept
       currentUser={null}
     />)

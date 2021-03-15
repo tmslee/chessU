@@ -17,7 +17,7 @@ export default function Application() {
     login: false,
     register: false
   });
-  const [cookie, setCookie] = useState(null);
+  // const [cookie, setCookie] = useState(null);
   // if (!cookie) {
   //   return (
   //     <LoginForm setCookie={setCookie}/>
@@ -36,7 +36,7 @@ export default function Application() {
       <LoginForm 
       setActive={setActive}
       active={active}
-      setCookie={setCookie}  
+      // setCookie={setCookie}  
       /> }
       {active.register && 
       <RegisterForm 

@@ -1,25 +1,43 @@
 import React from 'react';
+import "./styles/Settings.scss"
+import axios from "axios";
 
-export default function Settings() {
+const updateUser = function(newUserInfo, id) {
+  axios.put(`http://localhost:8001/api/users/${id}`, newUserInfo)
+  .then( res => console.log(res))
+}
+
+export default function Settings(props) {
+
+  const {currentUser, setSettings} = props;
+  
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateUser({
+      username: 'alvin',
+      email: 'alvin@gmail.com',
+      password: '123'
+    }, 1)
+  }
 
   return(
     <div className="modal-bg3 bg-active">
     <div className="modal-settings">
       <div className="modal-settings-content">
-      <h1>Log In</h1>
+      <h1>Settings</h1>
       <form className="modal-settings-form" onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
           <input 
           type="text" 
-          onChange={e => setUserName(e.target.value)}
           />
         </label>
         <label>
           <p>Password</p>
           <input 
           type="password" 
-          onChange={e => setPassword(e.target.value)}
           />
         </label>
         <div>
@@ -27,6 +45,7 @@ export default function Settings() {
         </div>
       </form>
       </div>
+      <button onClick={ () => setSettings(false)} className="modal-close">X</button>
     </div>
     </div>
   )

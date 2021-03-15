@@ -8,16 +8,30 @@ const CASUAL = "CASUAL";
 const AI = "AI";
 
 export default function GameForm(props) {
-  const {gameType, enqueue, loadGame, hide} = props;
-  const [gameOptions, setGameOptions] = useState({
-    gameType,
-    timeLimit: null,
-    opponent: null,
-    difficulty: null
-  });
-  const setTime = (timeLimit) => {setGameOptions(prev => ({...prev, timeLimit}))};
-  const setOpponent = (opponent) => {setGameOptions(prev => ({...prev, opponent}))};
-  const setDifficulty = (difficulty) => {setGameOptions(prev => ({...prev, difficulty}))};
+  const {
+    gameOptions, 
+    setGameOptions, 
+    enqueue, 
+    loadGame, 
+    returnToMenu
+  } = props;
+
+  let newGameOptions = {...gameOptions};
+
+  const setTime = (timeLimit) => {
+    newGameOptions = {...newGameOptions, timeLimit};
+    setGameOptions(newGameOptions);
+  };
+
+  const setOpponent = (opponentID) => {    
+    newGameOptions = {...newGameOptions, opponentID};
+    setGameOptions(newGameOptions);
+  };
+  
+  const setDifficulty = (difficulty) => {    
+    newGameOptions = {...newGameOptions, difficulty};
+    setGameOptions(newGameOptions);
+  };
 
   return (
     <Form onSubmit={event => event.preventDefault()}>
@@ -52,7 +66,7 @@ export default function GameForm(props) {
             </Col>
           </Form.Group>
        
-          {gameType === CASUAL &&     
+          {gameOptions.type === CASUAL &&     
             <Form.Group as={Col} controlId="inviteUser">
               <Form.Label>Invite a Friend</Form.Label>
               <Form.Control 
@@ -62,7 +76,7 @@ export default function GameForm(props) {
             </Form.Group>
           }
 
-          {gameType === AI && 
+          {gameOptions.type === AI && 
             <Form.Group as={Row}>
               <Form.Label as="legend" row sm={2}>
                 Difficulty
@@ -97,11 +111,11 @@ export default function GameForm(props) {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={hide}>
+        <Button variant="secondary" onClick={returnToMenu}>
           Cancel
         </Button>
-        {(gameType === RANKED || gameType === CASUAL) && <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> }
-        {(gameType === AI) && <Button variant="primary" onClick={() => loadGame(gameOptions)}>Start Game</Button> }
+        {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> }
+        {(gameOptions.type === AI) && <Button variant="primary" onClick={() => loadGame(gameOptions)}>Start Game</Button> }
       </Modal.Footer>
     </Form>
   );

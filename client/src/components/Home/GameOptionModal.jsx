@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
 
-import "./styles/GameOptionModal.scss"
+import "./styles/GameOptionModal.scss";
 import {Modal} from "react-bootstrap";
+import axios from "axios";
 
 import useEnqueueFlow from "./../../hooks/useEnqueueFlow";
+
+
 import GameForm from "./GameForm";
 import GameQueue from './GameQueue';
 import GameAccept from './GameAccept';
@@ -20,73 +23,119 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 const LOADING = "LOADING";
 const ERROR = "ERROR";
 
+const EMPTY_GAME = {
+  type:null,
+  timelimit:null,
+  difficulty:null,
+  currentUserID:null,
+  opponentID:null
+};
+
 export default function GameOptionsModal(props) {
   
-  const {show, gameType, hide} = props;
+  const {
+    showState,
+    gameOptions, 
+    setGameOptions, 
+    closeModal
+  } = props;
+
   const {
     mode,
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
-  const leaveQueue = function () {
 
+  const leaveQueue = function (userID) {
+    //implement getting off queue here
+    console.log("leaving queue...");
+    axios.delete(`http://localhost:8001/api/queues/${userID}`)
+    .then( res => console.log(res) )
   };
 
-  const enqueue = function (params) {
-    console.log(params);
-    //need to implement actual enqueue
-    goToView(IN_Q);
+  const enqueue = async function (gameOptions) {
+    //might want to make gameOptions only give currentUserID, type, when you do enqueue(gameOptions)
+    console.log("joining queue...");
+    console.log(gameOptions);
+    
+    const { currentUserID, type } = gameOptions;
+    //might need a try catch here
+    //grabbing userInfo to get username/elo
+    const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
+
+    console.log(userInfo.data, "userinfo")
+
+    const { username, elo } = userInfo.data;
+    const queueInfo = { currentUserID, type, username, elo }
+
+    //adds user to queue
+    axios.post('http://localhost:8001/api/queues', queueInfo)
+    .then( () => goToView(IN_Q) )
   }
 
-  const loadGame = function (params) {
-    console.log(params);
-    //need to implement actual loadGame
+  const loadGame = function (gameOptions) {
+    leaveQueue(gameOptions.currentUserID);
+    console.log("loading game...");
+    console.log(gameOptions);
     goToView(LOADING);
+    //need to implement actual loadGame here
   }
 
   const returnToGameOptions = function () {
-    leaveQueue();
+    leaveQueue(gameOptions.currentUserID);
+    console.log("returning to game settings...");
+    console.log("setting opponent to null");
+    setGameOptions({...gameOptions, opponentID: null});
     goToView(SELECT_OPTIONS);
   }
 
   const returnToMenu = function () {
-    leaveQueue();
-    hide();
+    console.log("returning to home page...");
+    closeModal();
   }
+  
   // useEffect(() => {
    //   goToView(SELECT_OPTIONS);
   //   //also need to get off the queue.
   // },[show])
 
+
+  console.log(gameOptions, "HERE")
+
   return (
-    <Modal show={show} onHide={hide} backdrop="static" keyboard={false}>
+    <Modal show={showState} onHide={closeModal} backdrop="static" keyboard={false}>
       <Modal.Header>
-        {gameType === RANKED && <Modal.Title>Ranked Mode </Modal.Title>}
-        {gameType === CASUAL && <Modal.Title>Casual Mode </Modal.Title>}
-        {gameType === AI && <Modal.Title>VS AI </Modal.Title>}        
+        {gameOptions.type === RANKED && <Modal.Title>Ranked Mode </Modal.Title>}
+        {gameOptions.type === CASUAL && <Modal.Title>Casual Mode </Modal.Title>}
+        {gameOptions.type === AI && <Modal.Title>VS AI </Modal.Title>}        
       </Modal.Header>
 
       {mode === SELECT_OPTIONS && 
         <GameForm
-          gameType = {gameType}
+          gameOptions = {gameOptions}
+          setGameOptions = {setGameOptions}
           enqueue = {enqueue}
           loadGame = {loadGame}
-          hide = {hide}
+          returnToMenu = {returnToMenu}
         />
       }
       {mode === IN_Q && 
         <GameQueue
+          gameOptions = {gameOptions}
+          setGameOptions = {setGameOptions}
+          goToView = {goToView}
           returnToGameOptions={returnToGameOptions}
         />
       }
       {mode === ACCEPT_MATCH && 
         <GameAccept
+          gameOptions = {gameOptions}
+          loadGame = {loadGame}
           returnToGameOptions={returnToGameOptions}
         />
       }      
       {mode === LOADING && 
         <Loading
-          returnToGameOptions={returnToGameOptions}
         />
       }
       {mode === ERROR && 
