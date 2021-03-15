@@ -15,14 +15,16 @@ io.on("connection", (socket) => {
   const { roomId } = socket.handshake.query;
   socket.join(roomId);
 
-  // Listen for new messages
+  // Listen for new messages and send it to everyone in the room
   socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
     io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
   });
 
-  // Listen for new move
+  // Listen for new move and send it to your opponent
   socket.on(NEW_CHESS_MOVE_EVENT, (data) => {
-    io.in(roomId).emit(NEW_CHESS_MOVE_EVENT, data);
+    console.log('receive a move!', data)
+    socket.to(roomId).emit(NEW_CHESS_MOVE_EVENT, data);
+    // io.in(roomId).emit(NEW_CHESS_MOVE_EVENT, data);
   });
 
   // Leave the room if the user closes the socket
