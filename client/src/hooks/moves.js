@@ -19,7 +19,7 @@ const useMove = (roomId) => {
         ...move,
         movedByCurrentUser: move.senderId === socketRef.current.id,
       };
-      console.log('re-render');
+      // setCurrentMove((moves) => [...moves, incomingMove]);
       setCurrentMove(incomingMove);
     });
 
