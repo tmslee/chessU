@@ -10,6 +10,10 @@ import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
 
 function Game() {
+  // should get them by axios
+  const usernameBlack = "Haopeng"
+  const usernameWhite = "Thomas"
+
   const [state, setState] = useState({
     position: "start",
     isBlackRunning: false,
@@ -24,7 +28,6 @@ function Game() {
 
   const roomId = state.roomId;
   const { currentMove, sendMove } = useMove(roomId);
-  console.log(currentMove);
 
   // set current positions from Chess.js
   let game = useRef(null);
@@ -32,22 +35,53 @@ function Game() {
     game.current = new Chess();
   }
 
-  // if the move is made by current user
-  // reset the chessboard based on received layout
-  if(!currentMove.movedByCurrentUser && state.position !== "start"){
+  console.log(currentMove);
+
+  // if the move is not made by current user
+  // reset the chessboard based on received move made by other user
+  if(!currentMove.movedByCurrentUser && currentMove.length !== 0){
     console.log('not my move');
-    const from = currentMove.from;
-    const to = currentMove.to;
+    console.log(currentMove);
+    currentMove.movedByCurrentUser = true;
+    const from = currentMove.body.from;
+    const to = currentMove.body.to;
     game.current.move({ from, to });
-    setState(prev => ({...prev,
-      position: game.current.fen(),
-    }))
+
+    let moveReceived = {from, to};
+    console.log(moveReceived);
+
+    let chessmoves = state.chessmoves;
+    if(state.isBlackRunning){
+      moveReceived['player'] = usernameBlack;
+      chessmoves.unshift(moveReceived);
+      sendMove(moveReceived);
+    } else {
+      moveReceived['player'] = usernameWhite;
+      chessmoves.unshift(moveReceived);
+      sendMove(moveReceived);
+    }
+
+    console.log('chessmoves', chessmoves);
+
+    if (state.isWhiteRunning){
+      setState(prev => ({...prev,
+        isWhiteRunning: false,
+        isBlackRunning: true,
+        position: game.current.fen(),
+        chessmoves
+      }));
+    } else {
+      setState(prev => ({...prev,
+        isWhiteRunning: true,
+        isBlackRunning: false,
+        position: game.current.fen(),
+        chessmoves
+      }));
+    }
   }
 
-  // should get them by axios
-  const usernameBlack = "Haopeng"
-  const usernameWhite = "Thomas"
 
+  // user makes a move
   //The logic to be performed on piece drop. See chessboardjsx.com/integrations for examples.
   // Signature: function({ sourceSquare: string, targetSquare: string, piece: string }) => void
   const onDrop = ({sourceSquare, targetSquare}) => {
@@ -58,16 +92,17 @@ function Game() {
     });
     if (!move) return;
 
-    const move_black = {player: usernameBlack, from: sourceSquare, to: targetSquare};
-    const move_white = {player: usernameWhite, from: sourceSquare, to: targetSquare};
+    let moveMade = {from: sourceSquare, to: targetSquare};
     
     let chessmoves = state.chessmoves;
     if(state.isBlackRunning){
-      chessmoves.unshift(move_black);
-      sendMove(move_black);
+      moveMade['player'] = usernameBlack;
+      chessmoves.unshift(moveMade);
+      sendMove(moveMade);
     } else {
-      chessmoves.unshift(move_white);
-      sendMove(move_white)
+      moveMade['player'] = usernameWhite;
+      chessmoves.unshift(moveMade);
+      sendMove(moveMade);
     }
 
     if (!game.current.game_over()){

@@ -13,11 +13,13 @@ const useMove = (roomId) => {
       query: { roomId },
     });
 
+    // receive the move from the opponent
     socketRef.current.on(NEW_CHESS_MOVE_EVENT, (move) => {
       const incomingMove = {
         ...move,
         movedByCurrentUser: move.senderId === socketRef.current.id,
       };
+      console.log('re-render');
       setCurrentMove(incomingMove);
     });
 
@@ -26,8 +28,8 @@ const useMove = (roomId) => {
     };
   }, [roomId]);
 
+  // send the move to the server and your opponent
   const sendMove = (move) => {
-    // console.log(move, socketRef.current.id);
     socketRef.current.emit(NEW_CHESS_MOVE_EVENT, {
       body: move,
       senderId: socketRef.current.id,
