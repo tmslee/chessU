@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
+const cookieSession = require('cookie-session');
 const express = require("express");
 const bodyparser = require("body-parser");
 const helmet = require("helmet");
 const cors = require("cors");
-
 const app = express();
 
 const db = require("./db");
@@ -39,6 +39,10 @@ module.exports = function application(
   ENV,
   // actions = { updateAppointment: () => {} }
 ) {
+  app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2'],
+  }));
   app.use(cors());
   app.use(helmet());
   app.use(bodyparser.json());

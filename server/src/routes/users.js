@@ -28,6 +28,7 @@ module.exports = db => {
         VALUES ($1, $2, $3) 
         RETURNING *;`, [username, email, password]
       )
+      req.session.userId = user.id;
       res.json(newUser.rows);
     } catch (err){
       res.send(err.message);
@@ -108,11 +109,34 @@ module.exports = db => {
           // res.send({error: "error"});
           return;
         }
-        // req.session.userId = user.id;
+        req.session.userId = user.id;
+        console.log(req.session.userId, "COOOOKIE?")
         // console.log(req.session.userId)
         res.json({user: {username: user.username, email: user.email, id: user.id}});
       })
       .catch(e => res.send(e));
+  });
+
+  // ----------------- ME ----------------
+
+  router.get('/me', async (req, res) => {
+    const userId = req.session.userId;
+    console.log(req.session)
+    if (!userId) {
+      res.status(404).send({error: "not logged in"});
+      return;
+    }
+
+    try {
+      const user = await db.query(
+        `SELECT * FROM users
+         WHERE id = $1`,
+         [userId])
+         res.send({user: {name: user.name, email: user.email, id: userId}});  
+    } catch (err) {
+      res.send(e);
+      
+    }
   });
 
 
