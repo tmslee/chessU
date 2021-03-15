@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require('jsonwebtoken');
 
 module.exports = db => {
   router.get('/users', async (req, res) => {
@@ -28,6 +29,7 @@ module.exports = db => {
         VALUES ($1, $2, $3) 
         RETURNING *;`, [username, email, password]
       )
+      // req.session.userId = user.id;
       res.json(newUser.rows);
     } catch (err){
       res.send(err.message);
@@ -110,6 +112,12 @@ module.exports = db => {
         }
         // req.session.userId = user.id;
         // console.log(req.session.userId)
+        jwt.sign({
+          data: 'TESTING'
+        },
+        'secret', { expiresIn: '1h'}
+        )
+        // console.log(token, "TOKEN IS HEEEEEEEEEEEEEEEEEERE");
         res.json({user: {username: user.username, email: user.email, id: user.id}});
       })
       .catch(e => res.send(e));
