@@ -1,26 +1,10 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("./environment");
 
-const app = require("./application")(ENV, { updateAppointment });
+const app = require("./application")(ENV);
 const server = require("http").Server(app);
 
 const db = {}
-
-const io = require("socket.io")(server);
-io.on("connection", socket => {
-  socket.onmessage = event => {
-    console.log(`Message Receoved: ${event.data}`);
-    if (event.data === "ping"){
-      socket.send(JSON.stringify("pong"));
-    }
-  }
-
-  
-  
-
-
-});
-
 
 // const WebSocket = require("ws");
 // const wss = new WebSocket.Server({ server });
