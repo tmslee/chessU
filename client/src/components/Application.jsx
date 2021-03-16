@@ -18,7 +18,7 @@ export default function Application() {
     register: false
   });
 
-  const { token, setToken } = useToken();
+  const { token, getToken, setToken } = useToken();
   const [currentUser, setCurrentUser] = useState();
   
   useEffect(()=> {
@@ -45,12 +45,18 @@ export default function Application() {
     })
   }
 
+  const logout = function (){
+    localStorage.clear();
+    setToken(getToken());
+  }
+
   return (
     <>
     <ChessNavBar
     currentUser={currentUser}
     setActive={setActive} 
     active={active}
+    logout={logout}
     />
     <Router>
     <main>

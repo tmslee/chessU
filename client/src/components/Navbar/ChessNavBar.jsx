@@ -8,7 +8,8 @@ export default function ChessNavBar(props) {
   const {
     currentUser,
     setActive,
-    active
+    active,
+    logout
   } = props;
 
   return (
@@ -47,7 +48,10 @@ export default function ChessNavBar(props) {
         {currentUser && 
           <Fragment>
             <p>Logged in as: {currentUser}</p>
-            <Button variant="outline-success">Log out</Button>
+            <Button 
+              variant="outline-success"
+              onClick={() => logout()}
+            >Log out</Button>
           </Fragment>
         }
         {!currentUser && 
