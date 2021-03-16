@@ -20,6 +20,7 @@ export default function Application() {
 
   const { token, getToken, setToken } = useToken();
   const [currentUser, setCurrentUser] = useState();
+  const [inGame, setInGameStatus] = useState(false);
   
   useEffect(()=> {
     if(token){
@@ -50,6 +51,11 @@ export default function Application() {
     setToken(getToken());
   }
 
+  const props = {
+    inGame,
+    setInGameStatus
+  }
+
   return (
     <>
     <ChessNavBar
@@ -58,28 +64,31 @@ export default function Application() {
     active={active}
     logout={logout}
     />
-    <Router>
-    <main>
-      {active.login && 
-      <LoginForm 
-      setActive={setActive}
-      active={active}
-      setToken={setToken}
-      /> }
-      {active.register && 
-      <RegisterForm 
-      setActive={setActive}
-      active={active} 
-      /> }
-      <Switch>
-        <Route path="/" exact component={HomeMenu} />
-        <Route path="/game" component={Game} />
-        <Route path="/login" component={LoginForm} />
-        <Route path="/register" component={RegisterForm} />
-        <Route path="/profile" component={Profile} />
-      </Switch>
-    </main>
-    </Router>
+      <Router>
+      <main>
+        {active.login && 
+        <LoginForm 
+        setActive={setActive}
+        active={active}
+        setToken={setToken}
+        /> }
+        {active.register && 
+        <RegisterForm 
+        setActive={setActive}
+        active={active} 
+        /> }
+        <Switch>
+          <Route path="/" exact render={(props) => <HomeMenu {...props}
+            inGame={inGame}
+            setInGameStatus={setInGameStatus}
+          />} />
+          <Route path="/game" component={Game} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={RegisterForm} />
+          <Route path="/profile" component={Profile} />
+        </Switch>
+      </main>
+      </Router>
     </>
   );
 

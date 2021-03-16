@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, Redirect} from "react";
 
 import "./styles/GameOptionModal.scss";
 import {Modal} from "react-bootstrap";
@@ -78,6 +78,8 @@ export default function GameOptionsModal(props) {
     console.log("loading game...");
     console.log(gameOptions);
     goToView(LOADING);
+
+    //wait for socket message for match id then redirect.
     //need to implement actual loadGame here
   }
 
