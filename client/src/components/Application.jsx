@@ -20,6 +20,7 @@ export default function Application() {
 
   const { token, getToken, setToken } = useToken();
   const [currentUser, setCurrentUser] = useState();
+  const [gameRoute, setGameRoute] = useState(`/game`);
   
   useEffect(()=> {
     if(token){
@@ -73,7 +74,7 @@ export default function Application() {
       /> }
       <Switch>
         <Route path="/" exact render={(props) => (<HomeMenu {...props} currentUser={currentUser}/>)}/>
-        <Route path="/game" component={Game} />
+        <Route path={game}oute component={Game} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={Profile} />

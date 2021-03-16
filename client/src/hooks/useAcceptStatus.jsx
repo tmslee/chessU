@@ -38,13 +38,19 @@ const useAcceptStatus = (gameOptions) => {
     socketRef.current = io(SOCKET_SERVER_URL);
     socketRef.current.on("connect", ()=> {
       if(matchAcceptStatus.currentUser) {
-        //send socket message that you have accepted 
+        //send socket message that you have accepted
+        socketRef.current.emit(RANKED_ACCEPT, {
+          userId: gameOptions.currentUser.id,
+          socketId: socketRef.current.id,
+          confirmation: true
+        })
       }
   
       //listen for opponent accept from socket
       socketRef.current.on(RANKED_ACCEPT, (data) => {
         opponentAccept();
         //send back match id which then client can render "/game/matchId"
+        
         //we redirect them to game
       });
       socketRef.current.on(CASUAL_ACCEPT, (data) => {

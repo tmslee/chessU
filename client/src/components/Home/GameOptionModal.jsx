@@ -119,7 +119,7 @@ export default function GameOptionsModal(props) {
         <GameForm
           gameOptions = {gameOptions}
           setGameOptions = {setGameOptions}
-          enqueue = {() => enqueue(goToView, IN_Q)}
+          enqueue = {enqueue}
           loadGame = {loadGame}
           returnToMenu = {returnToMenu}
         />
