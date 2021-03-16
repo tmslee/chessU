@@ -1,5 +1,5 @@
-import { addMatch } from "../src/db_helpers/db_match_helpers"
-import { sortUsers } from "../src/helpers/sort_users_helper"
+const { addMatch } = require("./db_helpers/db_match_helpers.js") 
+const  { sortUsers } = require("../src/helpers/sort_users_helper")
 
 const server = require("http").createServer();
 const io = require("socket.io")(server, {
@@ -43,8 +43,8 @@ const ranked = [];
 const PORT = 8002;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
-const RANKED = "ranked";
-const RANKED_ACCEPT = "ranked_accept";
+const RANKED = "RANKED";
+const RANKED_ACCEPT = "RANKED_ACCEPT";
 
 io.on("connection", (socket) => {
   
@@ -65,6 +65,7 @@ io.on("connection", (socket) => {
 
   socket.on(RANKED, (data) => {
     ranked.push(data);
+    console.log(ranked);
     if (ranked.length > 1){
       const sortedRanked = sortUsers(ranked);
       const first = sortedRanked.pop();

@@ -37,11 +37,11 @@ const useAcceptStatus = (gameOptions) => {
     if(matchAcceptStatus.currentUser) {
       //send socket message that you have accepted 
     }
-    
 
     //listen for opponent accept from socket
     socket.on(RANKED_ACCEPT, (data) => {
       //we should receive match info from here
+      //change accept status opponent
       //we redirect them to game
     });
     socket.on(CASUAL_ACCEPT, (data) => {

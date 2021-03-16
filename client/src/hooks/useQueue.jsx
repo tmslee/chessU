@@ -9,6 +9,8 @@ import io from "socket.io-client";
 // redirect user to matchiD
 
 const QUEUE = "queue";
+const RANKED = "RANKED";
+const CASUAL = "CASUAL";
 const SOCKET_SERVER_URL = "http://localhost:8002";
 
 //  userInfo = { userId, type, elo }
@@ -29,6 +31,7 @@ const useQueue = (gameOptions) => {
     socketRef.current = io(SOCKET_SERVER_URL);
 
     if (inQueue) {
+      console.log(`joining queue: sending message to socket from user:`);
       // send socket message that youre going into queue
       // we need gameOptions here to determine which message we are sending
       
@@ -39,12 +42,12 @@ const useQueue = (gameOptions) => {
       })
       
 
-      socket.on(RANKED, (data) => {
+      socketRef.current.on(RANKED, (data) => {
         //we are matched up!
         // dequeue
       });
 
-      socket.on(CASUAL, (data) => {
+      socketRef.current.on(CASUAL, (data) => {
         
       });
     }

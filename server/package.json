@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
+  "type": "module",
   "proxy": "http://localhost:8001",
   "scripts": {
     "start": "node ./src/index.js",

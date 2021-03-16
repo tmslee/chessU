@@ -62,16 +62,17 @@ export default function GameOptionsModal(props) {
     const { currentUserID, type } = gameOptions;
     //might need a try catch here
     //grabbing userInfo to get username/elo
-    const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
+    // const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
 
-    console.log(userInfo.data, "userinfo")
+    // console.log(userInfo.data, "userinfo")
 
-    const { username, elo } = userInfo.data;
-    const queueInfo = { currentUserID, type, username, elo }
+    // const { username, elo } = userInfo.data;
+    // const queueInfo = { currentUserID, type, username, elo }
 
     //adds user to queue
-    axios.post('http://localhost:8001/api/queues', queueInfo)
-    .then( () => goToView(IN_Q) )
+    // axios.post('http://localhost:8001/api/queues', queueInfo)
+    // .then( () => goToView(IN_Q) )
+    goToView(IN_Q);
   }
 
   const loadGame = function (gameOptions) {
