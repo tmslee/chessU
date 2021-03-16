@@ -135,7 +135,13 @@ module.exports = db => {
           `SELECT * FROM users
            WHERE id = $1;`,
         [userId]);
-        res.json(user.rows[0]);  
+
+        const { id, elo, username } = user.rows[0];
+        res.json({ 
+          id,
+          elo,
+          username
+        });  
       } catch (err) {
         res.send(e);
       }
