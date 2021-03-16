@@ -10,7 +10,9 @@ import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
 
 function Game() {
-  // should get them by axios
+  // props.
+
+
   const usernameBlack = "Haopeng"
   const usernameWhite = "Thomas"
 
