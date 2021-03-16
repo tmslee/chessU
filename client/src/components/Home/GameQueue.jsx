@@ -13,7 +13,7 @@ export default function GameQueue(props) {
   const {gameOptions, setGameOptions, goToView, returnToGameOptions} = props;
   
   const [opponentID, setOpponentID] = useState(gameOptions.opponentID);
-
+  
   const findOpponent = function(gameOptions) {
     //implement this: go into db and grab an opponent from queue. returns opponentID
     console.log("finding opponent for game: ...");
