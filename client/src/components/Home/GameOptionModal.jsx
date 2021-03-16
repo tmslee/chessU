@@ -45,7 +45,7 @@ export default function GameOptionsModal(props) {
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
-  const {inQueue, enqueue, dequeue} = useQueue(gameOptions);
+  const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
 
   // const leaveQueue = function (userID) {
   //   //implement getting off queue here
@@ -99,7 +99,7 @@ export default function GameOptionsModal(props) {
     closeModal();
   }
   
-  // useEffect(() => {
+ // useEffect(() => {
    //   goToView(SELECT_OPTIONS);
   //   //also need to get off the queue.
   // },[show])

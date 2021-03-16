@@ -9,11 +9,14 @@ import io from "socket.io-client";
 // redirect user to matchiD
 
 const QUEUE = "queue";
-const SOCKET_SERVER_URL = "http://localhost:8002";
+const RANKED_ACCEPT = "RANKED_ACCEPT";
+const CASUAL_ACCEPT = "CASUAL_ACCEPT";
+const SOCKET_SERVER_URL = "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
 const useAcceptStatus = (gameOptions) => {
   const socketRef = useRef();
+  
 
   // match accept states /////////////////////////////////////
   const[matchAcceptStatus, setAcceptStatus] = useState({
@@ -33,21 +36,21 @@ const useAcceptStatus = (gameOptions) => {
 
   useEffect(() => {
     socketRef.current = io(SOCKET_SERVER_URL);
-
-    if(matchAcceptStatus.currentUser) {
-      //send socket message that you have accepted 
-    }
-
-    //listen for opponent accept from socket
-    socket.on(RANKED_ACCEPT, (data) => {
-      //we should receive match info from here
-      //change accept status opponent
-      //we redirect them to game
+    socketRef.current.on("connect", ()=> {
+      if(matchAcceptStatus.currentUser) {
+        //send socket message that you have accepted 
+      }
+  
+      //listen for opponent accept from socket
+      socketRef.current.on(RANKED_ACCEPT, (data) => {
+        opponentAccept();
+        //send back match id which then client can render "/game/matchId"
+        //we redirect them to game
+      });
+      socketRef.current.on(CASUAL_ACCEPT, (data) => {
+        
+      });
     });
-    socket.on(CASUAL_ACCEPT, (data) => {
-      
-    });
-
   }, [matchAcceptStatus]);
   ////////////////////////////////////////////////////////////
   return {

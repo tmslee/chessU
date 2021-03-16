@@ -26,7 +26,7 @@ export default function HomeMenu(props) {
 
   //maybe need to useEffect here whenever currentUser changes we update game Options
   const showModal = function (type) {
-    setGameOptions(prev => ({...prev, type}));
+    setGameOptions(prev => ({...prev, type, currentUser})); // fuck you
     setShowState(true);
   };
 

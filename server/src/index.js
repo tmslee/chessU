@@ -50,7 +50,7 @@ const ranked = [];
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
 const RANKED = "RANKED";
-const RANKED_ACCEPT = "ranked_accept";
+const RANKED_ACCEPT = "RANKED_ACCEPT";
 
 io.on("connection", (socket) => {
   
@@ -98,6 +98,7 @@ io.on("connection", (socket) => {
       const user1 = confirmation[0];
       const user2 = confirmation[1];
       if (user1.confirmation && user2.confirmation){
+        console.log(user1, user2);
         // create a match in db
         addMatch("ranked", user1, user2).then((matchId) => {
           // send the matchid back to clients
@@ -105,7 +106,7 @@ io.on("connection", (socket) => {
           io.to(user2.socketId).emit(RANKED_ACCEPT, { matchId });
         })
       } else {
-        io.in(roomId).emit(RANKED_ACCEPT, {}); // does not match up
+        io.in(roomId).emit(RANKED_ACCEPT, { matchId: null }); // does not match up
       }
     }
   });
