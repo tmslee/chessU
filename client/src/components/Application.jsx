@@ -32,13 +32,9 @@ export default function Application() {
     }).then( res => res.data.user)
   }
 
-  useEffect ( () => {
-    console.log(token)
-  }, [token])
-
   return (
     <>
-    <ChessNavBar 
+    <ChessNavBar
     setActive={setActive} 
     active={active}
     token={token}

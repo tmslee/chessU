@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from "react";
+import React, {Fragment, useState, useEffect} from "react";
 
 import "./styles/ChessNavbar.scss"
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
@@ -12,24 +12,75 @@ export default function ChessNavBar(props) {
     token
   } = props;
 
-  let currentUser = null;
-  console.log(`current token: ${token}`);
-  // if(token) {
-  //   currentUser = getCurrentUser(token);
-  // }
+  const[state, setState] = useState(token);
 
-  useEffect( async () => {
+  useEffect(() => {
+    setState(token);
+  }, [token]);
+
+  let currentUser;
+
+  const getCurrUser = async function (token) {
     if (token) {
-      try {
-        currentUser = await getCurrentUser(token)
-      } catch (err) {
-        console.log(err);
-      }
+      getCurrentUser(token).then(res => {
+        console.log(res.data);
+        return res.id;
+      });
     } else {
-      currentUser = null;
+      return currentUser = null;
     }
-    console.log(currentUser);
-  }, [token])
+  }
+
+
+
+  console.log(`current user: ${currentUser}`);
+
+  // let currentUser = null;
+  // useEffect(() => {
+  //   if (token) {
+  //     getCurrentUser(token).then(res => {
+  //       currentUser = res.id;  
+  //     })
+  //   } else {
+  //     currentUser = null;
+  //   }
+  // }, [token])
+
+  // const getCurrUser = async function (token) {
+  //   if (token) {
+  //     console.log("getCurrentUser returns: ", getCurrentUser(token));
+  //     return getCurrentUser(token).then(res => {
+  //       console.log(res.id);
+  //       return res.id
+  //     });
+  //   } else {
+  //     return null;
+  //   }
+  // }
+  
+  // getCurrUser(token).then(res => {
+  //   const CU =  res.id;
+  //   console.log(CU);
+  // })
+
+  // const [currentUser, setCurrentUser] = useState(getCurrUser(token));
+  
+  // const setCurrUser = async function (token) {
+  //   if (token) {
+  //     await getCurrentUser(token).then(res => {
+  //       setCurrentUser(res.id);
+  //     });
+  //     console.log(`currentUser: ${currentUser}`);
+
+  //   } else {
+  //     await setCurrentUser(null);
+  //     console.log(`currentUser: ${currentUser}`);
+  //   } 
+  // };
+
+  // useEffect(() => {
+  //   setCurrUser(token);
+  // }, [token])
 
   return (
     <Navbar bg="light" expand="lg">

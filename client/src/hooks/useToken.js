@@ -4,7 +4,7 @@ export default function useToken() {
   const getToken = () => {
     const tokenString = localStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
-    return userToken?.token
+    return userToken;
   };
 
   const [token, setToken] = useState(getToken());
@@ -14,12 +14,13 @@ export default function useToken() {
     setToken(userToken);
   };
 
-  useEffect ( () => {
-    console.log("in useEffect")
-  }, [token])
+  // useEffect ( () => {
+  //   console.log("in useEffect")
+  // }, [token])
   
   return {
     setToken: saveToken,
+    getToken,
     token
   }
 }

@@ -125,6 +125,7 @@ module.exports = db => {
     const decoded = jwt.verify(req.headers.authorization, 'shhhhh');
     console.log(decoded, "decoded");
     const userId = decoded.userId
+    
     if (!userId) {
       res.status(404).send({error: "not logged in"});
       return;
