@@ -6,7 +6,7 @@ import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstr
 
 export default function ChessNavBar(props) {
   const {
-    currentUser,
+    username,
     setActive,
     active,
     logout
@@ -45,16 +45,16 @@ export default function ChessNavBar(props) {
           </NavDropdown>
         </Nav>
 
-        {currentUser && 
+        {username && 
           <Fragment>
-            <p>Logged in as: {currentUser}</p>
+            <p>Logged in as: {username}</p>
             <Button 
               variant="outline-success"
               onClick={() => logout()}
             >Log out</Button>
           </Fragment>
         }
-        {!currentUser && 
+        {!username && 
         <Fragment>
           <Button onClick={() => setActive({...active, register: true  })} variant="outline-success">Sign up</Button>
           <Button onClick={() => setActive({...active, login: true  })}variant="outline-success">Log in</Button>

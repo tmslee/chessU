@@ -13,15 +13,16 @@ const EMPTY_GAME = {
   type:null,
   timeLimit:null,
   difficulty:null,
-  currentUserID: 2,
+  currentUser: null,
   opponentID:null
 };
 
 export default function HomeMenu(props) {
-  const [showState, setShowState] = useState(false);
+  const {currentUser} = props; 
 
+  const [showState, setShowState] = useState(false);
   //initialize with currentUser here
-  const [gameOptions, setGameOptions] = useState({...EMPTY_GAME});
+  const [gameOptions, setGameOptions] = useState({...EMPTY_GAME, currentUser});
 
   //maybe need to useEffect here whenever currentUser changes we update game Options
   const showModal = function (type) {
@@ -34,7 +35,7 @@ export default function HomeMenu(props) {
     setShowState(false);
     console.log("options reset") 
     //also need to set currentUser when we reset
-    setGameOptions({...EMPTY_GAME});
+    setGameOptions({...EMPTY_GAME, currentUser});
   };
 
   useEffect(() => {

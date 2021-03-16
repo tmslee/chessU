@@ -49,7 +49,7 @@ const ranked = [];
 // const PORT = 8002;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
-const RANKED = "ranked";
+const RANKED = "RANKED";
 const RANKED_ACCEPT = "ranked_accept";
 
 io.on("connection", (socket) => {

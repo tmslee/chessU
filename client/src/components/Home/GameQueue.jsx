@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 
 import "./styles/GameQueue.scss"
 import {Button, Modal} from "react-bootstrap";
-import useQueue from "../../hooks/useQueue";
 
 const RANKED = "RANKED";
 const CASUAL = "CASUAL";
@@ -15,7 +14,6 @@ export default function GameQueue(props) {
   
   // const [opponentID, setOpponentID] = useState(gameOptions.opponentID);
 
-  const {inQueue, enqueue, dequeue} = useQueue(gameOptions);
 
   // const findOpponent = function(gameOptions) {
   //   //implement this: go into db and grab an opponent from queue. returns opponentID

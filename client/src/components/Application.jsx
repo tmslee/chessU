@@ -24,7 +24,7 @@ export default function Application() {
   useEffect(()=> {
     if(token){
       getCurrentUser(token).then( res => {
-        setCurrentUser(res.id);
+        setCurrentUser(res);
       });
     } else {
       setCurrentUser(null);
@@ -53,7 +53,7 @@ export default function Application() {
   return (
     <>
     <ChessNavBar
-    currentUser={currentUser}
+    username={currentUser? currentUser.username : null}
     setActive={setActive} 
     active={active}
     logout={logout}
@@ -72,7 +72,7 @@ export default function Application() {
       active={active} 
       /> }
       <Switch>
-        <Route path="/" exact component={HomeMenu} />
+        <Route path="/" exact render={(props) => (<HomeMenu {...props} currentUser={currentUser}/>)}/>
         <Route path="/game" component={Game} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
