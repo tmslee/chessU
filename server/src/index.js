@@ -51,6 +51,7 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
 const RANKED = "RANKED";
 const RANKED_ACCEPT = "RANKED_ACCEPT";
+const confirmation = [];
 
 io.on("connection", (socket) => {
   
@@ -91,16 +92,15 @@ io.on("connection", (socket) => {
   // socketRef.current.emit(RANKED_ACCEPT, {
   //   socketId: socketRef.current.id,
   // });
-  const confirmation = [];
   socket.on(RANKED_ACCEPT, (data) => {
     confirmation.push(data)
     if (confirmation.length === 2){
-      const user1 = confirmation[0];
-      const user2 = confirmation[1];
-      if (user1.confirmation && user2.confirmation){
+      const user1 = confirmation.pop();
+      const user2 = confirmation.pop();
+      if (user1.confirmation && user2.confirmation && user1.userId && user2.userId){
         console.log(user1, user2);
         // create a match in db
-        addMatch("ranked", user1, user2).then((matchId) => {
+        addMatch("ranked", user1.userId, user2.userId).then((matchId) => {
           // send the matchid back to clients
           io.to(user1.socketId).emit(RANKED_ACCEPT, { matchId });
           io.to(user2.socketId).emit(RANKED_ACCEPT, { matchId });
