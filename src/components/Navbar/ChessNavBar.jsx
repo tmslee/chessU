@@ -6,81 +6,10 @@ import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstr
 
 export default function ChessNavBar(props) {
   const {
+    currentUser,
     setActive,
-    active, 
-    getCurrentUser,
-    token
+    active
   } = props;
-
-  const[state, setState] = useState(token);
-
-  useEffect(() => {
-    setState(token);
-  }, [token]);
-
-  let currentUser;
-
-  const getCurrUser = async function (token) {
-    if (token) {
-      getCurrentUser(token).then(res => {
-        console.log(res.data);
-        return res.id;
-      });
-    } else {
-      return currentUser = null;
-    }
-  }
-
-
-
-  console.log(`current user: ${currentUser}`);
-
-  // let currentUser = null;
-  // useEffect(() => {
-  //   if (token) {
-  //     getCurrentUser(token).then(res => {
-  //       currentUser = res.id;  
-  //     })
-  //   } else {
-  //     currentUser = null;
-  //   }
-  // }, [token])
-
-  // const getCurrUser = async function (token) {
-  //   if (token) {
-  //     console.log("getCurrentUser returns: ", getCurrentUser(token));
-  //     return getCurrentUser(token).then(res => {
-  //       console.log(res.id);
-  //       return res.id
-  //     });
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  
-  // getCurrUser(token).then(res => {
-  //   const CU =  res.id;
-  //   console.log(CU);
-  // })
-
-  // const [currentUser, setCurrentUser] = useState(getCurrUser(token));
-  
-  // const setCurrUser = async function (token) {
-  //   if (token) {
-  //     await getCurrentUser(token).then(res => {
-  //       setCurrentUser(res.id);
-  //     });
-  //     console.log(`currentUser: ${currentUser}`);
-
-  //   } else {
-  //     await setCurrentUser(null);
-  //     console.log(`currentUser: ${currentUser}`);
-  //   } 
-  // };
-
-  // useEffect(() => {
-  //   setCurrUser(token);
-  // }, [token])
 
   return (
     <Navbar bg="light" expand="lg">
