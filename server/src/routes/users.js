@@ -121,29 +121,25 @@ module.exports = db => {
   // ----------------- ME ----------------
 
   router.get('/me', async (req, res) => {
-    console.log(req.headers)
+    // console.log(req.headers)
     const decoded = jwt.verify(req.headers.authorization, 'shhhhh');
-    console.log(decoded, "decoded");
+    console.log(decoded.userId, "decoded");
     const userId = decoded.userId
-    
+
     if (!userId) {
       res.status(404).send({error: "not logged in"});
       return;
-    }
-
-    try {
-      const user = await db.query(
-        `SELECT * FROM users
-         WHERE id = $1`,
-         [userId])
-         res.send({user: {name: user.name, email: user.email, id: userId}});  
-    } catch (err) {
-      res.send(e);
-      
+    } else {
+      try {
+        const user = await db.query(
+          `SELECT * FROM users
+           WHERE id = $1;`,
+        [userId]);
+        res.json(user.rows[0]);  
+      } catch (err) {
+        res.send(e);
+      }
     }
   });
-
-
-
   return router;
 }

@@ -19,7 +19,17 @@ export default function Application() {
   });
 
   const { token, setToken } = useToken();
-
+  const [currentUser, setCurrentUser] = useState();
+  
+  useEffect(()=> {
+    if(token){
+      getCurrentUser(token).then( res => {
+        setCurrentUser(res.id);
+      });
+    } else {
+      setCurrentUser(null);
+    }
+  }, [token]);
 
   const getCurrentUser = function(token) {
     console.log("getting curent user...");
@@ -29,16 +39,18 @@ export default function Application() {
     }
     return axios.get('http://localhost:8001/api/me', {
       headers: headers
-    }).then( res => res.data.user)
+    }).then( res => {
+      console.log(res);
+      return res.data;
+    })
   }
 
   return (
     <>
     <ChessNavBar
+    currentUser={currentUser}
     setActive={setActive} 
     active={active}
-    token={token}
-    getCurrentUser={getCurrentUser}
     />
     <Router>
     <main>
