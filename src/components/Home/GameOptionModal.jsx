@@ -100,7 +100,7 @@ export default function GameOptionsModal(props) {
   // },[show])
 
 
-  console.log(gameOptions, "HERE")
+  // console.log(gameOptions, "HERE")
 
   return (
     <Modal show={showState} onHide={closeModal} backdrop="static" keyboard={false}>

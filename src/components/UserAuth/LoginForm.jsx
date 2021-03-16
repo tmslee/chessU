@@ -32,8 +32,6 @@ export default function LoginForm( props ) {
     e.preventDefault();
     const validLogin = await loginUser(username, password)
     if (validLogin) {
-      //set cookie
-      // setCookie(true);
       setActive({...active, login: false  })
     } else {
       setError(true);
