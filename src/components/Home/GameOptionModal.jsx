@@ -55,6 +55,7 @@ export default function GameOptionsModal(props) {
 
   const enqueue = async function (gameOptions) {
     //might want to make gameOptions only give currentUserID, type, when you do enqueue(gameOptions)
+    // { userId, type, elo }
     console.log("joining queue...");
     console.log(gameOptions);
     
