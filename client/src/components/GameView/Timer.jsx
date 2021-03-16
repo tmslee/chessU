@@ -15,7 +15,7 @@ export default function Countdown(props) {
       <Alert variant={col}>
         <Alert.Heading>{color}: {username} </Alert.Heading>
         <Alert.Heading>Countdown: <Timer 
-          initialTime={10*1000}
+          initialTime={1800*1000}
           direction="backward"
           timeToUpdate={1000}
           onResume={() => setCol("danger")}

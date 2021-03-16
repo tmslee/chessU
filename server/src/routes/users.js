@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require('jsonwebtoken');
 
 module.exports = db => {
   router.get('/users', async (req, res) => {
@@ -28,6 +29,7 @@ module.exports = db => {
         VALUES ($1, $2, $3) 
         RETURNING *;`, [username, email, password]
       )
+      req.session.userId = user.id;
       res.json(newUser.rows);
     } catch (err){
       res.send(err.message);
@@ -108,14 +110,36 @@ module.exports = db => {
           // res.send({error: "error"});
           return;
         }
-        // req.session.userId = user.id;
-        // console.log(req.session.userId)
-        res.json({user: {username: user.username, email: user.email, id: user.id}});
+        const token = jwt.sign({ userId:user.id}, 'shhhhh');
+        res.json({user: {username: user.username, email: user.email, id: user.id},
+          token
+        });
       })
       .catch(e => res.send(e));
   });
 
+  // ----------------- ME ----------------
 
+  router.get('/me', async (req, res) => {
+    // console.log(req.headers)
+    const decoded = jwt.verify(req.headers.authorization, 'shhhhh');
+    console.log(decoded.userId, "decoded");
+    const userId = decoded.userId
 
+    if (!userId) {
+      res.status(404).send({error: "not logged in"});
+      return;
+    } else {
+      try {
+        const user = await db.query(
+          `SELECT * FROM users
+           WHERE id = $1;`,
+        [userId]);
+        res.json(user.rows[0]);  
+      } catch (err) {
+        res.send(e);
+      }
+    }
+  });
   return router;
 }

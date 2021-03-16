@@ -8,19 +8,24 @@
     "start": "node ./src/index.js",
     "error": "TEST_ERROR=true node ./src/index.js",
     "reset": "psql -U development -d chessu_development < ./src/db/schema/create.sql && psql -U development -d chessu_development < ./src/db/schema/development.sql",
-    "test:server": "NODE_ENV=test npm start"
+    "test:server": "NODE_ENV=test npm start",
+    "socketio": "nodemon ./src/socketio.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "helmet": "^3.18.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7",
     "pg": "^8.5.0",
-    "socket.io": "^2.4.1",
     "socket.io-client": "^4.0.0",
+    "socket.io": "^3.0.4",
     "ws": "^7.0.0"
   },
   "devDependencies": {

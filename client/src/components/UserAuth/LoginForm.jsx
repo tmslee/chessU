@@ -4,34 +4,34 @@ import './styles/LoginForm.scss'
 import FormError from '../Errors/FormError';
 import axios from 'axios';
 
-const loginUser = async function(username, password) {
-  try {
-    const user = await axios.post('http://localhost:8001/api/login', {username, password})
-    console.log(user,"here")
-    return user;
-  } catch (err) {
-    console.log(err, "error")
-  }
-};
-
 export default function LoginForm( props ) {
 
   const {
      setActive, 
-     active
+     active,
+     setToken
     } = props;
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState(false);
+
+  const loginUser = async function(username, password) {
+    try {
+      const user = await axios.post('http://localhost:8001/api/login', {username, password})
+      console.log(user,"here")
+      await setToken(user.data.token)
+      return user;
+    } catch (err) {
+      console.log(err, "error")
+    }
+  };
   
 
   const handleSubmit = async function(e) {
     e.preventDefault();
     const validLogin = await loginUser(username, password)
     if (validLogin) {
-      //set cookie
-      // setCookie(true);
       setActive({...active, login: false  })
     } else {
       setError(true);

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useCookies } from "react-cookie";
+import React, { useEffect, useState } from "react";
 import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
@@ -7,7 +6,8 @@ import Profile from "./Profile/index";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
-
+import useToken from "../hooks/useToken";
+import axios from 'axios';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,18 +17,46 @@ export default function Application() {
     login: false,
     register: false
   });
-  // const [cookie, setCookie] = useState(null);
-  // if (!cookie) {
-  //   return (
-  //     <LoginForm setCookie={setCookie}/>
-  //   )
-  // }
+
+  const { token, getToken, setToken } = useToken();
+  const [currentUser, setCurrentUser] = useState();
+  
+  useEffect(()=> {
+    if(token){
+      getCurrentUser(token).then( res => {
+        setCurrentUser(res.id);
+      });
+    } else {
+      setCurrentUser(null);
+    }
+  }, [token]);
+
+  const getCurrentUser = function(token) {
+    console.log("getting curent user...");
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    }
+    return axios.get('http://localhost:8001/api/me', {
+      headers: headers
+    }).then( res => {
+      console.log(res);
+      return res.data;
+    })
+  }
+
+  const logout = function (){
+    localStorage.clear();
+    setToken(getToken());
+  }
 
   return (
     <>
-    <ChessNavBar 
+    <ChessNavBar
+    currentUser={currentUser}
     setActive={setActive} 
-    active={active} 
+    active={active}
+    logout={logout}
     />
     <Router>
     <main>
@@ -36,7 +64,7 @@ export default function Application() {
       <LoginForm 
       setActive={setActive}
       active={active}
-      // setCookie={setCookie}  
+      setToken={setToken}
       /> }
       {active.register && 
       <RegisterForm 
