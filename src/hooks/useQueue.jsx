@@ -11,16 +11,19 @@ import io from "socket.io-client";
 const QUEUE = "queue";
 const RANKED = "RANKED";
 const CASUAL = "CASUAL";
-const SOCKET_SERVER_URL = "http://localhost:8002";
+const SOCKET_SERVER_URL = "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
 const useQueue = (gameOptions) => {
+  const { currentUser, type, timeLimit } = gameOptions;
   const socketRef = useRef();
+  console.log(currentUser);
 
   // queue states ////////////////////////////////////////
   const[inQueue, setQueue] = useState(false);
-  const enqueue = function () {
+  const enqueue = function (goToView, IN_Q) {
     setQueue(true);
+    goToView(IN_Q);
   }
   const dequeue = function () {
     setQueue(false);
@@ -29,28 +32,32 @@ const useQueue = (gameOptions) => {
   // state change handling
   useEffect(() => {
     socketRef.current = io(SOCKET_SERVER_URL);
-
-    if (inQueue) {
-      console.log(`joining queue: sending message to socket from user:`);
-      // send socket message that youre going into queue
-      // we need gameOptions here to determine which message we are sending
-      
-      socketRef.current.emit(gameOptions.type, {
-        userId: gameOptions.currentUserId,
-        elo: null,
-        socketId: socketRef.current.id,
-      })
-      
-
-      socketRef.current.on(RANKED, (data) => {
-        //we are matched up!
-        // dequeue
-      });
-
-      socketRef.current.on(CASUAL, (data) => {
+    socketRef.current.on("connect", () => {
+      console.log(socketRef.current.id);
+      if (inQueue) {
+        console.log(`joining queue: sending message to socket from user:`);
+        // send socket message that youre going into queue
+        // we need gameOptions here to determine which message we are sending
+        console.log('before sending to socketio', socketRef.current.id);
+        socketRef.current.emit(type, {
+          userId: currentUser.id,
+          elo: currentUser.elo,
+          socketId: socketRef.current.id,
+        })
         
-      });
-    }
+        // listening from server/socket
+        socketRef.current.on(RANKED, (data) => {
+          console.log(data);
+          //we are matched up!
+          // dequeue
+        });
+  
+        socketRef.current.on(CASUAL, (data) => {
+          
+        });
+      }
+    });
+
 
     //listen for match found message from socket
   }, [inQueue]);

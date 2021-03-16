@@ -5,7 +5,7 @@ import {Modal} from "react-bootstrap";
 import axios from "axios";
 
 import useEnqueueFlow from "./../../hooks/useEnqueueFlow";
-
+import useQueue from "./../../hooks/useQueue";
 
 import GameForm from "./GameForm";
 import GameQueue from './GameQueue';
@@ -27,7 +27,7 @@ const EMPTY_GAME = {
   type:null,
   timelimit:null,
   difficulty:null,
-  currentUserID:null,
+  currentUser:null,
   opponentID:null
 };
 
@@ -45,38 +45,40 @@ export default function GameOptionsModal(props) {
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
+  const {inQueue, enqueue, dequeue} = useQueue(gameOptions);
 
-  const leaveQueue = function (userID) {
-    //implement getting off queue here
-    console.log("leaving queue...");
-    axios.delete(`http://localhost:8001/api/queues/${userID}`)
-    .then( res => console.log(res) )
-  };
+  // const leaveQueue = function (userID) {
+  //   //implement getting off queue here
+  //   console.log("leaving queue...");
+  //   axios.delete(`http://localhost:8001/api/queues/${userID}`)
+  //   .then( res => console.log(res) )
+  // };
 
-  const enqueue = async function (gameOptions) {
-    //might want to make gameOptions only give currentUserID, type, when you do enqueue(gameOptions)
-    // { userId, type, elo }
-    console.log("joining queue...");
-    console.log(gameOptions);
+  // const enqueue = async function (gameOptions) {
+  //   //might want to make gameOptions only give currentUserID, type, when you do enqueue(gameOptions)
+  //   // { userId, type, elo }
+  //   console.log("joining queue...");
+  //   console.log(gameOptions);
     
-    const { currentUserID, type } = gameOptions;
-    //might need a try catch here
-    //grabbing userInfo to get username/elo
-    // const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
+  //   const { currentUserID, type } = gameOptions;
+  //   //might need a try catch here
+  //   //grabbing userInfo to get username/elo
+  //   // const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
 
-    // console.log(userInfo.data, "userinfo")
+  //   // console.log(userInfo.data, "userinfo")
 
-    // const { username, elo } = userInfo.data;
-    // const queueInfo = { currentUserID, type, username, elo }
+  //   // const { username, elo } = userInfo.data;
+  //   // const queueInfo = { currentUserID, type, username, elo }
 
-    //adds user to queue
-    // axios.post('http://localhost:8001/api/queues', queueInfo)
-    // .then( () => goToView(IN_Q) )
-    goToView(IN_Q);
-  }
+  //   //adds user to queue
+  //   // axios.post('http://localhost:8001/api/queues', queueInfo)
+  //   // .then( () => goToView(IN_Q) )
+  //   goToView(IN_Q);
+  // }
 
   const loadGame = function (gameOptions) {
-    leaveQueue(gameOptions.currentUserID);
+    // leaveQueue(gameOptions.currentUserID);
+    dequeue();
     console.log("loading game...");
     console.log(gameOptions);
     goToView(LOADING);
@@ -84,7 +86,8 @@ export default function GameOptionsModal(props) {
   }
 
   const returnToGameOptions = function () {
-    leaveQueue(gameOptions.currentUserID);
+    // leaveQueue(gameOptions.currentUserID);
+    dequeue();
     console.log("returning to game settings...");
     console.log("setting opponent to null");
     setGameOptions({...gameOptions, opponentID: null});
@@ -116,7 +119,7 @@ export default function GameOptionsModal(props) {
         <GameForm
           gameOptions = {gameOptions}
           setGameOptions = {setGameOptions}
-          enqueue = {enqueue}
+          enqueue = {() => enqueue(goToView, IN_Q)}
           loadGame = {loadGame}
           returnToMenu = {returnToMenu}
         />
