@@ -1,22 +1,16 @@
 import { Alert, Button, Modal } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import Timer from "react-compound-timer";
+import useAcceptStatus from "../../hooks/useAcceptStatus";
 
 export default function AcceptTimer(props) {
 
   const {gameOptions, returnToGameOptions, loadGame} = props;
 
   const [col, setCol] = useState("success");
-  const [acceptStatus, setAcceptStatus] = useState({
-    currentUser: false,
-    opponent: false
-  });
+  const {matchAcceptStatus, acceptMatch, opponentAccept} = useAcceptStatus(gameOptions);
 
   //NEED TO FIND A WAY TO KNOW WHEN OPPONENT ACCEPTS
-
-  useEffect(() => {
-    if (acceptStatus.currentUser && acceptStatus.opponent) loadGame(gameOptions);
-  }, [acceptStatus]);
 
   return (
     <div className = "timer">
@@ -24,15 +18,15 @@ export default function AcceptTimer(props) {
         <Alert variant={col}>
           <Alert.Heading>Opponent Found!</Alert.Heading>
           <Alert.Heading>
-            {!acceptStatus.currentUser && <p>Accept match within: </p>}
-            {(acceptStatus.currentUser && !acceptStatus.opponent) && <p>Waiting for opponent to accept: </p>}
+            {!matchAcceptStatus.currentUser && <p>Accept match within: </p>}
+            {(matchAcceptStatus.currentUser && !matchAcceptStatus.opponent) && <p>Waiting for opponent to accept: </p>}
             <Timer 
               initialTime={15000}
               direction="backward"
               timeToUpdate={1000}
               checkpoints={[
                 {time: 6000, callback: () => setCol("danger")},
-                //{time: 0, callback: () => returnToGameOptions()}
+                {time: 0, callback: () => returnToGameOptions()}
               ]}
             >
               <span><Timer.Seconds /> seconds</span>
@@ -43,16 +37,14 @@ export default function AcceptTimer(props) {
 
 
       <Modal.Footer>
-      {!acceptStatus.currentUser && 
+      {!matchAcceptStatus.currentUser && 
       <>
         <Button variant="secondary" onClick={returnToGameOptions}>
           Decline
         </Button>
         <Button 
           variant="primary" 
-          onClick={() => setAcceptStatus(prev => {
-            return {...prev, currentUser:true};
-          })}
+          onClick={acceptMatch}
         >
           Accept
         </Button>
