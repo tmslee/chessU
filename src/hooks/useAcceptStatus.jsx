@@ -9,63 +9,69 @@ import io from "socket.io-client";
 // redirect user to matchiD
 
 const QUEUE = "queue";
-const RANKED_ACCEPT = "RANKED_ACCEPT";
-const CASUAL_ACCEPT = "CASUAL_ACCEPT";
+const MATCH_CONFIRM = "MATCH_CONFIRM";
 const SOCKET_SERVER_URL = "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
-const useAcceptStatus = (gameOptions, setGameRoute) => {
+const useAcceptStatus = (gameOptions, returnToGameOptions, loadGame, setGameRoute) => {
   const socketRef = useRef();
-  
 
   // match accept states /////////////////////////////////////
-  const[matchAcceptStatus, setAcceptStatus] = useState({
-    currentUser: false,
-    opponent: false
-  });
-  const acceptMatch = function () {
-    setAcceptStatus(prev => {
-      return {...prev, currentUser: true};
-    });
-  }
-  const opponentAccept = function () {
-    setAcceptStatus(prev => {
-      return {...prev, opponent: true};
-    });
+  const[userStatus, setUserStatus] = useState(0);
+  const[opponentStatus, setOpponentStatus] = useState(0);
+
+
+  const acceptMatch = () => setUserStatus(1);
+  const declineMatch = () => setUserStatus(-1);
+  const opponentAccept = () => setOpponentStatus(1);
+  const opponentDecline = () => setOpponentStatus(-1);
+
+  const declineThenGameOptions = async function () {
+    await opponentDecline();
+    returnToGameOptions();
   }
 
   useEffect(() => {
     socketRef.current = io(SOCKET_SERVER_URL);
     socketRef.current.on("connect", ()=> {
-      if(matchAcceptStatus.currentUser) {
-        //send socket message that you have accepted
-        socketRef.current.emit(RANKED_ACCEPT, {
-          userId: gameOptions.currentUser.id,
-          socketId: socketRef.current.id,
-          confirmation: true
-        })
-      }
-  
-      //listen for opponent accept from socket
-      socketRef.current.on(RANKED_ACCEPT, (data) => {
-        opponentAccept();
-        console.log(data, "RANKED ACCEPT")
-        const {matchId} = data;
-        //send back match id which then client can render "/game/matchId"
-        setGameRoute(`/game/${matchId}`);
-        //we redirect them to game
-      });
-      socketRef.current.on(CASUAL_ACCEPT, (data) => {
-        
-      });
+      //send confirmation back to server
+      socketRef.current.emit(MATCH_CONFIRM, {
+        type: gameOptions.type,
+        userId: gameOptions.currentUser.id,
+        socketId: socketRef.current.id,
+        confirmation: userStatus
+      })
     });
-    
-  }, [matchAcceptStatus]);
-  ////////////////////////////////////////////////////////////
+  }, [userStatus]);
+
+  useEffect(() => {
+    //listen for opponent confirmation
+    socketRef.current.on(MATCH_CONFIRM, (data) => {
+      //if confirmation match id is null -> we exit
+      if (!data.matchId) {
+        console.log("match declined");
+        declineThenGameOptions();
+      } else {
+        console.log("match made");
+        opponentAccept();
+        loadGame(gameOptions);
+
+        const {matchId} = data;
+        setGameRoute(`/game/${matchId}`);
+        // console.log(data, "RANKED ACCEPT")
+        //send back match id which then client can render "/game/matchId"
+        //we redirect them to game
+      }
+    });
+  }, [userStatus, opponentStatus]);
+
   return {
-    matchAcceptStatus,
+    userStatus,
+    opponentStatus,
     acceptMatch,
-    opponentAccept
+    declineMatch,
+    opponentAccept,
+    opponentDecline
   };
 };
 

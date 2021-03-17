@@ -8,9 +8,17 @@ export default function AcceptTimer(props) {
   const {gameOptions, returnToGameOptions, loadGame, setGameRoute} = props;
 
   const [col, setCol] = useState("success");
-  const {matchAcceptStatus, acceptMatch, opponentAccept} = useAcceptStatus(gameOptions, setGameRoute);
+  const {
+    userStatus, 
+    opponentStatus, 
+    acceptMatch, 
+    declineMatch
+  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute);
 
-  //NEED TO FIND A WAY TO KNOW WHEN OPPONENT ACCEPTS
+  const declineThenGameOptions = async function () {
+    await declineMatch();
+    returnToGameOptions();
+  }
 
   return (
     <div className = "timer">
@@ -18,15 +26,17 @@ export default function AcceptTimer(props) {
         <Alert variant={col}>
           <Alert.Heading>Opponent Found!</Alert.Heading>
           <Alert.Heading>
-            {!matchAcceptStatus.currentUser && <p>Accept match within: </p>}
-            {(matchAcceptStatus.currentUser && !matchAcceptStatus.opponent) && <p>Waiting for opponent to accept: </p>}
+            {userStatus === 0 && <p>Accept match within: </p>}
+            {(userStatus === 1 && opponentStatus === 0) && <p>Waiting for opponent to accept: </p>}
             <Timer 
               initialTime={15000}
               direction="backward"
               timeToUpdate={1000}
               checkpoints={[
                 {time: 6000, callback: () => setCol("danger")},
-                //{time: 0, callback: () => returnToGameOptions()}
+                {time: 0, callback: () => {
+                  declineThenGameOptions();
+                }}
               ]}
             >
               <span><Timer.Seconds /> seconds</span>
@@ -37,9 +47,11 @@ export default function AcceptTimer(props) {
 
 
       <Modal.Footer>
-      {!matchAcceptStatus.currentUser && 
+      {userStatus === 0 && 
       <>
-        <Button variant="secondary" onClick={returnToGameOptions}>
+        <Button variant="secondary" onClick={() => {
+          declineThenGameOptions();
+        }}>
           Decline
         </Button>
         <Button 
