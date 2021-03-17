@@ -3,17 +3,17 @@ import "./styles/UserInfo.scss"
 
 export default function UserInfo (props) {
 
-  const {setSettings} = props;
+  const {currentUser, setSettings} = props;
 
   return (
     <div className="user-box">
       <div className="user-icon">
-        <img src="profile-hex.png"/>  
+        <img src={currentUser.profile_img} alt=""/>  
       </div>
         <button onClick={() => setSettings(true)} id="edit">Edit Profile</button>
       <div className="user-info">
-        <a>Username</a>
-        <a>Elo</a>
+        <a>{currentUser.username}</a>
+        <a>Elo: {currentUser.elo}</a>
       </div>
     </div>
   )
