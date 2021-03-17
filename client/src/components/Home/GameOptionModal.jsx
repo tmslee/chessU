@@ -37,7 +37,8 @@ export default function GameOptionsModal(props) {
     showState,
     gameOptions, 
     setGameOptions, 
-    closeModal
+    closeModal,
+    setGameRoute
   } = props;
 
   const {
@@ -137,6 +138,7 @@ export default function GameOptionsModal(props) {
           gameOptions = {gameOptions}
           loadGame = {loadGame}
           returnToGameOptions={returnToGameOptions}
+          setGameRoute = {setGameRoute}
         />
       }      
       {mode === LOADING && 

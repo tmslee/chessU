@@ -9,8 +9,10 @@ import MovesLog from "./MovesLog"
 import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
 
-function Game() {
-  // props.
+function Game(props) {
+  // const { matchId } = props.match.params; // which is also chat room id
+  // const usernameBlack = props.user1;
+  // const usernameWhite = props.user2;
 
 
   const usernameBlack = "Haopeng"

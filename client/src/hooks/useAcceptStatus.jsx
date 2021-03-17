@@ -14,7 +14,7 @@ const CASUAL_ACCEPT = "CASUAL_ACCEPT";
 const SOCKET_SERVER_URL = "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
-const useAcceptStatus = (gameOptions) => {
+const useAcceptStatus = (gameOptions, setGameRoute) => {
   const socketRef = useRef();
   
 
@@ -49,14 +49,17 @@ const useAcceptStatus = (gameOptions) => {
       //listen for opponent accept from socket
       socketRef.current.on(RANKED_ACCEPT, (data) => {
         opponentAccept();
+        console.log(data, "RANKED ACCEPT")
+        const {matchId} = data;
         //send back match id which then client can render "/game/matchId"
-        
+        setGameRoute(`/game/${matchId}`);
         //we redirect them to game
       });
       socketRef.current.on(CASUAL_ACCEPT, (data) => {
         
       });
     });
+    
   }, [matchAcceptStatus]);
   ////////////////////////////////////////////////////////////
   return {

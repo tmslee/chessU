@@ -49,6 +49,7 @@ export default function Application() {
   const logout = function (){
     localStorage.clear();
     setToken(getToken());
+        
   }
 
   return (
@@ -73,8 +74,14 @@ export default function Application() {
       active={active} 
       /> }
       <Switch>
-        <Route path="/" exact render={(props) => (<HomeMenu {...props} currentUser={currentUser}/>)}/>
-        <Route path={game}oute component={Game} />
+        <Route path="/" exact render={(props) => 
+          (<HomeMenu 
+            {...props} 
+            currentUser={currentUser} 
+            setGameRoute={setGameRoute} 
+          />)
+        }/>
+        <Route path={gameRoute} component={Game} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={Profile} />

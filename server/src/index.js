@@ -95,6 +95,7 @@ io.on("connection", (socket) => {
   socket.on(RANKED_ACCEPT, (data) => {
     confirmation.push(data)
     if (confirmation.length === 2){
+      console.log(confirmation);
       const user1 = confirmation.pop();
       const user2 = confirmation.pop();
       if (user1.confirmation && user2.confirmation && user1.userId && user2.userId){
