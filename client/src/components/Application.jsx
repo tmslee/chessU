@@ -55,7 +55,7 @@ export default function Application() {
   return (
     <>
     <ChessNavBar
-    username={currentUser? currentUser.username : null}
+    username={currentUser ? currentUser.username : null}
     setActive={setActive} 
     active={active}
     logout={logout}
@@ -92,7 +92,16 @@ export default function Application() {
         <Route path="/game/:matchId" user1={'Haopeng'} user2={'alvin'} component={Game} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" exact render={(props) => 
+          (<Profile 
+            {...props} 
+            token={token}
+            currentUser={currentUser}
+            setActive={setActive} 
+            getCurrentUser={getCurrentUser}
+            setCurrentUser={setCurrentUser}
+          />)
+        }/>
       </Switch>
     </main>
     </Router>
