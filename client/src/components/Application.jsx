@@ -20,7 +20,8 @@ export default function Application() {
 
   const { token, getToken, setToken } = useToken();
   const [currentUser, setCurrentUser] = useState();
-  const [gameRoute, setGameRoute] = useState(`/game`);
+  const [gameRoute, setGameRoute] = useState();
+  const [gameInfo, setGameInfo] = useState();
   
   useEffect(()=> {
     if(token){
@@ -78,9 +79,15 @@ export default function Application() {
             {...props} 
             currentUser={currentUser} 
             setGameRoute={setGameRoute} 
+            setGameInfo={setGameInfo}
           />)
         }/>
-        <Route path={gameRoute} component={Game} />
+          <Route path="/game/:id" exact render={(props) => 
+          (<Game 
+            {...props} 
+            gameInfo = {gameInfo}  // colors : { white: user1, black: user2 }
+          />)
+        }/>
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={Profile} />

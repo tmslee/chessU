@@ -4,7 +4,13 @@ import "./styles/HomeMenu.scss"
 import AcceptTimer from "./AcceptTimer";
 
 export default function GameAccept(props) {
-  const {gameOptions, returnToGameOptions, loadGame, setGameRoute} = props;
+  const {
+    gameOptions, 
+    returnToGameOptions, 
+    loadGame, 
+    setGameRoute, 
+    setGameInfo
+  } = props;
 
   return (
     <AcceptTimer
@@ -12,6 +18,7 @@ export default function GameAccept(props) {
       returnToGameOptions = {returnToGameOptions}
       loadGame = {loadGame}
       setGameRoute = {setGameRoute}
+      setGameInfo = {setGameInfo}
     />
   );
 };

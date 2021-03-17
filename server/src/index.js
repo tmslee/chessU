@@ -31,9 +31,9 @@ const matches = {};
 const matchConfirmStatus = {};
 const userSockets = {};
 
-const dequeue = function(Q, userId) {
-  Q.forEach( (user, idx) => {
-    if(user.userId === userId) {
+const dequeue = function(Q, id) {
+  Q.forEach( (data, idx) => {
+    if(data.currentUser.id === id) {
       Q.splice(idx, 1);
     }
   })
@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
   //  io.to(socketId).emit("hey", "I just met you");
 
   socket.on(ENQUEUE, (data) => {
-    if (data.socketId && data.userId && data.elo){
+    if (data.socketId && data.currentUser){
       let queue;
       if (data.type === RANKED) queue = rankedQ;
       else if (data.type === CASUAL) queue = casualQ;
@@ -70,18 +70,20 @@ io.on("connection", (socket) => {
         const first = sortedQueue.pop();
         const second = sortedQueue.pop(); // [{user} , {opp} ]  [ {opp} ]
 
-        dequeue(queue, first.userId);
-        dequeue(queue, second.userId);
+        const firstUser = first.currentUser;
+        const secondUser = second.currentUser;
+        dequeue(queue, firstUser.id);
+        dequeue(queue, secondUser.id);
         // send a msg back to users  "match found"
-        io.to(first.socketId).emit(ENQUEUE, {opponentId: second.userId});
-        io.to(second.socketId).emit(ENQUEUE, {opponentId: first.userId});
+        io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser});
+        io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser});
         
-        matches[first.userId] = second.userId;
-        matches[second.userId] = first.userId;
-        matchConfirmStatus[first.userId] = 0;
-        matchConfirmStatus[second.userId] = 0;
-        userSockets[first.userId] = first.socketId;
-        userSockets[second.userId] = second.socketId;
+        matches[firstUser.id] = secondUser.id;
+        matches[secondUser.id] = firstUser.id;
+        matchConfirmStatus[firstUser.id] = 0;
+        matchConfirmStatus[secondUser.id] = 0;
+        userSockets[firstUser.id] = first.socketId;
+        userSockets[secondUser.id] = second.socketId;
         console.log("matches: ", matches);
         console.log("confirm status: ", matchConfirmStatus);
         console.log("userSockets: ", userSockets);
@@ -90,11 +92,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on(DEQUEUE, (data) => {
-    if (data.socketId && data.userId && data.elo){
+    if (data.socketId && data.currentUser){
       let queue;
       if (data.type === RANKED) queue = rankedQ;
       else if (data.type === CASUAL) queue = casualQ;
-      dequeue(queue, data.userId)
+      dequeue(queue, data.currentUser.id)
       console.log("queue :", queue);
     }
   });
@@ -119,10 +121,12 @@ io.on("connection", (socket) => {
     }
     console.log("matches: ", matches);
   }
-
+  
   socket.on(MATCH_CONFIRM, (data) => {
-    userSockets[data.userId] = data.socketId; 
-    const {userId, type, socketId, confirmation} = data;
+    const {currentUser, type, socketId, confirmation} = data;
+    const userId = currentUser.id;
+
+    userSockets[userId] = socketId; 
     const opponent = matches[userId];
     const opponentStatus = matchConfirmStatus[opponent];
 
@@ -146,9 +150,12 @@ io.on("connection", (socket) => {
       } else if (opponentStatus === 1) { //opponent accepted{
           removeFromMatches(matches, userId);
           console.log('making match');
-          addMatch(type, userId, opponent).then(matchId => {
-            io.to(userSockets[data.userId]).emit(MATCH_CONFIRM, { matchId });
-            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId });
+          // const white = userId;
+          // const black = opponent;
+          const color = { white : userId, black : opponent };
+          addMatch(type, color.white, color.black).then(matchId => {
+            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId, color });
+            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId, color });
           });
       } else { //opponent pending -> just update matchConfirmStatus
         matchConfirmStatus[userId] = 1;

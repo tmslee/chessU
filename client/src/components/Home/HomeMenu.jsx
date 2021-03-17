@@ -14,11 +14,11 @@ const EMPTY_GAME = {
   timeLimit:null,
   difficulty:null,
   currentUser: null,
-  opponentID:null
+  opponent:null
 };
 
 export default function HomeMenu(props) {
-  const {currentUser, setGameRoute } = props; 
+  const {currentUser, setGameRoute, setGameInfo } = props; 
 
   const [showState, setShowState] = useState(false);
   //initialize with currentUser here
@@ -66,6 +66,7 @@ export default function HomeMenu(props) {
         setGameOptions={setGameOptions}
         closeModal={closeModal}
         setGameRoute={setGameRoute}
+        setGameInfo={setGameInfo}
       />
     </>
   );
