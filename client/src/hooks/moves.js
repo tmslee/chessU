@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
-const SOCKET_SERVER_URL = "http://localhost:8002";
+const SOCKET_SERVER_URL = "http://localhost:8001";
 
 const useMove = (roomId) => {
   const [currentMove, setCurrentMove] = useState([]);

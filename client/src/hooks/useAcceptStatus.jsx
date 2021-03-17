@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Redirect } from "react-router";
 import io from "socket.io-client";
 
 // first queue up send user info to socket
@@ -13,9 +14,16 @@ const MATCH_CONFIRM = "MATCH_CONFIRM";
 const SOCKET_SERVER_URL = "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
-const useAcceptStatus = (gameOptions, returnToGameOptions, loadGame, setGameRoute) => {
+const useAcceptStatus = (
+  gameOptions, 
+  returnToGameOptions,
+   loadGame, 
+   setGameRoute,
+   setGameInfo
+   ) => {
   const socketRef = useRef();
 
+  const { currentUser, type, opponent } = gameOptions;
   // match accept states /////////////////////////////////////
   const[userStatus, setUserStatus] = useState(0);
   const[opponentStatus, setOpponentStatus] = useState(0);
@@ -36,8 +44,9 @@ const useAcceptStatus = (gameOptions, returnToGameOptions, loadGame, setGameRout
     socketRef.current.on("connect", ()=> {
       //send confirmation back to server
       socketRef.current.emit(MATCH_CONFIRM, {
-        type: gameOptions.type,
-        userId: gameOptions.currentUser.id,
+        type,
+        // userId: gameOptions.currentUser.id,
+        currentUser,
         socketId: socketRef.current.id,
         confirmation: userStatus
       })
@@ -48,19 +57,25 @@ const useAcceptStatus = (gameOptions, returnToGameOptions, loadGame, setGameRout
     //listen for opponent confirmation
     socketRef.current.on(MATCH_CONFIRM, (data) => {
       //if confirmation match id is null -> we exit
+      const {matchId} = data;
       if (!data.matchId) {
         console.log("match declined");
         declineThenGameOptions();
       } else {
         console.log("match made");
         opponentAccept();
-        loadGame(gameOptions);
-        
-        const {matchId} = data;
-        setGameRoute(`/game/${matchId}`);
-        // console.log(data, "RANKED ACCEPT")
-        //send back match id which then client can render "/game/matchId"
-        //we redirect them to game
+        console.log(data, opponent)
+        loadGame(data, currentUser, opponent, matchId);
+        // setGameInfo( {
+        //   matchId : data.matchId,
+        //   colors : data.colors, // { white : id, black : id }
+        //   name1 : currentUser.username,
+        //   name2 : opponent.username 
+        // })
+
+        // setGameRoute(`/game/${matchId}`);
+        // window.location = `/game/${matchId}`;
+
       }
     });
   }, [userStatus, opponentStatus]);
