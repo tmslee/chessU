@@ -49,7 +49,6 @@ export default function Application() {
   const logout = function (){
     localStorage.clear();
     setToken(getToken());
-        
   }
 
   return (

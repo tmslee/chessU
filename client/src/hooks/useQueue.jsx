@@ -11,8 +11,7 @@ import io from "socket.io-client";
 const IN_Q = "IN_Q";
 const ACCEPT_MATCH = "ACCEPT_MATCH";
 
-const RANKED = "RANKED";
-const CASUAL = "CASUAL";
+const ENQUEUE = "ENQUEUE"
 const DEQUEUE = "DEQUEUE";
 const SOCKET_SERVER_URL = "http://localhost:8001";
 const RANKED_ACCEPT = "RANKED_ACCEPT";
@@ -44,15 +43,18 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         // send socket message that youre going into queue
         // we need gameOptions here to determine which message we are sending
         console.log('before sending to socketio', socketRef.current.id);
-        socketRef.current.emit(type, {
+
+        socketRef.current.emit(ENQUEUE, {
+          type: gameOptions.type,
           userId: currentUser.id,
           elo: currentUser.elo,
           socketId: socketRef.current.id,
         })
         
         // listening from server/socket
-        socketRef.current.on(RANKED, (data) => {
+        socketRef.current.on(ENQUEUE, (data) => {
           console.log(data);
+          
           const opponentID = data.opponentId;
           setGameOptions(prev => ({...prev, opponentID}));
           goToView(ACCEPT_MATCH);
@@ -68,9 +70,6 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
           // })
         });
   
-        socketRef.current.on(CASUAL, (data) => {
-          
-        });
 
       } else if(currentUser) {
         //send a dequeue messsage to socket 

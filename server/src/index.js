@@ -16,22 +16,25 @@ const io = require("socket.io")(server, {
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
+
+const ENQUEUE = "ENQUEUE";
+const MATCH_CONFIRM = "MATCH_CONFIRM";
+const DEQUEUE = "DEQUEUE";
 const RANKED = "RANKED";
 const CASUAL = "CASUAL";
-const RANKED_ACCEPT = "RANKED_ACCEPT";
-const DEQUEUE = "DEQUEUE";
+
 const confirmation = [];
 
-const ranked = [];
-const casual = [];
+const rankedQ = [];
+const casualQ = [];
+const matches = {};
+const matchConfirmStatus = {};
+const userSockets = {};
 
 const dequeue = function(Q, userId) {
   Q.forEach( (user, idx) => {
-    console.log(user, idx);
-    // console.log(user.socketId, socketId);
     if(user.userId === userId) {
       Q.splice(idx, 1);
-      console.log(Q);
     }
   })
 };
@@ -53,33 +56,46 @@ io.on("connection", (socket) => {
    // sending to individual socketid (private message)
   //  io.to(socketId).emit("hey", "I just met you");
 
-  socket.on(RANKED, (data) => {
+  socket.on(ENQUEUE, (data) => {
     if (data.socketId && data.userId && data.elo){
-      ranked.push(data);
-      console.log(ranked);
-      if (ranked.length > 1){
-        const sortedRanked = sortUsers(ranked);
-        const first = sortedRanked.pop();
-        const second = sortedRanked.pop(); // [{user} , {opp} ]  [ {opp} ]
-        ranked.pop();
-        ranked.pop();
+      let queue;
+      if (data.type === RANKED) queue = rankedQ;
+      else if (data.type === CASUAL) queue = casualQ;
+
+      queue.push(data);
+      console.log("queue: " , queue);
+
+      if (queue.length > 1){
+        const sortedQueue = sortUsers(queue);
+        const first = sortedQueue.pop();
+        const second = sortedQueue.pop(); // [{user} , {opp} ]  [ {opp} ]
+
+        dequeue(queue, first.userId);
+        dequeue(queue, second.userId);
         // send a msg back to users  "match found"
-        io.to(first.socketId).emit(RANKED, {opponentId: second.userId});
-        io.to(second.socketId).emit(RANKED, {opponentId: first.userId});
+        io.to(first.socketId).emit(ENQUEUE, {opponentId: second.userId});
+        io.to(second.socketId).emit(ENQUEUE, {opponentId: first.userId});
+        
+        matches[first.userId] = second.userId;
+        matches[second.userId] = first.userId;
+        matchConfirmStatus[first.userId] = 0;
+        matchConfirmStatus[second.userId] = 0;
+        userSockets[first.userId] = first.socketId;
+        userSockets[second.userId] = second.socketId;
+        console.log("matches: ", matches);
+        console.log("confirm status: ", matchConfirmStatus);
+        console.log("userSockets: ", userSockets);
       }
     }
   });
 
   socket.on(DEQUEUE, (data) => {
     if (data.socketId && data.userId && data.elo){
-      if (data.type === RANKED) {
-        console.log('data', data);
-        dequeue(ranked, data.userId);
-      } else if (data.type === CASUAL) {
-        dequeue(casual, data.userId);
-      }
-      console.log("ranked :", ranked);
-      // console.log();
+      let queue;
+      if (data.type === RANKED) queue = rankedQ;
+      else if (data.type === CASUAL) queue = casualQ;
+      dequeue(queue, data.userId)
+      console.log("queue :", queue);
     }
   });
   
@@ -92,25 +108,54 @@ io.on("connection", (socket) => {
   // socketRef.current.emit(RANKED_ACCEPT, {
   //   socketId: socketRef.current.id,
   // });
-  socket.on(RANKED_ACCEPT, (data) => {
-    confirmation.push(data)
-    if (confirmation.length === 2){
-      console.log(confirmation);
-      const user1 = confirmation.pop();
-      const user2 = confirmation.pop();
-      if (user1.confirmation && user2.confirmation && user1.userId && user2.userId && user1.userId !== user2.userId){
-        console.log(user1, user2);
-        // create a match in db
-        addMatch("ranked", user1.userId, user2.userId).then((matchId) => {
-          // send the matchid back to clients
-          io.to(user1.socketId).emit(RANKED_ACCEPT, { matchId });
-          io.to(user2.socketId).emit(RANKED_ACCEPT, { matchId });
-        })
-      } else {
-        io.in(roomId).emit(RANKED_ACCEPT, { matchId: null }); // does not match up
-      }
+  
+  const removeFromMatches = function (matches, userId) {
+    const userId2 = matches[userId];
+    if(userId2) {
+      delete matches[userId];
     }
+    if(matches[userId2]) {
+      delete matches[userId2];
+    }
+    console.log("matches: ", matches);
+  }
+
+  socket.on(MATCH_CONFIRM, (data) => {
+    userSockets[data.userId] = data.socketId; 
+    const {userId, type, socketId, confirmation} = data;
+    const opponent = matches[userId];
+    const opponentStatus = matchConfirmStatus[opponent];
+
+    if (confirmation === -1) { //you have declined
+      console.log("you have declined. opponent socket: ", userSockets[opponent]);
+      if(opponentStatus !== 0) {
+        removeFromMatches(matches, userId);
+        io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId:null });
+        io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId:null });
+      } else {
+        io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId:null });
+        matchConfirmStatus[userId] = -1;
+      }
+
+    } else if (confirmation === 1) {
+      console.log("you have accepted");
+      if(opponentStatus === -1) { //opponent declined
+        removeFromMatches(matches, userId);
+        io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId:null });
+        io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId:null });
+      } else if (opponentStatus === 1) { //opponent accepted{
+          removeFromMatches(matches, userId);
+          console.log('making match');
+          addMatch(type, userId, opponent).then(matchId => {
+            io.to(userSockets[data.userId]).emit(MATCH_CONFIRM, { matchId });
+            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId });
+          });
+      } else { //opponent pending -> just update matchConfirmStatus
+        matchConfirmStatus[userId] = 1;
+      }
+    }    
   });
+
 
   // Listen for new move and send it to your opponent
   socket.on(NEW_CHESS_MOVE_EVENT, (data) => {
