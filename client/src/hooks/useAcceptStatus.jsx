@@ -55,7 +55,7 @@ const useAcceptStatus = (gameOptions, returnToGameOptions, loadGame, setGameRout
         console.log("match made");
         opponentAccept();
         loadGame(gameOptions);
-
+        
         const {matchId} = data;
         setGameRoute(`/game/${matchId}`);
         // console.log(data, "RANKED ACCEPT")

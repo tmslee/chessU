@@ -12,6 +12,8 @@ export default function ChessNavBar(props) {
     logout
   } = props;
 
+  
+
   return (
     <Navbar bg="light" expand="lg">
       
@@ -32,7 +34,7 @@ export default function ChessNavBar(props) {
         <Nav className="mr-auto">
 
           <Nav.Link href="/profile">Profile</Nav.Link>
-          <Nav.Link href="/">My Stats</Nav.Link>
+          <Nav.Link href="/">LeaderBoards</Nav.Link>
           <Nav.Link href="/community">Community</Nav.Link>
 
           <NavDropdown title="Quick Play" id="basic-nav-dropdown">
