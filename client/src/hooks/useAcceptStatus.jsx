@@ -57,23 +57,24 @@ const useAcceptStatus = (
     //listen for opponent confirmation
     socketRef.current.on(MATCH_CONFIRM, (data) => {
       //if confirmation match id is null -> we exit
+      const {matchId} = data;
       if (!data.matchId) {
         console.log("match declined");
         declineThenGameOptions();
       } else {
         console.log("match made");
         opponentAccept();
-        loadGame(gameOptions);
-        setGameInfo( {
-          matchId : data.matchId,
-          colors : data.colors, // { white : id, black : id }
-          name1 : currentUser.username,
-          name2 : opponent.username 
-        })
+        console.log(data, opponent)
+        loadGame(data, currentUser, opponent, matchId);
+        // setGameInfo( {
+        //   matchId : data.matchId,
+        //   colors : data.colors, // { white : id, black : id }
+        //   name1 : currentUser.username,
+        //   name2 : opponent.username 
+        // })
 
-        const {matchId} = data;
         // setGameRoute(`/game/${matchId}`);
-        window.location = `/game/${matchId}`;
+        // window.location = `/game/${matchId}`;
 
       }
     });
