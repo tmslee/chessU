@@ -32,7 +32,7 @@ const useAcceptStatus = (gameOptions, setGameRoute) => {
     setAcceptStatus(prev => {
       return {...prev, opponent: true};
     });
-  }  
+  }
 
   useEffect(() => {
     socketRef.current = io(SOCKET_SERVER_URL);

@@ -13,6 +13,7 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 
 const RANKED = "RANKED";
 const CASUAL = "CASUAL";
+const DEQUEUE = "DEQUEUE";
 const SOCKET_SERVER_URL = "http://localhost:8001";
 const RANKED_ACCEPT = "RANKED_ACCEPT";
 
@@ -70,6 +71,15 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         socketRef.current.on(CASUAL, (data) => {
           
         });
+
+      } else if(currentUser) {
+        //send a dequeue messsage to socket 
+        socketRef.current.emit(DEQUEUE, {
+          type,
+          userId: currentUser.id,
+          elo: currentUser.elo,
+          socketId: socketRef.current.id,
+        })
       }
     });
     //listen for match found message from socket
