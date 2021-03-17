@@ -5,7 +5,13 @@ import useAcceptStatus from "../../hooks/useAcceptStatus";
 
 export default function AcceptTimer(props) {
 
-  const {gameOptions, returnToGameOptions, loadGame, setGameRoute} = props;
+  const {
+    gameOptions, 
+    returnToGameOptions, 
+    loadGame, 
+    setGameRoute,
+    setGameInfo
+  } = props;
 
   const [col, setCol] = useState("success");
   const {
@@ -13,7 +19,7 @@ export default function AcceptTimer(props) {
     opponentStatus, 
     acceptMatch, 
     declineMatch
-  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute);
+  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute, setGameInfo);
 
   const declineThenGameOptions = async function () {
     await declineMatch();

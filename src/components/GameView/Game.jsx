@@ -10,7 +10,7 @@ import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
 
 function Game(props) {
-  // const { matchId } = props.match.params; // which is also chat room id
+  const { matchId } = props.match.params; // which is also chat room id
   // const usernameBlack = props.user1;
   // const usernameWhite = props.user2;
 
@@ -27,7 +27,7 @@ function Game(props) {
     reset: false,
     chessmoves: [],
     winner:'',
-    roomId: 1,
+    roomId: matchId,
     isReceived: true
   })
 

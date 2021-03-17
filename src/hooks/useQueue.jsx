@@ -45,9 +45,8 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         console.log('before sending to socketio', socketRef.current.id);
 
         socketRef.current.emit(ENQUEUE, {
-          type: gameOptions.type,
-          userId: currentUser.id,
-          elo: currentUser.elo,
+          type,
+          currentUser,
           socketId: socketRef.current.id,
         })
         
@@ -55,8 +54,8 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         socketRef.current.on(ENQUEUE, (data) => {
           console.log(data);
           
-          const opponentID = data.opponentId;
-          setGameOptions(prev => ({...prev, opponentID}));
+          const opponent = data.opponent;
+          setGameOptions(prev => ({...prev, opponent}));
           goToView(ACCEPT_MATCH);
           dequeue();
           //we are matched up and send opponent id to AcceptTimer component
@@ -75,8 +74,9 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         //send a dequeue messsage to socket 
         socketRef.current.emit(DEQUEUE, {
           type,
-          userId: currentUser.id,
-          elo: currentUser.elo,
+          // userId: currentUser.id,
+          // elo: currentUser.elo,
+          currentUser,
           socketId: socketRef.current.id,
         })
       }

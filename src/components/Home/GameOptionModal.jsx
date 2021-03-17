@@ -23,13 +23,13 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 const LOADING = "LOADING";
 const ERROR = "ERROR";
 
-const EMPTY_GAME = {
-  type:null,
-  timelimit:null,
-  difficulty:null,
-  currentUser:null,
-  opponentID:null
-};
+// const EMPTY_GAME = {
+//   type:null,
+//   timelimit:null,
+//   difficulty:null,
+//   currentUser:null,
+//   opponentID:null
+// };
 
 export default function GameOptionsModal(props) {
   
@@ -38,7 +38,8 @@ export default function GameOptionsModal(props) {
     gameOptions, 
     setGameOptions, 
     closeModal,
-    setGameRoute
+    setGameRoute,
+    setGameInfo
   } = props;
 
   const {
@@ -83,6 +84,7 @@ export default function GameOptionsModal(props) {
     console.log("loading game...");
     console.log(gameOptions);
     goToView(LOADING);
+
     //need to implement actual loadGame here
   }
 
@@ -91,7 +93,7 @@ export default function GameOptionsModal(props) {
     dequeue();
     console.log("returning to game settings...");
     console.log("setting opponent to null");
-    setGameOptions({...gameOptions, opponentID: null});
+    setGameOptions({...gameOptions, opponent: null});
     goToView(SELECT_OPTIONS);
   }
 
@@ -139,6 +141,7 @@ export default function GameOptionsModal(props) {
           loadGame = {loadGame}
           returnToGameOptions={returnToGameOptions}
           setGameRoute = {setGameRoute}
+          setGameInfo = {setGameInfo}
         />
       }      
       {mode === LOADING && 
