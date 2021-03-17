@@ -14,44 +14,27 @@ const io = require("socket.io")(server, {
   },
 });
 
-const ranked = [];
-
-// const casual = [{ 
-//   userId,  
-//   elo,  
-// }]
-
-// push user data into queue
-// sort object by elo
-// we check if ranked >= 2
-//   pop first 2 users and match them
-
-//what happens if 5 ppl press queue same time -- edge case
-
-
-// there are two guys ready to play, A and B
-// send A with B's userId and A's socket Id
-// send B with A's userId and B's socket Id
-
-//const EMPTY_GAME = {
-//   type:null,
-//   timeLimit:null,
-//   difficulty:null,
-//   currentUserID: 2,
-//   opponentID:null
-// };
-
-// const matchesFound = [{
-//   user1 : false,
-//   user2 : false}
-// }]
-
-// const PORT = 8002;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const NEW_CHESS_MOVE_EVENT = "newChessMove";
 const RANKED = "RANKED";
+const CASUAL = "CASUAL";
 const RANKED_ACCEPT = "RANKED_ACCEPT";
+const DEQUEUE = "DEQUEUE";
 const confirmation = [];
+
+const ranked = [];
+const casual = [];
+
+const dequeue = function(Q, userId) {
+  Q.forEach( (user, idx) => {
+    console.log(user, idx);
+    // console.log(user.socketId, socketId);
+    if(user.userId === userId) {
+      Q.splice(idx, 1);
+      console.log(Q);
+    }
+  })
+};
 
 io.on("connection", (socket) => {
   
@@ -71,15 +54,32 @@ io.on("connection", (socket) => {
   //  io.to(socketId).emit("hey", "I just met you");
 
   socket.on(RANKED, (data) => {
-    ranked.push(data);
-    console.log(ranked);
-    if (ranked.length > 1){
-      const sortedRanked = sortUsers(ranked);
-      const first = sortedRanked.pop();
-      const second = sortedRanked.pop(); // [{user} , {opp} ]  [ {opp} ]  
-      // send a msg back to users  "match found"
-      io.to(first.socketId).emit(RANKED, {opponentId: second.userId});
-      io.to(second.socketId).emit(RANKED, {opponentId: first.userId});
+    if (data.socketId && data.userId && data.elo){
+      ranked.push(data);
+      console.log(ranked);
+      if (ranked.length > 1){
+        const sortedRanked = sortUsers(ranked);
+        const first = sortedRanked.pop();
+        const second = sortedRanked.pop(); // [{user} , {opp} ]  [ {opp} ]
+        ranked.pop();
+        ranked.pop();
+        // send a msg back to users  "match found"
+        io.to(first.socketId).emit(RANKED, {opponentId: second.userId});
+        io.to(second.socketId).emit(RANKED, {opponentId: first.userId});
+      }
+    }
+  });
+
+  socket.on(DEQUEUE, (data) => {
+    if (data.socketId && data.userId && data.elo){
+      if (data.type === RANKED) {
+        console.log('data', data);
+        dequeue(ranked, data.userId);
+      } else if (data.type === CASUAL) {
+        dequeue(casual, data.userId);
+      }
+      console.log("ranked :", ranked);
+      // console.log();
     }
   });
   
@@ -98,7 +98,7 @@ io.on("connection", (socket) => {
       console.log(confirmation);
       const user1 = confirmation.pop();
       const user2 = confirmation.pop();
-      if (user1.confirmation && user2.confirmation && user1.userId && user2.userId){
+      if (user1.confirmation && user2.confirmation && user1.userId && user2.userId && user1.userId !== user2.userId){
         console.log(user1, user2);
         // create a match in db
         addMatch("ranked", user1.userId, user2.userId).then((matchId) => {

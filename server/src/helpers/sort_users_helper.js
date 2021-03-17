@@ -10,7 +10,7 @@ const sortUsers = function(arr){
   })
 }
 
-console.log(sortUsers(ranked));
+// console.log(sortUsers(ranked));
 
 // const ranked = [{ 
 //   userId,  
