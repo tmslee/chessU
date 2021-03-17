@@ -10,13 +10,14 @@ import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
 
 function Game(props) {
-  // const { matchId } = props.match.params; // which is also chat room id
-  // const usernameBlack = props.user1;
-  // const usernameWhite = props.user2;
+  const { matchId } = props.match.params; // which is also chat room id
+  console.log(props);
+  // if()
+  // const usernameBlack = 'alvin';
+  // const usernameWhite = 'haopeng';
 
-
-  const usernameBlack = "Haopeng"
-  const usernameWhite = "Thomas"
+  const usernameBlack = 'alvin';
+  const usernameWhite = 'haopeng';
 
   const [state, setState] = useState({
     position: "start",
@@ -27,7 +28,7 @@ function Game(props) {
     reset: false,
     chessmoves: [],
     winner:'',
-    roomId: 1,
+    roomId: matchId,
     isReceived: true
   })
 
@@ -37,6 +38,7 @@ function Game(props) {
   // set current positions from Chess.js
   let game = useRef(null);
   if (state.position === "start"){
+    // game.current = new Chess();
     game.current = new Chess();
   }
 
@@ -91,6 +93,7 @@ function Game(props) {
           isReceived: false
         }));
       }
+      // console.log(game.current.turn());
     } else {
       if (game.current.turn() === 'b'){
         gameover('White');
@@ -107,6 +110,7 @@ function Game(props) {
   // Signature: function({ sourceSquare: string, targetSquare: string, piece: string }) => void
   const onDrop = ({sourceSquare, targetSquare}) => {
     // return position change when the move is valid
+    console.log(sourceSquare, targetSquare);
     let move = game.current.move({
       from: sourceSquare,
       to: targetSquare
@@ -144,6 +148,7 @@ function Game(props) {
           isReceived: true
         }));
       }
+      // console.log(game.current.turn());
     } else {
       if (game.current.turn() === 'b'){
         gameover('White');
@@ -185,6 +190,7 @@ function Game(props) {
         timeout={gameover}/>
       </div>
       <div className="chessboard">
+      {/* orientation={'black'} */}
         <ChessBoard position={state.position} onDrop={onDrop} roomId={state.roomId}/>
         <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
         <Chat roomId={state.roomId}/>

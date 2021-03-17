@@ -3,7 +3,7 @@ import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
 import Profile from "./Profile/index";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
 import useToken from "../hooks/useToken";
@@ -20,8 +20,10 @@ export default function Application() {
 
   const { token, getToken, setToken } = useToken();
   const [currentUser, setCurrentUser] = useState();
-  const [gameRoute, setGameRoute] = useState(`/game`);
-  
+  const [gameRoute, setGameRoute] = useState();
+  const [gameInfo, setGameInfo] = useState();
+
+  console.log('re-render application')
   useEffect(()=> {
     if(token){
       getCurrentUser(token).then( res => {
@@ -31,6 +33,10 @@ export default function Application() {
       setCurrentUser(null);
     }
   }, [token]);
+
+  useEffect( () => {
+    console.log(gameInfo, "gameInfo")
+  }, [gameInfo])
 
   const getCurrentUser = function(token) {
     console.log("getting curent user...");
@@ -78,9 +84,17 @@ export default function Application() {
             {...props} 
             currentUser={currentUser} 
             setGameRoute={setGameRoute} 
+            setGameInfo={setGameInfo}
           />)
         }/>
-        <Route path={gameRoute} component={Game} />
+          <Route exact path="/game/:id" render={(props) => 
+          (<Game 
+            {...props} 
+            gameInfo = {gameInfo}
+            currentUser = {currentUser}  // colors : { white: user1, black: user2 }
+          />)
+        }/>
+        {/* <Route path="/game/:id" component={Game} /> */}
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" exact render={(props) => 

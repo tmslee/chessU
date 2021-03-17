@@ -4,7 +4,7 @@ import "./styles/Statistics.scss"
 export default function Statistics(props) {
   const {currentUser} = props;
   
-
+  
   return (
     <div className="stats-box">
       <div className="stats">
