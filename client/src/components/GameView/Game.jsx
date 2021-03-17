@@ -11,13 +11,31 @@ import useMove from "../../hooks/moves"
 
 function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
-  console.log(props);
-  // if()
-  // const usernameBlack = 'alvin';
-  // const usernameWhite = 'haopeng';
+  // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
+  // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
 
-  const usernameBlack = 'alvin';
-  const usernameWhite = 'haopeng';
+  let usernameWhite;
+  let usernameBlack;
+  let chessboardOrientation;
+  // decide who is white or black
+  if (props.currentUser.id === props.gameInfo.colors.white){
+    usernameWhite = props.currentUser.username;
+    if (usernameWhite === props.gameInfo.name1){
+      usernameBlack = props.gameInfo.name2;
+    } else {
+      usernameBlack = props.gameInfo.name1;
+    }
+    chessboardOrientation = 'white';
+  } else {
+    usernameBlack = props.currentUser.username;
+    if (usernameBlack === props.gameInfo.name1){
+      usernameWhite = props.gameInfo.name2;
+    } else {
+      usernameWhite = props.gameInfo.name1;
+    }
+    chessboardOrientation = 'black';
+  }
+
 
   const [state, setState] = useState({
     position: "start",
@@ -191,7 +209,7 @@ function Game(props) {
       </div>
       <div className="chessboard">
       {/* orientation={'black'} */}
-        <ChessBoard position={state.position} onDrop={onDrop} roomId={state.roomId}/>
+        <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
         <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
         <Chat roomId={state.roomId}/>
       </div>
