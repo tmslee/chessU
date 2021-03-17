@@ -5,10 +5,10 @@ import useAcceptStatus from "../../hooks/useAcceptStatus";
 
 export default function AcceptTimer(props) {
 
-  const {gameOptions, returnToGameOptions, loadGame} = props;
+  const {gameOptions, returnToGameOptions, loadGame, setGameRoute} = props;
 
   const [col, setCol] = useState("success");
-  const {matchAcceptStatus, acceptMatch, opponentAccept} = useAcceptStatus(gameOptions);
+  const {matchAcceptStatus, acceptMatch, opponentAccept} = useAcceptStatus(gameOptions, setGameRoute);
 
   //NEED TO FIND A WAY TO KNOW WHEN OPPONENT ACCEPTS
 

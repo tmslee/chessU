@@ -18,7 +18,7 @@ const EMPTY_GAME = {
 };
 
 export default function HomeMenu(props) {
-  const {currentUser} = props; 
+  const {currentUser, setGameRoute } = props; 
 
   const [showState, setShowState] = useState(false);
   //initialize with currentUser here
@@ -65,6 +65,7 @@ export default function HomeMenu(props) {
         gameOptions={gameOptions}
         setGameOptions={setGameOptions}
         closeModal={closeModal}
+        setGameRoute={setGameRoute}
       />
     </>
   );
