@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./styles/Settings.scss"
 import axios from "axios";
 
@@ -8,18 +8,28 @@ const updateUser = function(newUserInfo, id) {
 }
 
 export default function Settings(props) {
+  const {token, currentUser, setSettings, getCurrentUser, setCurrentUser} = props;
 
-  const {currentUser, setSettings} = props;
+  const [username, setUsername] = useState(currentUser.username);
+  const [email, setEmail] = useState(currentUser.email);
+  const [password, setPassword] = useState(currentUser.password);
   
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUser({
-      username: 'alvin',
-      email: 'alvin@gmail.com',
-      password: '123'
-    }, 1)
+      username: username,
+      email: email,
+      password: password
+    }, currentUser.id)
+    setSettings(false);
+
+    if(token){
+      getCurrentUser(token).then( res => {
+        setCurrentUser(res);
+      });
+    } else {
+      setCurrentUser(null);
+    }
   }
 
   return(
@@ -31,13 +41,25 @@ export default function Settings(props) {
         <label>
           <p>Username</p>
           <input 
-          type="text" 
+          type="text"
+          value={username} 
+          onChange={e => setUsername(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Email</p>
+          <input 
+          type="text"
+          value={email} 
+          onChange={e => setEmail(e.target.value)}
           />
         </label>
         <label>
           <p>Password</p>
           <input 
           type="password" 
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           />
         </label>
         <div>
