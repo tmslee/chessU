@@ -4,6 +4,7 @@ import "./styles/Statistics.scss"
 export default function Statistics(props) {
   const {currentUser} = props;
   
+  // do a get request to users/:id which gives back all stats
 
   return (
     <div className="stats-box">

@@ -98,3 +98,15 @@ VALUES (
   6, 'user6', 50 , 'ranked', '2001-11-13 12:46:02' 
 );
 
+
+-- SELECT count(winner) as wins from matches
+-- where winner = 1;
+
+
+-- SELECT count(loser) as losses from matches
+-- where loser = 1;
+
+-- SELECT elo from users 
+-- where id = 1;
+
+-- how many wins on white
