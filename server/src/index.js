@@ -156,7 +156,6 @@ io.on("connection", (socket) => {
     }    
   });
 
-
   // Listen for new move and send it to your opponent
   socket.on(NEW_CHESS_MOVE_EVENT, (data) => {
     console.log('receive a move!', data)
