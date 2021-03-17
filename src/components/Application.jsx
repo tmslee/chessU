@@ -80,7 +80,8 @@ export default function Application() {
             setGameRoute={setGameRoute} 
           />)
         }/>
-        <Route path={gameRoute} component={Game} />
+        {/* <Route path={gameRoute} component={Game} /> */}
+        <Route path="/game/:matchId" user1={'Haopeng'} user2={'alvin'} component={Game} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={Profile} />
