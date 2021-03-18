@@ -1,35 +1,36 @@
 const db = require("../db");
 
-const allUsers = function(userId) {
+const allUsers = function() {
   return db.query(`
   SELECT * FROM users;`,
-  [userId]
   ).then(res => res.rows)
 };
 
 exports.allUsers = allUsers;
 
-const individualUser = function(userId) {
+const getUserWithId = function(userId) {
   return db.query(`
-  SELECT * FROM users where id = $1;`,
+  SELECT * FROM users
+  where id = $1
+  `,
   [userId]
   ).then(res => res.rows[0])
-};
+}
 
-exports.individualUser = individualUser;
+exports.getUserWithId = getUserWithId;
 
 const addUser = function(username, email, password) {
   return db.query(`
   INSERT INTO users (username, email, password) 
   VALUES ($1, $2, $3) 
   RETURNING *;`,
-  [userId]
+  [username, email, password]
   ).then(res => res.rows[0])
 };
 
 exports.addUser = addUser;
 
-const editUser = function(username, email, password) {
+const editUser = function(username, email, password, userId) {
   return db.query(`
   UPDATE users SET 
     username=$1::text, 
@@ -37,10 +38,36 @@ const editUser = function(username, email, password) {
     password=$3::text
   WHERE id = $4::integer 
   RETURNING *;`,
-  [userId]
-  ).then(res => res.rows)
+  [username, email, password, userId]
+  ).then(res => res.rows[0])
 };
 
 exports.editUser = editUser;
+
+const deleteUser = function(userId) {
+  return db.query(`
+  DELETE FROM users 
+  WHERE id = $1::integer
+  RETURNING *;
+  `,
+  [userId]
+  ).then(res => res.rows[0])
+};
+
+exports.deleteUser = deleteUser;
+
+const getUserWithName = function(name) {
+  return db.query(`
+  SELECT * FROM users
+  where username = $1
+  `,
+  [name]
+  ).then(res => res.rows[0])
+};
+
+exports.getUserWithName = getUserWithName;
+
+
+
 
 
