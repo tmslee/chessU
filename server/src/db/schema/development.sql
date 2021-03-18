@@ -97,19 +97,4 @@ INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
 INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
   3, 1, '2001-11-13 12:46:20'
 );
-<<<<<<< HEAD
 
-
--- SELECT count(winner) as wins from matches
--- where winner = 1;
-
-
--- SELECT count(loser) as losses from matches
--- where loser = 1;
-
--- SELECT elo from users 
--- where id = 1;
-
--- how many wins on white
-=======
->>>>>>> e7eb234b4e10c3ff74a311aa768af7b9597f187b
