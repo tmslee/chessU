@@ -97,3 +97,27 @@ INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
 INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
   3, 1, '2001-11-13 12:46:20'
 );
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  3, 4, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  4, 5, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  1, 6, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  6, 2, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  1, 5, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  1, 4, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  5, 2, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  4, 2, '2001-11-13 12:46:20'
+);

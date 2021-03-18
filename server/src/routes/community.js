@@ -3,8 +3,10 @@ const {
   friends,
   friendRequests,
   addFriend,
-  removeFriend
-} = require("../db_helpers/db_leaderboard_helpers")
+  removeFriend,
+  acceptFriendRequest,
+  declineFriendRequest
+} = require("../db_helpers/db_community_helpers")
 
 module.exports = db => {
 
@@ -26,15 +28,31 @@ module.exports = db => {
     .catch( err => res.json(err))
   })
 
-  router.post('/friendRequests/:userID', (req, res) => {
-    const currentUserID = req.params.userID;
-    friends(currentUserID, userID)
+  router.post('/friends/:currentUserID/:userID', (req, res) => {
+    const currentUserID = req.params.currentUserID;
+    const userID = req.params.userID
+    addFriend(currentUserID, userID)
     .catch( err => res.json(err))
   })
 
-  router.delete('/friendRequests/:userID', (req, res) => {
-    const currentUserID = req.params.userID;
-    friends(currentUserID, userID)
+  router.delete('/friends/:currentUserID/:userID', (req, res) => {
+    const currentUserID = req.params.currentUserID;
+    const userID = req.params.userID
+    removeFriend(currentUserID, userID)
+    .catch( err => res.json(err))
+  })
+
+  router.post('/friendRequests/:currentUserID/:userID', (req, res) => {
+    const currentUserID = req.params.currentUserID;
+    const userID = req.params.userID
+    acceptFriendRequest(currentUserID, userID)
+    .catch( err => res.json(err))
+  })
+
+  router.delete('/friendRequests/:currentUserID/:userID', (req, res) => {
+    const currentUserID = req.params.currentUserID;
+    const userID = req.params.userID
+    declineFriendRequest(currentUserID, userID)
     .catch( err => res.json(err))
   })
 
