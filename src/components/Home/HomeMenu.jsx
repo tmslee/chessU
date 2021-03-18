@@ -18,7 +18,11 @@ const EMPTY_GAME = {
 };
 
 export default function HomeMenu(props) {
-  const {currentUser, setGameRoute, setGameInfo } = props; 
+  const {
+    currentUser, 
+    setGameRoute, 
+    setGameInfo,
+  } = props; 
 
   const [showState, setShowState] = useState(false);
   //initialize with currentUser here

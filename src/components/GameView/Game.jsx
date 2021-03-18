@@ -11,14 +11,14 @@ import useMove from "../../hooks/moves"
 
 function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
-  // const usernameBlack = props.user1;
-  // const usernameWhite = props.user2;
-  // console.log(matchId, usernameBlack, usernameWhite);
+  console.log(props);
+  // if()
+  // const usernameBlack = 'alvin';
+  // const usernameWhite = 'haopeng';
 
   const usernameBlack = 'alvin';
   const usernameWhite = 'haopeng';
 
-  // const start = "RNBQKBNR/PPPPPPPP/8/8/8/8/rnbqkbnr/pppppppp w KQkq - 0 1";
   const [state, setState] = useState({
     position: "start",
     isBlackRunning: false,
@@ -190,7 +190,8 @@ function Game(props) {
         timeout={gameover}/>
       </div>
       <div className="chessboard">
-        <ChessBoard position={state.position} orientation={'black'} onDrop={onDrop} roomId={state.roomId}/>
+      {/* orientation={'black'} */}
+        <ChessBoard position={state.position} onDrop={onDrop} roomId={state.roomId}/>
         <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
         <Chat roomId={state.roomId}/>
       </div>
