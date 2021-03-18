@@ -3,13 +3,14 @@ import UserInfo from "./UserInfo";
 import Statistics from "./Statistics";
 import Settings from "./Settings";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function Profile (props) {
   const {token, currentUser, setActive, getCurrentUser, setCurrentUser} = props
   const [settings, setSettings] = useState(false);
   const [statsInfo, setStatsInfo] = useState();
 
- 
+  // const history = useHistory();
   
   useEffect(() => {
     if (!currentUser){
