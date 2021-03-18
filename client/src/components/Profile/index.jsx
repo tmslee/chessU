@@ -22,9 +22,21 @@ export default function Profile (props) {
     }
   }, [currentUser])
 
+  useEffect(() => {
+    if (!currentUser){
+      setActive(prev => ({...prev, login: true }));
+    } else {
+      setActive(prev => ({...prev, login: false }));
+    }
+  }, [currentUser])
+
   return (
     <>
+<<<<<<< HEAD
     {currentUser &&  statsInfo &&
+=======
+    {currentUser &&
+>>>>>>> development
       <>
         {settings && <Settings 
           token={token}
@@ -39,7 +51,10 @@ export default function Profile (props) {
         />
         <Statistics
           currentUser={currentUser}
+<<<<<<< HEAD
           statsInfo={statsInfo}
+=======
+>>>>>>> development
         />
       </>
     }
