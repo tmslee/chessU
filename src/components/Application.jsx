@@ -34,9 +34,6 @@ export default function Application() {
     }
   }, [token]);
 
-  useEffect( () => {
-    console.log(gameInfo, "gameInfo")
-  }, [gameInfo])
 
   const getCurrentUser = function(token) {
     console.log("getting curent user...");
