@@ -8,6 +8,7 @@ import Popup from './Popup';
 import MovesLog from "./MovesLog"
 import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
+import axios from "axios";
 
 function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
@@ -36,6 +37,7 @@ function Game(props) {
     }
     chessboardOrientation = 'black';
   }
+  console.log('white', usernameWhite, 'black', usernameBlack);
 
 
   const [state, setState] = useState({
@@ -74,6 +76,58 @@ function Game(props) {
       winner
     }));
   }
+  const movesRecord = async function(move) {
+    const record = {};
+    if(move['player'] == usernameWhite){
+      record['userID'] = props.gameInfo.colors.white;
+    } else {
+      record['userID'] = props.gameInfo.colors.black;
+    }
+    record["matchID"] = props.gameInfo.matchId;
+    record["action"] = `from: ${move.from}, to: ${move.to}`;
+    console.log('send', record);
+    try {
+      const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
+      console.log('send successfully');
+      return recordMatch;
+    } catch (err) {
+      console.log(err, "error")
+    }
+  };
+  console.log('match id', state.roomId, matchId, props.gameInfo.matchId);
+
+  const resultRecord = async function(){
+    const matchResult = {
+      white: props.gameInfo.colors.white, 
+      black: props.gameInfo.colors.black,
+      winner: props.currentUser.id,
+    };
+    if (matchResult['white'] === matchResult['winner']){
+      matchResult['loser'] = matchResult['black'];
+    } else {
+      matchResult['loser'] = matchResult['white'];
+    }
+    console.log('match id', state.roomId, matchId);
+    const idMatch = props.gameInfo.matchId;
+    console.log(matchResult);
+    try{
+      const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
+      console.log('record')
+      return result;
+    } catch (err) {
+      console.log(err, "error")
+    }
+  }
+
+  // the winner client side will send the result
+  const resultSend = function(){ 
+    resultRecord();
+    if (game.current.turn() === 'b'){
+      gameover('White');
+    } else {
+      gameover('Black');
+    }
+  }
 
   // if the move is not made by current user
   // reset the chessboard based on received move made by other user
@@ -93,7 +147,7 @@ function Game(props) {
       moveReceived['player'] = usernameWhite;
       chessmoves.unshift(moveReceived);
     }
-
+    
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
         setState(prev => ({...prev,
@@ -112,7 +166,7 @@ function Game(props) {
           isReceived: false
         }));
       }
-      // console.log(game.current.turn());
+      movesRecord(moveReceived);
     } else {
       resultSend();
     }
@@ -163,34 +217,12 @@ function Game(props) {
           isReceived: true
         }));
       }
+      // movesRecord(moveMade);
       // console.log(game.current.turn());
     } else {
       resultSend();
     }
   }
-  
-  const resultSend = function(){ 
-    const move_logs = state.chessmoves;
-    result(move_logs);
-    if (game.current.turn() === 'b'){
-      gameover('White');
-    } else {
-      gameover('Black');
-    }
-  }
-
-  const result = async function(move_logs) {
-    for(const move of move_logs){
-      try {
-        const user = await axios.post('http://localhost:8001/api/login', {username, password})
-        console.log(user,"here")
-        await setToken(user.data.token)
-        return user;
-      } catch (err) {
-        console.log(err, "error")
-      }
-    }
-  };
   
   const setModalShow = function(bool){
     setState(prev => ({...prev, modalShow: bool }));
