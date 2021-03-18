@@ -29,8 +29,12 @@ module.exports = db => {
         VALUES ($1, $2, $3) 
         RETURNING *;`, [username, email, password]
       )
-      req.session.userId = user.id;
-      res.json(newUser.rows);
+      const user = newUser.rows[0];
+      
+      const token = jwt.sign({ userId:user.id}, 'shhhhh');
+      res.json({user: {username: user.username, email: user.email, id: user.id},
+        token
+      });
     } catch (err){
       res.send(err.message);
     }

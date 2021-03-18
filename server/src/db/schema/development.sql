@@ -97,3 +97,4 @@ INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
 INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
   3, 1, '2001-11-13 12:46:20'
 );
+
