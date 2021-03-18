@@ -2,6 +2,7 @@ import React, {Fragment, useState, useEffect} from "react";
 
 import "./styles/ChessNavbar.scss"
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
 
 
 export default function ChessNavBar(props) {
@@ -12,12 +13,18 @@ export default function ChessNavBar(props) {
     logout
   } = props;
 
+  const history = useHistory();
+
+  const handleClick = function(url) {
+    history.push(url);
+  }
   
+  const onProfile = window.location.pathname === "/profile";
 
   return (
     <Navbar bg="light" expand="lg">
       
-      <Navbar.Brand href="/">
+      <Navbar.Brand onClick={() => handleClick("/")}>
         <img
           alt=""
           src="http://shorturl.at/howPQ"
@@ -32,10 +39,10 @@ export default function ChessNavBar(props) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-
-          <Nav.Link href="/profile">Profile</Nav.Link>
-          <Nav.Link href="/">LeaderBoards</Nav.Link>
-          <Nav.Link href="/community">Community</Nav.Link>
+        <Nav.Link onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
+          {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
+          {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
+          <Nav.Link onClick={() => handleClick("/community")}>Community</Nav.Link>
 
           <NavDropdown title="Quick Play" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Ranked</NavDropdown.Item>
@@ -46,8 +53,20 @@ export default function ChessNavBar(props) {
             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
           </NavDropdown>
         </Nav>
-
-        {username && 
+        {username && onProfile &&
+          <Fragment>
+            <p>Logged in as: {username}</p>
+            <Button 
+              onClick={ () => {
+                handleClick("/")
+                logout()
+              }}
+              variant="outline-success"
+              // onClick={() => logout()}
+            >Log out</Button>
+          </Fragment>
+        }
+        {username && !onProfile &&
           <Fragment>
             <p>Logged in as: {username}</p>
             <Button 
