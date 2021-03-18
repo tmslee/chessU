@@ -6,6 +6,8 @@ import Profile from "./Profile/index";
 import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
+import Community from "./Community/Community";
+import LeaderBoards from "./Community/LeaderBoards";
 import useToken from "../hooks/useToken";
 import axios from 'axios';
 // Importing the Bootstrap CSS
@@ -60,7 +62,7 @@ export default function Application() {
   return (
     <>
     <ChessNavBar
-    username={currentUser? currentUser.username : null}
+    username={currentUser ? currentUser.username : null}
     setActive={setActive} 
     active={active}
     logout={logout}
@@ -97,7 +99,20 @@ export default function Application() {
         {/* <Route path="/game/:id" component={Game} /> */}
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
-        <Route path="/profile" component={Profile} />
+        
+        <Route path="/profile" exact render={(props) => 
+          (<Profile 
+            {...props} 
+            token={token}
+            currentUser={currentUser}
+            setActive={setActive} 
+            getCurrentUser={getCurrentUser}
+            setCurrentUser={setCurrentUser}
+          />)
+        }/>
+
+        <Route path="/community" component={Community} />
+        <Route path="/leaderboards" component={LeaderBoards} />
       </Switch>
     </main>
     </Router>
