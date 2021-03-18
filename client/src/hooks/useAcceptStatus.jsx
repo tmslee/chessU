@@ -64,17 +64,6 @@ const useAcceptStatus = (
       } else {
         console.log("match made");
         opponentAccept();
-<<<<<<< HEAD
-        loadGame(gameOptions);
-        setGameInfo( {
-          matchId : data.matchId,
-          colors : data.colors, // { white : id, black : id }
-          name1 : currentUser.username,
-          name2 : opponent.username 
-        })
-
-        const {matchId} = data;
-=======
         console.log(data, opponent)
         loadGame(data, currentUser, opponent, matchId);
         // setGameInfo( {
@@ -84,7 +73,6 @@ const useAcceptStatus = (
         //   name2 : opponent.username 
         // })
 
->>>>>>> e7eb234b4e10c3ff74a311aa768af7b9597f187b
         // setGameRoute(`/game/${matchId}`);
         // window.location = `/game/${matchId}`;
 
