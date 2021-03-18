@@ -18,8 +18,9 @@ const users = require("./routes/users");
 const action = require("./routes/actions");
 const matches = require("./routes/matches");
 const chatLogs = require("./routes/chatLogs");
-const queues = require("./routes/queues");
 const stats = require("./routes/stats");
+const leaderboards = require("./routes/leaderboards");
+const community = require("./routes/community");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -55,9 +56,9 @@ module.exports = function application(
   app.use("/api", action(db));
   app.use("/api", matches(db));
   app.use("/api", chatLogs(db));
-  app.use("/api", queues(db));
   app.use("/api", stats(db));
-
+  app.use("/api", leaderboards(db));
+  app.use("/api", community(db));
   
   if (ENV === "development" || ENV === "test") {
     Promise.all([

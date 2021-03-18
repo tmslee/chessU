@@ -12,14 +12,40 @@ const addMatch = function(type, user1, user2) {
 
 exports.addMatch = addMatch;
 
-// const addUser = function(user) {
-//   return db.query(`
-//   INSERT INTO users
-//   (name, email, password)
-//   VALUES ($1, $2, $3)
-//   RETURNING *;`
-//   , [user.name, user.email, user.password])
-//     .then(res => res.rows[0]);
-// };
+const allMatches = function() {
+  return db.query(`
+  SELECT * 
+  FROM matches;`
+  ).then(res => res.rows)
+};
 
-// exports.addUser = addUser;
+exports.allMatches = allMatches;
+
+const getMatchById = function(id) {
+  return db.query(`
+  SELECT * 
+  FROM matches 
+  where id = $1;`,
+  [id]
+  ).then(res => res.rows)
+};
+
+exports.getMatchById = getMatchById;
+
+const updateMatch = function(white, black, winner, loser, matchID) {
+  return db.query(`
+  UPDATE matches SET
+    white = $1::integer,
+    black = $2::integer,
+    winner = $3::integer,
+    loser = $4::integer
+  WHERE id = $5::integer
+  RETURNING *;`,
+  [white, black, winner, loser, matchID]
+  ).then(res => res.rows)
+};
+
+exports.updateMatch = updateMatch;
+
+
+

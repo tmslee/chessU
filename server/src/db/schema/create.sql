@@ -11,7 +11,9 @@ CREATE TABLE users (
   email varchar(255) NOT NULL CHECK (email <> ''),
   password varchar(255) NOT NULL CHECK (password <> ''),
   profile_img TEXT DEFAULT NULL,
-  elo int DEFAULT 1500,
+  ranked30 int DEFAULT 1500,
+  ranked10 int DEFAULT 1500,
+  casual int DEFAULT 1500,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT UC_users UNIQUE (username)
 );

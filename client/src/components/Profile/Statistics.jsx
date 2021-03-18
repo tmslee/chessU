@@ -22,6 +22,9 @@ export default function Statistics(props) {
     <div className="stats-box">
       <div className="stats">
         <a>W/L:  {wins}/{losses} </a>
+        <a>Ranked 30 Elo: {currentUser.ranked30} </a>
+        <a>Ranked 10 Elo: {currentUser.ranked10} </a>
+        <a>Casual Elo: {currentUser.casual} </a>
         <a>Total Matches Played: {matches}</a>
         <a>Avg Moves Per Match: {actions/matches} </a> 
         <a>Percent Wins On White: {whiteWins/matches} </a> 
