@@ -28,6 +28,8 @@ CREATE TABLE "matches" (
   start_time TIMESTAMP,
   end_time TIMESTAMP
 );
+  -- white INTEGER NOT NULL,
+  -- black INTEGER NOT NULL
 
 CREATE TABLE "chat_logs" (
   id SERIAL PRIMARY KEY NOT NULL,

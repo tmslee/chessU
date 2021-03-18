@@ -12,7 +12,7 @@ export default function ChessNavBar(props) {
     logout
   } = props;
 
-  
+  const onProfile = window.location.pathname === "/profile"
 
   return (
     <Navbar bg="light" expand="lg">
@@ -33,8 +33,9 @@ export default function ChessNavBar(props) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
 
-          <Nav.Link href="/profile">Profile</Nav.Link>
           <Nav.Link href="/leaderboards">LeaderBoards</Nav.Link>
+          {username && <Nav.Link href="/profile">Profile</Nav.Link>}
+          {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
           <Nav.Link href="/community">Community</Nav.Link>
 
           <NavDropdown title="Quick Play" id="basic-nav-dropdown">
@@ -46,7 +47,16 @@ export default function ChessNavBar(props) {
             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
           </NavDropdown>
         </Nav>
-
+        {username && onProfile &&
+          <Fragment>
+            <p>Logged in as: {username}</p>
+            <Button 
+              href="/"
+              variant="outline-success"
+              onClick={() => logout()}
+            >Log out</Button>
+          </Fragment>
+        }
         {username && 
           <Fragment>
             <p>Logged in as: {username}</p>
