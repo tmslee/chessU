@@ -31,13 +31,13 @@ module.exports = db => {
       const avgMatch = await avgMatchLength(userId);
 
       res.json({
-        wins,  
-        losses, 
-        matches,
-        actions,
-        whiteWins,
-        blackWins,
-        avgMatch
+        wins: wins.wins,  
+        losses: losses.losses, 
+        matches: matches.tot_matches,
+        actions: actions.tot_actions,
+        whiteWins: whiteWins.win_white,
+        blackWins: blackWins.win_black,
+        avgMatch: avgMatch.avg_match_len
       })
 
     } catch (err) {
