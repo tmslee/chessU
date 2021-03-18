@@ -54,7 +54,17 @@ export default function GameOptionsModal(props) {
   const history = useHistory();
   const loadGame = function (data, currentUser, opponent, matchId) {
     // leaveQueue(gameOptions.currentUserID);
-    console.log("loading game...");
+    console.log("ai loading game...");
+    if (opponent.username === 'AI'){
+      setGameInfo({
+        matchId : data.matchId,
+        colors : data.colors,
+        name1 : currentUser.username,
+        name2 : opponent.username 
+      })
+      history.push(`/aigame/${matchId}`);
+      return
+    } 
 
     dequeue();
     console.log("loading game...");

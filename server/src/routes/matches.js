@@ -18,6 +18,7 @@ module.exports = db => {
           $1::text, $2::integer, $3::integer
         ) RETURNING *;`,
         [type, user1ID, user2ID]);
+      console.log(newMatch.rows);
       res.json(newMatch.rows);
     } catch (err) {
       console.error(err.message);

@@ -7,6 +7,7 @@ import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
 import useToken from "../hooks/useToken";
+import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -94,7 +95,9 @@ export default function Application() {
             currentUser = {currentUser}  // colors : { white: user1, black: user2 }
           />)
         }/>
-        {/* <Route path="/game/:id" component={Game} /> */}
+        <Route path="/aigame/:id" render={(props) => (
+          <AiGame {...props} currentUser = {currentUser} />
+        )} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" exact render={(props) => 
