@@ -13,7 +13,6 @@ export default function UserInfo (props) {
         <button onClick={() => setSettings(true)} id="edit">Edit Profile</button>
       <div className="user-info">
         <a>{currentUser.username}</a>
-        <a>Elo: {currentUser.elo}</a>
       </div>
     </div>
   )
