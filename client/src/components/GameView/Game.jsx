@@ -14,6 +14,7 @@ function Game(props) {
   // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
   // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
 
+  const isRanked = true;
   let usernameWhite;
   let usernameBlack;
   let chessboardOrientation;
@@ -113,11 +114,7 @@ function Game(props) {
       }
       // console.log(game.current.turn());
     } else {
-      if (game.current.turn() === 'b'){
-        gameover('White');
-      } else {
-        gameover('Black');
-      }
+      resultSend();
     }
   }
 
@@ -168,30 +165,67 @@ function Game(props) {
       }
       // console.log(game.current.turn());
     } else {
-      if (game.current.turn() === 'b'){
-        gameover('White');
-      } else {
-        gameover('Black');
-      }
+      resultSend();
     }
   }
+  
+  const resultSend = function(){ 
+    const move_logs = state.chessmoves;
+    result(move_logs);
+    if (game.current.turn() === 'b'){
+      gameover('White');
+    } else {
+      gameover('Black');
+    }
+  }
+
+  const result = async function(move_logs) {
+    for(const move of move_logs){
+      try {
+        const user = await axios.post('http://localhost:8001/api/login', {username, password})
+        console.log(user,"here")
+        await setToken(user.data.token)
+        return user;
+      } catch (err) {
+        console.log(err, "error")
+      }
+    }
+  };
   
   const setModalShow = function(bool){
     setState(prev => ({...prev, modalShow: bool }));
   }
   
-  const regame = function(){
-    setState({ 
-      position: "start",
-      isBlackRunning: false,
-      isWhiteRunning: true,
-      isGameOver: false,
-      modalShow: false,
-      chessmoves: [],
-      winner:'',
-      isReceived: true
-    });
-  }
+  // let invitationFromOpponent = false;
+  // // receive the regame invitation sent by your opponent
+  // const { regameInfo, sendRegameInfo } = useRegame(roomId);
+  // if(!regameInfo.madeByCurrentUser && regameInfo.length !== 0){
+    // setModalShow(false);
+  //   invitationFromOpponent = true;
+  // }
+
+  // const regame = function(){
+  //   if (isRanked){
+  //     window.location.assign("/");
+  //   } else {
+  //     // for casual mode, they can replay once again
+  //     sendRegameInfo(props.currentUser.id);
+  //     setState({ 
+  //       position: "start",
+  //       isBlackRunning: false,
+  //       isWhiteRunning: true,
+  //       isGameOver: false,
+  //       modalShow: false,
+  //       chessmoves: [],
+  //       winner:'',
+  //       isReceived: true
+  //     });
+  //   }
+  // }
+
+  // const backToHome = function(){
+  //   window.location.assign("/");
+  // }
 
   return (
     <div className="gameView">
@@ -216,8 +250,11 @@ function Game(props) {
       <Popup
         show={state.modalShow}
         onHide={() => setModalShow(false)}
-        regame={regame}
+        // regame={regame}
+        // backToHome={backToHome}
         winner={state.winner}
+        isRanked={isRanked}
+        // invitationFromOpponent={invitationFromOpponent}
       />
     </div>
   );
