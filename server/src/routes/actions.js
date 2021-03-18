@@ -16,6 +16,7 @@ module.exports = db => {
 
   router.post('/actions', async (req, res) => {
     const { userID, matchID, action } = req.body
+    console.log(req.body);
     try{
       const newActionLog = await db.query(
         `INSERT INTO action_logs (user_id, match_id, action) VALUES (

@@ -32,11 +32,13 @@ const matchConfirmStatus = {};
 const userSockets = {};
 
 const dequeue = function(Q, id) {
-  Q.forEach( (data, idx) => {
-    if(data.currentUser.id === id) {
-      Q.splice(idx, 1);
-    }
-  })
+  if(Q !== undefined && Q.length > 0){
+    Q.forEach( (data, idx) => {
+      if(data.currentUser.id === id) {
+        Q.splice(idx, 1);
+      }
+    })
+  }
 };
 
 io.on("connection", (socket) => {

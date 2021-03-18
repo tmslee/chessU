@@ -35,19 +35,19 @@ module.exports = db => {
   });
 
   router.put('/matches/:matchID', async (req, res) => {
-    const {type, user1ID, user2ID, winner, loser} = req.body;
+    const {white, black, winner, loser} = req.body;
     const matchID = req.params.matchID;
+    console.log(white, black, winner, loser, matchID);
     try {
       const updatedMatch = await db.query(`
         UPDATE matches SET 
-          type = $1::text,
-          user1_id = $2::integer, 
-          user2_id = $3::integer,  
-          winner = $4::integer,
-          loser = $5::integer
-        WHERE id = $6::integer
+          white = $1::integer, 
+          black = $2::integer,  
+          winner = $3::integer,
+          loser = $4::integer
+        WHERE id = $5::integer
         RETURNING *;`,
-        [type, user1ID, user2ID, winner, loser, matchID]);
+        [Number(white), Number(black), Number(winner), Number(loser), Number(matchID)]);
       res.json(updatedMatch.rows);
     } catch (err) {
       console.error(err.message);
