@@ -9,12 +9,21 @@ import Chess from "chess.js";
 import axios from "axios";
 
 export default function AiGame(props){
+  console.log(props);
   const currentUserId = props.currentUser.id
   const { matchId } = props.match.params; 
+  const difficulty = props.gameInfo.difficulty - 1;
 
   const usernameWhite = props.currentUser.username;
   const usernameBlack = 'AI';
   const chessboardOrientation = 'white';
+
+  let duration;
+  if(props.gameInfo.timeLimit === null){
+    duration = false;
+  } else {
+    duration = props.gameInfo.timeLimit;
+  }
 
   const [state, setState] = useState({
     position: "start",
@@ -25,7 +34,7 @@ export default function AiGame(props){
     chessmoves: [],
     winner:'',
     roomId: matchId,
-    isReceived: true
+    duration
   })
 
   let ai = useRef(null);
@@ -62,18 +71,19 @@ export default function AiGame(props){
     }
   };
 
-  const resultRecord = async function(){
+  const resultRecord = async function(currentUserId){
     const matchResult = {
-      white: props.gameInfo.colors.white, 
-      black: props.gameInfo.colors.black,
-      winner: props.currentUser.id,
+      white: props.currentUser.id, 
+      black: null,
     };
-    if (matchResult['white'] === matchResult['winner']){
-      matchResult['loser'] = matchResult['black'];
+    if (currentUserId){
+      matchResult['winner'] = props.currentUser.id;
+      matchResult['loser'] = null;
     } else {
-      matchResult['loser'] = matchResult['white'];
+      matchResult['winner'] = null;
+      matchResult['loser'] = props.currentUser.id;
     }
-    const idMatch = props.gameInfo.matchId;
+    const idMatch = props.match.params.id;
     console.log(matchResult);
     try{
       const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
@@ -87,7 +97,11 @@ export default function AiGame(props){
   // the winner client side will send the result
   const resultSend = function(){ 
     if (game.current.turn() === 'b'){
+      resultRecord(currentUserId);
+    } else {
       resultRecord();
+    }
+    if (game.current.turn() === 'b'){
       gameover('White');
     } else {
       gameover('Black');
@@ -95,7 +109,7 @@ export default function AiGame(props){
   }
 
   const moveMadeByAi = function(){
-    const aimove = ai.current.aiMove(3);
+    const aimove = ai.current.aiMove(difficulty);
     const aiFrom = Object.keys(aimove)[0].toLowerCase();
     const aiTo = Object.values(aimove)[0].toLowerCase();
     let move = game.current.move({
@@ -112,8 +126,7 @@ export default function AiGame(props){
       setState(prev => ({...prev,
         isWhiteRunning: true,
         position: game.current.fen(),
-        chessmoves,
-        isReceived: true
+        chessmoves
       }))
       movesRecord(moveMadeAi);
     } else {
@@ -144,8 +157,7 @@ export default function AiGame(props){
       setState(prev => ({...prev,
         isWhiteRunning: false,
         position: game.current.fen(),
-        chessmoves,
-        isReceived: true
+        chessmoves
       }));
       movesRecord(moveMade);
       moveMadeByAi();
@@ -161,12 +173,13 @@ export default function AiGame(props){
   return (
     <div className="gameView">
       <div className="countdown">
+        {state.duration &&         
         <Countdown color={"white"} 
         username={usernameWhite}
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
-        // timeout={gameover}
-        />
+        duration={state.duration}
+        />}
       </div>
       <div className="chessboard">
         <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
