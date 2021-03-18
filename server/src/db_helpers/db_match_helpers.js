@@ -7,7 +7,7 @@ const addMatch = function(type, user1, user2) {
   VALUES ($1::text, $2::integer, $3::integer) 
   RETURNING *;`,
   [type, user1, user2]
-  ).then(res => res.rows[0].id)
+  ).then(res => res.rows[0])
 };
 
 exports.addMatch = addMatch;
