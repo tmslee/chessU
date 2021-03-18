@@ -2,7 +2,13 @@ import React from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
 
 export default function UserListItem(props) {
-  const {currentUser, type, isFriend, user} = props;
+  const {
+    currentUser, 
+    type, 
+    isFriend, 
+    user,
+    gameType
+  } = props;
   //type: "user" or "request" 
 
   const inviteToGame = function () {
@@ -37,7 +43,12 @@ export default function UserListItem(props) {
           <h5>{user.username}</h5>
         </Col>
         <Col>
-          <h5>Elo: {user.elo}</h5>
+        {gameType === "ranked30" &&
+          <h5>Elo: {user.ranked30}</h5>
+        }
+        {gameType === "ranked10" &&
+          <h5>Elo: {user.ranked10}</h5>
+        }
         </Col>
         <Col>
           {currentUser && type === "user" && isFriend && 

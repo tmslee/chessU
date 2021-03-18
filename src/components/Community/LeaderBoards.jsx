@@ -5,13 +5,13 @@ import axios from "axios";
 
 export default function LeaderBoards(props) {
   const { currentUser } = props;
-  const [type, setType] = useState('ranked30');
+  const [gameType, setgameType] = useState('ranked30');
   const [users, setUsers] = useState();
 
   useEffect( () => {
-    axios.get(`http://localhost:8001/api/leaderboards/${type}`)
+    axios.get(`http://localhost:8001/api/leaderboards/${gameType}`)
     .then( res => setUsers(res.data));
-  },[type])
+  },[gameType])
   // setUsers(res.data)
 
   const userListRender = () => {
@@ -20,6 +20,7 @@ export default function LeaderBoards(props) {
       <UserListItem 
       currentUser={currentUser}
       type="user"
+      gameType={gameType}
       user={user}
       isFriend={true}
       />
@@ -32,11 +33,11 @@ export default function LeaderBoards(props) {
 
   return (
     <div>
-      { users && type &&
+      { users && gameType &&
       <Tabs
       id="controlled-tab-example"
-      activeKey={type}
-      onSelect={(k) => setType(k)}
+      activeKey={gameType}
+      onSelect={(k) => setgameType(k)}
       >
         <Tab eventKey="ranked30" title="30 minutes ranked">
           <div>30 RANKED</div>
@@ -44,10 +45,6 @@ export default function LeaderBoards(props) {
         </Tab>
         <Tab eventKey="ranked10" title="10 minutes ranked">
           <div>10 RANKED</div>
-          {userListRender()}
-        </Tab>
-        <Tab eventKey="ranked0" title="no time limit ranked">
-          <div>UNLIMITED RANKED</div> 
           {userListRender()}
         </Tab>
       </Tabs>
