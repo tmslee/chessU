@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {Form, Tabs, Tab, ListGroup} from "react-bootstrap";
 import FriendList from './FriendList'
@@ -10,13 +11,15 @@ export default function Community(props) {
 
   const [key, setKey] = useState('Friends');
 
-  const [friends, setFriends] = useState();
-  const [requests, setRequests] = useState();
+  const [friends, setFriends] = useState([]);
+  const [requests, setRequests] = useState([]);
 
   useEffect(() => {
     if(currentUser){
-      setFriends([]);
-      setRequests([]);
+      axios.get(`http://localhost:8001/api/friends/${currentUser.id}`)
+      .then( res => setFriends(res.data));
+      axios.get(`http://localhost:8001/api/friendRequests/${currentUser.id}`)
+      .then( res => setRequests(res.data));
     }
     else {
       setFriends([]);
