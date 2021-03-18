@@ -1,5 +1,14 @@
 const router = require("express").Router();
-const { totalWins } = require("../db_helpers/db_stats_helpers")
+const { 
+  totalWins, 
+  totalLosses,
+  totalMatches,
+  totalActions,
+  winsAsWhite,
+  winsAsBlack,
+  avgMatchLength 
+} = require("../db_helpers/db_stats_helpers")
+
 module.exports = db => {
 
 
@@ -9,9 +18,30 @@ module.exports = db => {
   // 4. average num moves
   // 5. average match length
   
-  router.get("/stats/:id", (req, res) => {
+  router.get("/stats/:id", async (req, res) => {
     const userId = req.params.id
-    const wins = totalWins(userId)
+    try {
+      const wins = await totalWins(userId);
+      const losses = await totalLosses(userId);
+      const totalMatches = await totalMatches(userId);
+      const totalActions = await totalActions(userId);
+      const winsAsWhite = await winsAsWhite(userId);
+      const winsAsBlack = await winsAsBlack(userId);
+      const avgMatchLength = await avgMatchLength(userId);
+
+      res.json({
+        wins, 
+        losses, 
+        totalMatches,
+        totalActions,
+        winsAsWhite,
+        winsAsBlack,
+        avgMatchLength
+      })
+
+    } catch (err) {
+
+    }
 
   })
 
