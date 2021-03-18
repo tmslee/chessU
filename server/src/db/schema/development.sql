@@ -20,17 +20,17 @@ INSERT INTO users (username, email, password, elo) VALUES (
 -- casual/ranked/ai
 
 -- matches
-INSERT INTO matches (type, user1_id, user2_id, winner, loser) VALUES (
-  'casual', 1, 2, 1, 2
+INSERT INTO matches (type, user1_id, user2_id, winner, loser, white, black, start_time, end_time) VALUES (
+  'CASUAL', 1, 2, 1, 2, 1, 2, '2000-11-13 12:12:12', '2000-11-13 12:12:13'
 );
-INSERT INTO matches (type, user1_id, user2_id, winner, loser) VALUES (
-  'ai', 1, null, 1, null
+INSERT INTO matches (type, user1_id, user2_id, winner, loser, white, black, start_time, end_time) VALUES (
+  'AI', 1, null, 1, null, 1, null, '2000-11-13 12:12:12', '2000-11-13 12:13:12'
 );
-INSERT INTO matches (type, user1_id, user2_id, winner, loser) VALUES (
-  'ranked', 3, 2, 2, 3
+INSERT INTO matches (type, user1_id, user2_id, winner, loser, white, black, start_time, end_time) VALUES (
+  'RANKED', 3, 2, 2, 3, 2, 3, '2000-11-13 11:12:12', '2000-11-13 12:12:12'
 );
-INSERT INTO matches (type, user1_id, user2_id, winner, loser) VALUES (
-  'casual', 1, 3, 1, 3
+INSERT INTO matches (type, user1_id, user2_id, winner, loser, white, black, start_time, end_time) VALUES (
+  'CASUAL', 1, 3, 1, 3, 3, 1, '2000-11-13 10:12:12', '2000-11-13 12:12:12'
 );
 
 -- chat logs
@@ -78,23 +78,22 @@ INSERT INTO action_logs (user_id, match_id, created_at, action) VALUES (
   2, 3, '2001-11-13 12:46:00', '{"piece" : "knight", "from" : "b1, "to" : "a3"}' 
 );
 
--- modes = 'ranked' , 'classic'
-
-INSERT INTO queues (user_id, username, elo, game_type, created_at)
-VALUES (
-  1, 'alvin', 1800 , 'casual', '2001-11-13 12:45:00' 
+-- friends 
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  1, 2, '2001-11-13 12:46:20'
 );
-
-INSERT INTO queues (user_id, username, elo, game_type, created_at)
-VALUES (
-  4, 'user4', 1500, 'ranked', '2001-11-13 12:46:00' 
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  2, 1, '2001-11-13 12:46:20'
 );
-INSERT INTO queues (user_id, username, elo, game_type, created_at)
-VALUES (
-  5, 'user5', 3000 ,'ranked', '2001-11-13 12:46:01' 
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  3, 2, '2001-11-13 12:46:20'
 );
-INSERT INTO queues (user_id, username, elo, game_type, created_at)
-VALUES (
-  6, 'user6', 50 , 'ranked', '2001-11-13 12:46:02' 
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  2, 3, '2001-11-13 12:46:20'
 );
-
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  1, 3, '2001-11-13 12:46:20'
+);
+INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
+  3, 1, '2001-11-13 12:46:20'
+);
