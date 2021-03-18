@@ -6,8 +6,8 @@ import Profile from "./Profile/index";
 import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
-import FriendList from "./Community/FriendList";
-import LeaderBoard from "./Community/LeaderBoard";
+import Community from "./Community/Community";
+import LeaderBoards from "./Community/LeaderBoards";
 import useToken from "../hooks/useToken";
 import axios from 'axios';
 // Importing the Bootstrap CSS
@@ -111,8 +111,8 @@ export default function Application() {
           />)
         }/>
 
-        <Route path="/community" component={FriendList} />
-        <Route path="/leaderboards" component={LeaderBoard} />
+        <Route path="/community" component={Community} />
+        <Route path="/leaderboards" component={LeaderBoards} />
       </Switch>
     </main>
     </Router>
