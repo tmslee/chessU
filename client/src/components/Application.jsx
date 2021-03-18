@@ -96,7 +96,7 @@ export default function Application() {
           />)
         }/>
         <Route path="/aigame/:id" render={(props) => (
-          <AiGame {...props} currentUser = {currentUser} />
+          <AiGame {...props} currentUser = {currentUser} gameInfo = {gameInfo} />
         )} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />

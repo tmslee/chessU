@@ -57,6 +57,9 @@ export default function GameOptionsModal(props) {
     console.log("ai loading game...");
     if (opponent.username === 'AI'){
       setGameInfo({
+        type: data.type,
+        difficulty: data.difficulty,
+        timeLimit: data.timeLimit,
         matchId : data.matchId,
         colors : data.colors,
         name1 : currentUser.username,

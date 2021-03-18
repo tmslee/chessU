@@ -133,6 +133,7 @@ export default function GameForm(props) {
         {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> }
         {(gameOptions.type === AI) && <Button variant="primary" onClick={() => {
           gameStartRecord(gameOptions).then(res => {
+            console.log(gameOptions);
             const matchId = res.data[0].id;
             loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
           });
