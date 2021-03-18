@@ -112,8 +112,19 @@ export default function Application() {
           />)
         }/>
 
-        <Route path="/community" component={Community} />
-        <Route path="/leaderboards" component={LeaderBoards} />
+        <Route path="/community" exact render={(props) => 
+          (<Community
+            {...props} 
+            currentUser={currentUser} 
+          />)
+        } />
+        <Route path="/leaderboards" exact render={(props) => 
+          (<LeaderBoards
+            {...props} 
+            token={token}
+            currentUser={currentUser} 
+          />)
+        }/>
       </Switch>
     </main>
     </Router>
