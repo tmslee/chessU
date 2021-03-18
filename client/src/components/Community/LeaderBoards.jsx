@@ -9,7 +9,7 @@ export default function LeaderBoards(props) {
   const [users, setUsers] = useState();
 
   axios.get(`http://localhost:8001/api/leaderboards/${type}`)
-  .then( res => console.log(res.data));
+  .then( res => setUsers(res.data));
   // setUsers(res.data)
 
   const userListRender = () => {
@@ -29,28 +29,24 @@ export default function LeaderBoards(props) {
 
   return (
     <div>
+      { users && type &&
       <Tabs
       id="controlled-tab-example"
       activeKey={type}
       onSelect={(k) => setType(k)}
       >
-        { users && type === 'ranked30' &&
         <Tab eventKey="ranked30" title="30 minutes ranked">
           <div>30 RANKED</div>
-          {userListRender}
+          {userListRender()}
         </Tab>
-        }
-        { users && type === 'ranked10' &&
         <Tab eventKey="ranked10" title="10 minutes ranked">
           <div>10 RANKED</div>
         </Tab>
-        }
-        { users && type === 'ranked0' &&
         <Tab eventKey="ranked0" title="no time limit ranked">
           <div>UNLIMITED RANKED</div> 
         </Tab>
-        }
       </Tabs>
+    } 
     </div>
   );
 }
