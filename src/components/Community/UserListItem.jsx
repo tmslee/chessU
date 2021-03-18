@@ -2,8 +2,9 @@ import React from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
 
 export default function UserListItem(props) {
-  const {type, isFriend, username, profileImg, elo} = props;
-  
+  const {currentUser, type, isFriend, user} = props;
+  //type: "user" or "request" 
+
   const inviteToGame = function () {
     console.log('inviting to game');
   }
@@ -24,29 +25,35 @@ export default function UserListItem(props) {
     <Container>
       <Row>
         <Col>
-        
+          <img
+            width={64}
+            height={64}
+            className="align-self-start mr-3"
+            src={user.profileImg}
+            alt="Generic placeholder"
+          />
         </Col>
         <Col>
-        
+          <h5>{user.username}</h5>
         </Col>
         <Col>
-        
+          <h5>Elo: {user.elo}</h5>
         </Col>
         <Col>
-          {type === "user" && isFriend && 
+          {currentUser && type === "user" && isFriend && 
             <>
             <Row>
               <Button variant="primary" onClick={inviteToGame}>invite to a game</Button>
             </Row>
             <Row>
-              <Button variant="danger" onClick={removeFriend}>remove Friend</Button>
+              <Button variant="danger" onClick={removeFriend}>remove friend</Button>
             </Row> 
             </>
           }
-          {type === "user" && !isFriend &&
-            <Button variant="primary" onClick={sendFriendRequest}>invite to a game</Button>
+          {currentUser && type === "user" && !isFriend &&
+            <Button variant="primary" onClick={sendFriendRequest}>add as friend</Button>
           }
-          {type === "request" && 
+          {currentUser && type === "request" && 
             <> 
             <Row>
               <Button variant="primary" onClick={acceptFriendRequest}>accept</Button>
@@ -56,7 +63,6 @@ export default function UserListItem(props) {
             </Row> 
             </>
           }
-
         </Col>
       </Row>
     </Container>

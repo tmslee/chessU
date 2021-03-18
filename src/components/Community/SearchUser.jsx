@@ -1,10 +1,34 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ListGroup, Form, Button, Col} from "react-bootstrap";
+import { First } from 'react-bootstrap/esm/PageItem';
+import UserListItem from './UserListItem';
 // import FriendList from ''
 
 export default function SearchUser(props) {
-  const {} = props;
+  const {currentUser, friends} = props;
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+
+  // useEffect(() => {
+  //   setSearchResult();
+  // }, [searchTerm]);
+  const isFriend = function (currentuser, user) {
+    return true;
+  }
+
+  const parsedSearchResult = searchResult.map(res => {
+    return (
+      <ListGroup.Item>
+        <UserListItem
+          currentUser={currentUser}
+          type={"user"}
+          isFriend={isFriend()}
+          user={res}
+        />
+      </ListGroup.Item>
+    );
+  })
 
   return (
     <div>
@@ -21,13 +45,10 @@ export default function SearchUser(props) {
             </Button>
           </Col>
         </Form.Row>
-        
+
       </Form>
       <ListGroup variant="flush">
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-        <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+        {parsedSearchResult}
       </ListGroup>
     </div>
 
