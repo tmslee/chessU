@@ -32,17 +32,16 @@ const getMatchById = function(id) {
 
 exports.getMatchById = getMatchById;
 
-const updateMatch = function(type, user1ID, user2ID, winner, loser, matchID) {
+const updateMatch = function(white, black, winner, loser, matchID) {
   return db.query(`
-  UPDATE matches SET 
-    type = $1::text,
-    user1_id = $2::integer, 
-    user2_id = $3::integer,  
-    winner = $4::integer,
-    loser = $5::integer
-  WHERE id = $6::integer
+  UPDATE matches SET
+    white = $1::integer,
+    black = $2::integer,
+    winner = $3::integer,
+    loser = $4::integer
+  WHERE id = $5::integer
   RETURNING *;`,
-  [type, user1ID, user2ID, winner, loser, matchID]
+  [white, black, winner, loser, matchID]
   ).then(res => res.rows)
 };
 

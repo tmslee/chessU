@@ -41,18 +41,17 @@ module.exports = db => {
   });
 
   router.put('/matches/:matchID', async (req, res) => {
-    const {type, user1ID, user2ID, winner, loser} = req.body;
+    const {white, black, winner, loser} = req.body;
     const matchID = req.params.matchID;
 
-    updateMatch(type, user1ID, user2ID, winner, loser, matchID)
+    updateMatch(white, black, winner, loser, matchID)
     .then( match => {
       res.json(match);
     })
     .catch( err => {
       res.send(err);
-    })
-
+    });
   });
 
   return router;
-}
+};
