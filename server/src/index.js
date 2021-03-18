@@ -152,10 +152,10 @@ io.on("connection", (socket) => {
           console.log('making match');
           // const white = userId;
           // const black = opponent;
-          const color = { white : userId, black : opponent };
-          addMatch(type, color.white, color.black).then(matchId => {
-            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId, color });
-            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId, color });
+          const colors = { white : userId, black : opponent };
+          addMatch(type, colors.white, colors.black).then(matchId => {
+            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId, colors });
+            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId, colors });
           });
       } else { //opponent pending -> just update matchConfirmStatus
         matchConfirmStatus[userId] = 1;

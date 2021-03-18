@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 
+import {useHistory} from "react-router-dom";
+
 import "./styles/GameOptionModal.scss";
 import {Modal} from "react-bootstrap";
 import axios from "axios";
@@ -49,43 +51,27 @@ export default function GameOptionsModal(props) {
 
   const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
 
-  // const leaveQueue = function (userID) {
-  //   //implement getting off queue here
-  //   console.log("leaving queue...");
-  //   axios.delete(`http://localhost:8001/api/queues/${userID}`)
-  //   .then( res => console.log(res) )
-  // };
-
-  // const enqueue = async function (gameOptions) {
-  //   //might want to make gameOptions only give currentUserID, type, when you do enqueue(gameOptions)
-  //   // { userId, type, elo }
-  //   console.log("joining queue...");
-  //   console.log(gameOptions);
-    
-  //   const { currentUserID, type } = gameOptions;
-  //   //might need a try catch here
-  //   //grabbing userInfo to get username/elo
-  //   // const userInfo = await axios.get(`http://localhost:8001/api/users/${currentUserID}`)
-
-  //   // console.log(userInfo.data, "userinfo")
-
-  //   // const { username, elo } = userInfo.data;
-  //   // const queueInfo = { currentUserID, type, username, elo }
-
-  //   //adds user to queue
-  //   // axios.post('http://localhost:8001/api/queues', queueInfo)
-  //   // .then( () => goToView(IN_Q) )
-  //   goToView(IN_Q);
-  // }
-
-  const loadGame = function (gameOptions) {
+  const history = useHistory();
+  const loadGame = function (data, currentUser, opponent, matchId) {
     // leaveQueue(gameOptions.currentUserID);
+    console.log("loading game...");
+
     dequeue();
     console.log("loading game...");
-    console.log(gameOptions);
+    console.log({
+      matchId : data.matchId,
+      colors : data.colors,
+      name1 : currentUser.username,
+      name2 : opponent.username 
+    });
+    setGameInfo({
+      matchId : data.matchId,
+      colors : data.colors, // { white : id, black : id }
+      name1 : currentUser.username,
+      name2 : opponent.username 
+    })
     goToView(LOADING);
-
-    //need to implement actual loadGame here
+    history.push(`/game/${matchId}`);
   }
 
   const returnToGameOptions = function () {
