@@ -9,7 +9,7 @@ export default function Countdown(props) {
   const color = props.color;
   const isGameOver = props.isGameOver;
   const timeout = props.timeout;
-  const duration = props.duration || 30;
+  const duration = props.duration;
 
   return (
     <div className = "timer">
