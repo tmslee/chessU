@@ -28,7 +28,7 @@ module.exports = db => {
     });
   });
 
-  router.get('/matches/:matchID', async (req, res) => {
+  router.get('/matches/:matchID', (req, res) => {
     const matchID = req.params.matchID;
 
     getMatchById(matchID)
@@ -40,7 +40,7 @@ module.exports = db => {
     });
   });
 
-  router.put('/matches/:matchID', async (req, res) => {
+  router.put('/matches/:matchID', (req, res) => {
     const {white, black, winner, loser} = req.body;
     const matchID = req.params.matchID;
 

@@ -48,7 +48,7 @@ module.exports = db => {
   })
 
   
-  router.put('/users/:id', async (req, res) => {
+  router.put('/users/:id', (req, res) => {
     const {username, email, password} = req.body;
     const userId = req.params.id;
 
@@ -61,7 +61,7 @@ module.exports = db => {
     })
   });
 
-  router.delete('/users/:id', async (req, res) => {
+  router.delete('/users/:id', (req, res) => {
     const userId = req.params.id;
 
     deleteUser(userId)
@@ -107,7 +107,7 @@ module.exports = db => {
 
   // ----------------- ME ----------------
 
-  router.get('/me', async (req, res) => {
+  router.get('/me', (req, res) => {
     const decoded = jwt.verify(req.headers.authorization, 'shhhhh');
     const userId = decoded.userId;
     getUserWithId(userId)
