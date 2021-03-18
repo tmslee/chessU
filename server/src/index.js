@@ -20,12 +20,12 @@ const NEW_CHESS_MOVE_EVENT = "newChessMove";
 const ENQUEUE = "ENQUEUE";
 const MATCH_CONFIRM = "MATCH_CONFIRM";
 const DEQUEUE = "DEQUEUE";
-const RANKED = "RANKED";
+const RANKED = "RANKED"
 const CASUAL = "CASUAL";
 
 const confirmation = [];
 
-const rankedQ = [];
+// const rankedQ = [];
 const rankedQ10 = [];
 const rankedQ30 = [];
 const casualQ = [];
@@ -70,8 +70,8 @@ io.on("connection", (socket) => {
           queue = rankedQ10;
         } else if (data.timeLimit === 30){
           queue = rankedQ30;
-        } else {
-          queue = rankedQ;
+        // } else {
+        //   queue = rankedQ;
         }
       }
       else if (data.type === CASUAL) {
@@ -88,7 +88,7 @@ io.on("connection", (socket) => {
       console.log("queue: " , queue);
 
       if (queue.length > 1){
-        const sortedQueue = sortUsers(queue);
+        const sortedQueue = sortUsers(queue, data.type, data.timeLimit);
         const first = sortedQueue.pop();
         const second = sortedQueue.pop(); // [{user} , {opp} ]  [ {opp} ]
 
@@ -121,21 +121,24 @@ io.on("connection", (socket) => {
           queue = rankedQ10;
         } else if (data.timeLimit === 30){
           queue = rankedQ30;
-        } else {
-          queue = rankedQ;
-        }
+        } 
+        // else {
+        //   queue = rankedQ;
+        // }
       }
       else if (data.type === CASUAL) {
         if (data.timeLimit === 10){
           queue = casualQ10;
         } else if (data.timeLimit === 30){
           queue = casualQ30;
-        } else {
+        } 
+        else {
           queue = casualQ;
         }
       };
       dequeue(queue, data.currentUser.id)
       console.log("queue :", queue);
+      console.log(rankedQ30 , "RANKED 30")
     }
   });
   
@@ -191,9 +194,9 @@ io.on("connection", (socket) => {
           // const white = userId;
           // const black = opponent;
           const colors = { white : userId, black : opponent };
-          addMatch(type, colors.white, colors.black).then(matchId => {
-            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId, colors, timeLimit });
-            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId, colors, timeLimit });
+          addMatch(type, colors.white, colors.black).then(match => {
+            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit });
+            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit });
           });
       } else { //opponent pending -> just update matchConfirmStatus
         matchConfirmStatus[userId] = 1;
