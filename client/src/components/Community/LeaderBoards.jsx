@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Tabs, Tab, ListGroup} from "react-bootstrap";
 import UserListItem from "./UserListItem";
 import axios from "axios";
@@ -8,8 +8,10 @@ export default function LeaderBoards(props) {
   const [type, setType] = useState('ranked30');
   const [users, setUsers] = useState();
 
-  axios.get(`http://localhost:8001/api/leaderboards/${type}`)
-  .then( res => setUsers(res.data));
+  useEffect( () => {
+    axios.get(`http://localhost:8001/api/leaderboards/${type}`)
+    .then( res => setUsers(res.data));
+  },[type])
   // setUsers(res.data)
 
   const userListRender = () => {
@@ -17,8 +19,9 @@ export default function LeaderBoards(props) {
       return(
       <UserListItem 
       currentUser={currentUser}
-      type={type}
+      type="user"
       user={user}
+      isFriend={true}
       />
       )
     })
@@ -41,9 +44,11 @@ export default function LeaderBoards(props) {
         </Tab>
         <Tab eventKey="ranked10" title="10 minutes ranked">
           <div>10 RANKED</div>
+          {userListRender()}
         </Tab>
         <Tab eventKey="ranked0" title="no time limit ranked">
           <div>UNLIMITED RANKED</div> 
+          {userListRender()}
         </Tab>
       </Tabs>
     } 
