@@ -58,13 +58,13 @@ export default function Application() {
 
   return (
     <>
+    <Router>
     <ChessNavBar
     username={currentUser ? currentUser.username : null}
     setActive={setActive} 
     active={active}
     logout={logout}
     />
-    <Router>
     <main>
       {active.login && 
       <LoginForm 
@@ -76,6 +76,7 @@ export default function Application() {
       <RegisterForm 
       setActive={setActive}
       active={active} 
+      setToken={setToken}
       /> }
       <Switch>
         <Route path="/" exact render={(props) => 
