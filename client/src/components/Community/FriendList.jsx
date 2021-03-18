@@ -5,21 +5,24 @@ import UserListItem from './UserListItem';
 
 export default function FriendList(props) {
   const {currentUser, friends} = props;
-
+  
+  console.log(friends);
   const parsedFriendList = friends.map(friend => {
     return (
-      <UserListItem
-        type={"user"}
-        isFriend={true}
-      />
+      <ListGroup.Item>
+        <UserListItem
+          currentUser={currentUser}
+          type={"user"}
+          isFriend={true}
+          user={friend}
+        />
+      </ListGroup.Item>
     );
   })
 
   return (
     <ListGroup variant="flush">
-      <ul>
         {parsedFriendList}  
-      </ul>
     </ListGroup>
   )
 }
