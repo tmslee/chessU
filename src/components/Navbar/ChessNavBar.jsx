@@ -66,7 +66,7 @@ export default function ChessNavBar(props) {
             >Log out</Button>
           </Fragment>
         }
-        {username && 
+        {username && !onProfile &&
           <Fragment>
             <p>Logged in as: {username}</p>
             <Button 
