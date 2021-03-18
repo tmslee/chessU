@@ -6,6 +6,8 @@ import Profile from "./Profile/index";
 import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
+import FriendList from "./Community/FriendList";
+import LeaderBoard from "./Community/LeaderBoard";
 import useToken from "../hooks/useToken";
 import axios from 'axios';
 // Importing the Bootstrap CSS
@@ -97,6 +99,7 @@ export default function Application() {
         {/* <Route path="/game/:id" component={Game} /> */}
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
+        
         <Route path="/profile" exact render={(props) => 
           (<Profile 
             {...props} 
@@ -107,6 +110,9 @@ export default function Application() {
             setCurrentUser={setCurrentUser}
           />)
         }/>
+
+        <Route path="/community" component={FriendList} />
+        <Route path="/leaderboards" component={LeaderBoard} />
       </Switch>
     </main>
     </Router>
