@@ -45,6 +45,7 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         console.log('before sending to socketio', socketRef.current.id);
 
         socketRef.current.emit(ENQUEUE, {
+          timeLimit,
           type,
           currentUser,
           socketId: socketRef.current.id,
@@ -73,6 +74,7 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
       } else if(currentUser) {
         //send a dequeue messsage to socket 
         socketRef.current.emit(DEQUEUE, {
+          timeLimit,
           type,
           // userId: currentUser.id,
           // elo: currentUser.elo,

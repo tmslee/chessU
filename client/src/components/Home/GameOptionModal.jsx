@@ -52,7 +52,7 @@ export default function GameOptionsModal(props) {
   const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
 
   const history = useHistory();
-  const loadGame = function (data, currentUser, opponent, matchId) {
+  const loadGame = function (data, currentUser, opponent, matchId, timeLimit) {
     // leaveQueue(gameOptions.currentUserID);
     console.log("ai loading game...");
     if (opponent.username === 'AI'){
@@ -81,7 +81,8 @@ export default function GameOptionsModal(props) {
       matchId : data.matchId,
       colors : data.colors, // { white : id, black : id }
       name1 : currentUser.username,
-      name2 : opponent.username 
+      name2 : opponent.username,
+      timeLimit
     })
     goToView(LOADING);
     history.push(`/game/${matchId}`);

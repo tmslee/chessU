@@ -14,6 +14,7 @@ function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
   // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
   // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
+  console.log(props);
 
   const isRanked = true;
   let usernameWhite;
@@ -39,6 +40,12 @@ function Game(props) {
   }
   console.log('white', usernameWhite, 'black', usernameBlack);
 
+  let duration;
+  if(props.gameInfo.timeLimit === null){
+    duration = false;
+  } else {
+    duration = props.gameInfo.timeLimit;
+  }
 
   const [state, setState] = useState({
     position: "start",
@@ -50,7 +57,8 @@ function Game(props) {
     chessmoves: [],
     winner:'',
     roomId: matchId,
-    isReceived: true
+    isReceived: true,
+    duration
   })
 
   const roomId = state.roomId;
@@ -262,16 +270,20 @@ function Game(props) {
   return (
     <div className="gameView">
       <div className="countdown">
+        {state.duration &&  
         <Countdown color={"white"} 
         username={usernameWhite}
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
-        timeout={gameover}/>
+        duration={state.duration}
+        timeout={gameover}/>}
+        {state.duration &&  
         <Countdown color={"black"}
         username={usernameBlack}
         isGameOver={state.isGameOver}
         isRunning={state.isBlackRunning}
-        timeout={gameover}/>
+        duration={state.duration}
+        timeout={gameover}/>}
       </div>
       <div className="chessboard">
       {/* orientation={'black'} */}
