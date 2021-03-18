@@ -134,7 +134,7 @@ export default function GameForm(props) {
         {(gameOptions.type === AI) && <Button variant="primary" onClick={() => {
           gameStartRecord(gameOptions).then(res => {
             console.log(gameOptions);
-            const matchId = res.data[0].id;
+            const matchId = res.data.id;
             loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
           });
           }}>Start Game</Button> }
