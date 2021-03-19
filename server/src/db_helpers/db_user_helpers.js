@@ -67,7 +67,13 @@ const getUserWithName = function(name) {
 
 exports.getUserWithName = getUserWithName;
 
+const updateEloById = function(updatedElo, userId, type){
+  return db.query(`
+  UPDATE user SET
+  &1 = $2
+  WHERE id = $3
+  `, [type, updatedElo, userId])
+  .then(res => res.rows[0]);
+}
 
-
-
-
+exports.updateEloById = updateEloById;
