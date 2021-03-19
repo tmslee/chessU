@@ -16,6 +16,8 @@ export default function UserListItem(props) {
   } = props;
   //type: "user" or "request" 
 
+  const currentUserID = currentUser? currentUser.id : null;
+
   const inviteToGame = function () {
     console.log('inviting to game');
   }
@@ -44,7 +46,7 @@ export default function UserListItem(props) {
         }
         </Col>
         <Col>
-          {currentUser && isFriend && 
+          {currentUserID !== user.id && currentUser && isFriend && 
             <>
             <Row>
               <Button variant="primary" onClick={() => {inviteToGame(currentUser.id, user.id)}}>invite to a game</Button>
@@ -54,21 +56,21 @@ export default function UserListItem(props) {
             </Row> 
             </>
           }
-          {currentUser && !isFriend && isRequesting &&
+          {currentUserID !== user.id && currentUser && !isFriend && isRequesting &&
             <> 
             <Row>
-              <Button variant="primary" onClick={() => {acceptFriendRequest(currentUser.id, user.id)}}>accept</Button>
+              <Button variant="primary" onClick={() => {acceptFriendRequest(currentUser.id, user.id)}}>accept friend request</Button>
             </Row>
             <Row>
-              <Button variant="danger" onClick={() => {declineFriendRequest(currentUser.id, user.id)}}>decline</Button>
+              <Button variant="danger" onClick={() => {declineFriendRequest(currentUser.id, user.id)}}>decline friend request</Button>
             </Row> 
             </>
           }
           
-          {currentUser && !isFriend && !isRequesting && !isPending &&
+          {currentUserID !== user.id && currentUser && !isFriend && !isRequesting && !isPending &&
             <Button variant="primary" onClick={() => {sendFriendRequest(currentUser.id, user.id)}}>add as friend</Button>
           }
-          {currentUser && !isFriend && !isRequesting && isPending &&
+          {currentUserID !== user.id && currentUser && !isFriend && !isRequesting && isPending &&
             <Button variant="danger" onClick={() => {removeFriend(currentUser.id, user.id)}}>cancel friend request</Button>
           }
 
