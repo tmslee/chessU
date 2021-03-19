@@ -29,7 +29,7 @@ export default function Statistics(props) {
         <a>Avg Moves Per Match: {actions/matches} </a> 
         {/* <a>Percent Wins On White: {whiteWins/matches * 100} </a>  */}
         {/* <a>Percent Wins On Black: {blackWins/matches * 100} </a>  */}
-        <a>Avg Match Length: {avgMatch.minutes}.{avgMatch.seconds} </a>
+        {/* <a>Avg Match Length: {avgMatch.minutes}.{avgMatch.seconds} </a> */}
       </div>
     </div>
   )
