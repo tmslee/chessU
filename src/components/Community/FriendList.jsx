@@ -4,17 +4,30 @@ import UserListItem from './UserListItem';
 // import FriendList from ''
 
 export default function FriendList(props) {
-  const {currentUser, friends} = props;
+  const {
+    currentUser, 
+    friends,
+    removeFriend,
+    sendFriendRequest,
+    acceptFriendRequest,
+    declineFriendRequest
+  } = props;
   
-  console.log(friends);
   const parsedFriendList = friends.map(friend => {
     return (
-      <ListGroup.Item>
+      <ListGroup.Item
+        key={friend.id}
+      >
         <UserListItem
           currentUser={currentUser}
-          type={"user"}
           isFriend={true}
+          isPending={false}
+          isRequesting={false}
           user={friend}
+          removeFriend={removeFriend}
+          sendFriendRequest={sendFriendRequest}
+          acceptFriendRequest={acceptFriendRequest}
+          declineFriendRequest={declineFriendRequest}
         />
       </ListGroup.Item>
     );

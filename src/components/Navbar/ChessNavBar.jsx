@@ -12,8 +12,6 @@ export default function ChessNavBar(props) {
     logout
   } = props;
 
-  
-
   return (
     <Navbar bg="light" expand="lg">
       
