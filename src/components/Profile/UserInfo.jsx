@@ -16,4 +16,4 @@ export default function UserInfo (props) {
       </div>
     </div>
   )
-}
+};

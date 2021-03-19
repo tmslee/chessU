@@ -3,7 +3,7 @@ import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
 import Profile from "./Profile/index";
-import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
 import Community from "./Community/Community";
@@ -11,7 +11,6 @@ import LeaderBoards from "./Community/LeaderBoards";
 import useToken from "../hooks/useToken";
 import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
-// Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Application() {
@@ -50,12 +49,12 @@ export default function Application() {
       console.log(res);
       return res.data;
     })
-  }
+  };
 
   const logout = function (){
     localStorage.clear();
     setToken(getToken());
-  }
+  };
 
   return (
     <>
@@ -92,7 +91,7 @@ export default function Application() {
           (<Game 
             {...props} 
             gameInfo = {gameInfo}
-            currentUser = {currentUser}  // colors : { white: user1, black: user2 }
+            currentUser = {currentUser}
           />)
         }/>
         <Route path="/aigame/:id" render={(props) => (
@@ -130,4 +129,4 @@ export default function Application() {
     </Router>
     </>
   );
-}
+};

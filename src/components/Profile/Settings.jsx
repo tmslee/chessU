@@ -4,8 +4,8 @@ import axios from "axios";
 
 const updateUser = function(newUserInfo, id) {
   axios.put(`http://localhost:8001/api/users/${id}`, newUserInfo)
-  .then( res => console.log(res))
-}
+  .then( res => console.log(res));
+};
 
 export default function Settings(props) {
   const {token, currentUser, setSettings, getCurrentUser, setCurrentUser} = props;
@@ -30,7 +30,7 @@ export default function Settings(props) {
     } else {
       setCurrentUser(null);
     }
-  }
+  };
 
   return(
     <div className="modal-bg3 bg-active">
