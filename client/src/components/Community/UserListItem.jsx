@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
 
 export default function UserListItem(props) {
-  const {currentUser, type, isFriend, user} = props;
+  const {
+    currentUser,
+    isFriend,
+    isPending, 
+    isRequesting,
+    user,
+    removeFriend,
+    sendFriendRequest,
+    acceptFriendRequest,
+    declineFriendRequest
+  } = props;
   //type: "user" or "request" 
 
   const inviteToGame = function () {
     console.log('inviting to game');
-  }
-  const removeFriend = function () {
-    console.log('removing friend');
-  }
-  const sendFriendRequest = function () {
-    console.log('sending friend request');
-  }
-  const acceptFriendRequest = function () {
-    console.log('accepted friend request');
-  }
-  const declineFriendRequest = function () {
-    console.log('declined friend request');
   }
   
   return (
@@ -40,29 +38,34 @@ export default function UserListItem(props) {
           <h5>Elo: {user.elo}</h5>
         </Col>
         <Col>
-          {currentUser && type === "user" && isFriend && 
+          {currentUser && isFriend && 
             <>
             <Row>
-              <Button variant="primary" onClick={inviteToGame}>invite to a game</Button>
+              <Button variant="primary" onClick={() => {inviteToGame(currentUser.id, user.id)}}>invite to a game</Button>
             </Row>
             <Row>
-              <Button variant="danger" onClick={removeFriend}>remove friend</Button>
+              <Button variant="danger" onClick={() => {removeFriend(currentUser.id, user.id)}}>remove friend</Button>
             </Row> 
             </>
           }
-          {currentUser && type === "user" && !isFriend &&
-            <Button variant="primary" onClick={sendFriendRequest}>add as friend</Button>
-          }
-          {currentUser && type === "request" && 
+          {currentUser && !isFriend && isRequesting &&
             <> 
             <Row>
-              <Button variant="primary" onClick={acceptFriendRequest}>accept</Button>
+              <Button variant="primary" onClick={() => {acceptFriendRequest(currentUser.id, user.id)}}>accept</Button>
             </Row>
             <Row>
-              <Button variant="danger" onClick={declineFriendRequest}>decline</Button>
+              <Button variant="danger" onClick={() => {declineFriendRequest(currentUser.id, user.id)}}>decline</Button>
             </Row> 
             </>
           }
+          
+          {currentUser && !isFriend && !isRequesting && !isPending &&
+            <Button variant="primary" onClick={() => {sendFriendRequest(currentUser.id, user.id)}}>add as friend</Button>
+          }
+          {currentUser && !isFriend && !isRequesting && isPending &&
+            <Button variant="danger" onClick={() => {removeFriend(currentUser.id, user.id)}}>cancel friend request</Button>
+          }
+
         </Col>
       </Row>
     </Container>
