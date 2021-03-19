@@ -18,13 +18,18 @@
   .user-icon {
     height: 80px;
     width: 80px;
-    border: 1px solid black;
-    padding: 10px;
+    // border: 1px solid black;
+    // padding: 10px;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
     margin-top: 60px;
+
+    #avatar {
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
+
   }
 
   .user-info {
@@ -37,5 +42,6 @@
   #edit {
     margin-top: 10px;
   }
+
 }
 // }
