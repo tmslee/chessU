@@ -93,6 +93,7 @@ function Game(props) {
     }
     record["matchID"] = props.gameInfo.matchId;
     record["action"] = `from: ${move.from}, to: ${move.to}`;
+    record["timeLimit"] = state.duration;
     console.log('send', record);
     try {
       const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
@@ -129,7 +130,6 @@ function Game(props) {
 
   // the winner client side will send the result
   const resultSend = function(){ 
-    resultRecord();
     if (game.current.turn() === 'b'){
       gameover('White');
     } else {
@@ -229,6 +229,7 @@ function Game(props) {
       // console.log(game.current.turn());
     } else {
       resultSend();
+      resultRecord();
     }
   }
   
