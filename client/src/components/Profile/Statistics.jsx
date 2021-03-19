@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "./styles/Statistics.scss"
+import "./styles/Statistics.scss";
 
 export default function Statistics(props) {
   const { currentUser, statsInfo } = props;

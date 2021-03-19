@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import './styles/LoginForm.scss'
+import './styles/LoginForm.scss';
 import FormError from '../Errors/FormError';
 import axios from 'axios';
 
@@ -18,21 +18,20 @@ export default function LoginForm( props ) {
 
   const loginUser = async function(username, password) {
     try {
-      const user = await axios.post('http://localhost:8001/api/login', {username, password})
-      console.log(user,"here")
-      await setToken(user.data.token)
+      const user = await axios.post('http://localhost:8001/api/login', {username, password});
+      await setToken(user.data.token);
       return user;
     } catch (err) {
-      console.log(err, "error")
+      console.log(err, "error");
     }
   };
   
 
   const handleSubmit = async function(e) {
     e.preventDefault();
-    const validLogin = await loginUser(username, password)
+    const validLogin = await loginUser(username, password);
     if (validLogin) {
-      setActive({...active, login: false  })
+      setActive({...active, login: false  });
       console.log('logging in');
     } else {
       setError(true);

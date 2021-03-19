@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 const {
   allUsers,
   addUser,
@@ -34,6 +36,7 @@ module.exports = db => {
 
   router.post('/users', (req, res) => {
     const {username, email, password} = req.body;
+    password = bcrypt.hashSync(password, 10);
 
     addUser(username, email, password)
     .then( user => {
@@ -79,8 +82,8 @@ module.exports = db => {
     return getUserWithName(name)
       .then(user => {
         if (user) {
-          // if (bcrypt.compareSync(password, user.password)) {
-          if (password === user.password) {
+          if (bcrypt.compareSync(password, user.password)) {
+          // if (password === user.password) {
             return user;
           }
         }

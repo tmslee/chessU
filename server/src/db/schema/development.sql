@@ -1,20 +1,20 @@
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'alvin', 'alvin@gmail.com', 'password', 1800, 1200, 1700
+  'alvin', 'alvin@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1800, 1200, 1700
 );
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'thomas', 'thomas@gmail.com', 'password', 900, 1200, 1800
+  'thomas', 'thomas@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 900, 1200, 1800
 );
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'haopeng', 'haopeng@gmail.com', 'password', 1400, 1200, 900
+  'haopeng', 'haopeng@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1400, 1200, 900
 );
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'user4', 'user4@gmail.com', 'password', 1500, 1600, 1700
+  'user4', 'user4@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1500, 1600, 1700
 );
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'user5', 'user5@gmail.com', 'password', 3000, 3100, 3200
+  'user5', 'user5@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 3000, 3100, 3200
 );
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'user6', 'user6@gmail.com', 'password', 50, 20, 15
+  'user6', 'user6@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 50, 20, 15
 );
 
 -- casual/ranked/ai

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import FormError from '../Errors/FormError';
-import './styles/RegisterForm.scss'
+import './styles/RegisterForm.scss';
 
 
 export default function RegisterForm(props) {
@@ -11,7 +11,7 @@ export default function RegisterForm(props) {
     setToken
   } = props;
 
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   const [newUser, setNewUser] = useState({
     username: '',
     email: '',
@@ -19,7 +19,7 @@ export default function RegisterForm(props) {
   });
 
   const clearError = () => {
-    setError(false)
+    setError(false);
   }
 
   const registerUser = function(newUser) {
@@ -27,18 +27,18 @@ export default function RegisterForm(props) {
     .then( result => {
       console.log(result, "DATAAAAA")
       if (!result.data.token) {
-        setError(true)
+        setError(true);
       } else {
         setToken(result.data.token);
-        setActive({...active, register: false  })
+        setActive({...active, register: false  });
       }
     })
   };
   
   const handleSubmit = function(e) {
     e.preventDefault();
-    registerUser(newUser)
-  }
+    registerUser(newUser);
+  };
   
   
   return(
