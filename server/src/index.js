@@ -120,6 +120,8 @@ io.on("connection", (socket) => {
           dequeue(queue, secondUser.id);
           io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser});
           io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser});
+          matches[firstUser.id] = secondUser.id;
+          matches[secondUser.id] = firstUser.id;
           matchConfirmStatus[firstUser.id] = 0;
           matchConfirmStatus[secondUser.id] = 0;
           userSockets[firstUser.id] = first.socketId;

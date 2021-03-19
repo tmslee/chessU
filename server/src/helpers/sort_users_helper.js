@@ -1,9 +1,3 @@
-const ranked = [
-  {userId: 1, elo: 1, type: "ranked"}, 
-  {userId: 2, elo: 5, type: "ranked"}, 
-  {userId: 3, elo: 2, type: "ranked"}
-]
-
 const test = [ { timeLimit: 30,
   type: 'RANKED',
   currentUser:
