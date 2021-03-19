@@ -1,8 +1,9 @@
-const { updateEloById30 } = require("../db_helpers/db_user_helpers");
+const { updateEloById30, updateEloById10,  updateEloByIdCasual} = require("../db_helpers/db_user_helpers");
 
 const eloUpdate = async function(winnerId, winner_elo, loserId, loser_elo, type, timeLimit){
+  console.log('elo update function', winnerId, winner_elo, loserId, loser_elo, type, timeLimit)
 
-  const eloDifference = Math.abs(winner_elo - loser_elo);
+  const eloDifference = 400;
   const transformedRatingWinner = Math.pow(10, winner_elo / eloDifference);
   const transformedRatingLoser = Math.pow(10, loser_elo / eloDifference);
 
@@ -20,6 +21,16 @@ const eloUpdate = async function(winnerId, winner_elo, loserId, loser_elo, type,
   if (type === 'RANKED' && timeLimit === 30){
     await updateEloById30(updatedWinner, winnerId);
     await updateEloById30(updatedLoser, loserId);
+  }
+
+  if (type === 'RANKED' && timeLimit === 10){
+    await updateEloById10(updatedWinner, winnerId);
+    await updateEloById10(updatedLoser, loserId);
+  }
+
+  if (type === 'CASUAL'){
+    await updateEloByIdCasual(updatedWinner, winnerId);
+    await updateEloByIdCasual(updatedLoser, loserId);
   }
 }
 

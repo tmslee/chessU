@@ -9,7 +9,7 @@ const {
 const {
   getEloWithUseId30,
   getEloWithUseId10,
-  getEloWithUseIdCausl
+  getEloWithUseIdCasual
 } = require("../db_helpers/db_elo_helper");
 
 const { eloUpdate } = require("../helpers/elo_update_helper");
@@ -64,6 +64,22 @@ module.exports = db => {
       console.log('winner id', winner, 'winner elo', eloWinner, 'loser id', loser, 'loser elo', eloLoser);
       // calculate the updated elos and update them in db
       eloUpdate(winner, eloWinner.ranked30, loser, eloLoser.ranked30, updatedMatch[0].type, Number(timeLimit));
+    }
+
+    if (updatedMatch[0].type === 'RANKED' && timeLimit == 10){
+      const eloWinner = await getEloWithUseId10(winner);
+      const eloLoser = await getEloWithUseId10(loser);
+      console.log('winner id', winner, 'winner elo', eloWinner, 'loser id', loser, 'loser elo', eloLoser);
+      // calculate the updated elos and update them in db
+      eloUpdate(winner, eloWinner.ranked10, loser, eloLoser.ranked10, updatedMatch[0].type, Number(timeLimit));
+    }
+
+    if (updatedMatch[0].type === 'CASUAL'){
+      const eloWinner = await getEloWithUseIdCasual(winner);
+      const eloLoser = await getEloWithUseIdCasual(loser);
+      console.log('winner id', winner, 'winner elo', eloWinner, 'loser id', loser, 'loser elo', eloLoser);
+      // calculate the updated elos and update them in db
+      eloUpdate(winner, eloWinner.casual, loser, eloLoser.casual, updatedMatch[0].type, Number(timeLimit));
     }
   });
 

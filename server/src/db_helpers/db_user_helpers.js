@@ -68,7 +68,6 @@ const getUserWithName = function(name) {
 exports.getUserWithName = getUserWithName;
 
 const updateEloById30 = function(updatedElo, userId){
-  console.log(updatedElo, userId);
   return db.query(`
   UPDATE users SET
   ranked30 = $1
@@ -79,3 +78,27 @@ const updateEloById30 = function(updatedElo, userId){
 }
 
 exports.updateEloById30 = updateEloById30;
+
+const updateEloById10 = function(updatedElo, userId){
+  return db.query(`
+  UPDATE users SET
+  ranked10 = $1
+  WHERE id = $2
+  RETURNING *;
+  `, [updatedElo, userId])
+  .then(res => console.log('elo update in db', res.rows[0]));
+}
+
+exports.updateEloById10 = updateEloById10;
+
+const updateEloByIdCasual = function(updatedElo, userId){
+  return db.query(`
+  UPDATE users SET
+  casual = $1
+  WHERE id = $2
+  RETURNING *;
+  `, [updatedElo, userId])
+  .then(res => console.log('elo update in db', res.rows[0]));
+}
+
+exports.updateEloByIdCasual = updateEloByIdCasual;

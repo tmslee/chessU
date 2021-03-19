@@ -22,7 +22,7 @@ const getEloWithUseId10 = function(userId) {
 
 exports.getEloWithUseId10 = getEloWithUseId10;
 
-const getEloWithUseIdCausl = function(userId) {
+const getEloWithUseIdCasual = function(userId) {
   return db.query(`
   SELECT casual FROM users
   where id = $1
@@ -31,4 +31,4 @@ const getEloWithUseIdCausl = function(userId) {
   ).then(res => res.rows[0])
 }
 
-exports.getEloWithUseIdCausl = getEloWithUseIdCausl;
+exports.getEloWithUseIdCasual = getEloWithUseIdCasual;
