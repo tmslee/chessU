@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./styles/HomeMenu.scss"
+import "./styles/HomeMenu.scss";
 import AcceptTimer from "./AcceptTimer";
 
 export default function GameAccept(props) {
