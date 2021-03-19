@@ -9,13 +9,14 @@ export default function Countdown(props) {
   const color = props.color;
   const isGameOver = props.isGameOver;
   const timeout = props.timeout;
+  const duration = props.duration;
 
   return (
     <div className = "timer">
       <Alert variant={col}>
         <Alert.Heading>{color}: {username} </Alert.Heading>
         <Alert.Heading>Countdown: <Timer 
-          initialTime={1800*1000}
+          initialTime={duration*60*1000}
           direction="backward"
           timeToUpdate={1000}
           onResume={() => setCol("danger")}

@@ -9,6 +9,7 @@ import ChessNavBar from "./Navbar/ChessNavBar";
 import Community from "./Community/Community";
 import LeaderBoards from "./Community/LeaderBoards";
 import useToken from "../hooks/useToken";
+import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,9 +37,6 @@ export default function Application() {
     }
   }, [token]);
 
-  useEffect( () => {
-    console.log(gameInfo, "gameInfo")
-  }, [gameInfo])
 
   const getCurrentUser = function(token) {
     console.log("getting curent user...");
@@ -61,13 +59,13 @@ export default function Application() {
 
   return (
     <>
+    <Router>
     <ChessNavBar
     username={currentUser ? currentUser.username : null}
     setActive={setActive} 
     active={active}
     logout={logout}
     />
-    <Router>
     <main>
       {active.login && 
       <LoginForm 
@@ -79,6 +77,7 @@ export default function Application() {
       <RegisterForm 
       setActive={setActive}
       active={active} 
+      setToken={setToken}
       /> }
       <Switch>
         <Route path="/" exact render={(props) => 
@@ -96,7 +95,9 @@ export default function Application() {
             currentUser = {currentUser}  // colors : { white: user1, black: user2 }
           />)
         }/>
-        {/* <Route path="/game/:id" component={Game} /> */}
+        <Route path="/aigame/:id" render={(props) => (
+          <AiGame {...props} currentUser = {currentUser} gameInfo = {gameInfo} />
+        )} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         

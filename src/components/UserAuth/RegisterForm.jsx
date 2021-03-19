@@ -5,10 +5,10 @@ import './styles/RegisterForm.scss'
 
 
 export default function RegisterForm(props) {
-  
   const {
     setActive, 
-    active
+    active,
+    setToken
   } = props;
 
   const [error, setError] = useState(false)
@@ -25,9 +25,11 @@ export default function RegisterForm(props) {
   const registerUser = function(newUser) {
     axios.post('http://localhost:8001/api/users', newUser)
     .then( result => {
-      if (!Array.isArray(result.data)) {
+      console.log(result, "DATAAAAA")
+      if (!result.data.token) {
         setError(true)
       } else {
+        setToken(result.data.token);
         setActive({...active, register: false  })
       }
     })
