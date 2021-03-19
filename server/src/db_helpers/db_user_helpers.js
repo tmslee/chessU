@@ -67,13 +67,15 @@ const getUserWithName = function(name) {
 
 exports.getUserWithName = getUserWithName;
 
-const updateEloById = function(updatedElo, userId, type){
+const updateEloById30 = function(updatedElo, userId){
+  console.log(updatedElo, userId);
   return db.query(`
-  UPDATE user SET
-  &1 = $2
-  WHERE id = $3
-  `, [type, updatedElo, userId])
-  .then(res => res.rows[0]);
+  UPDATE users SET
+  ranked30 = $1
+  WHERE id = $2
+  RETURNING *;
+  `, [updatedElo, userId])
+  .then(res => console.log('elo update in db', res.rows[0]));
 }
 
-exports.updateEloById = updateEloById;
+exports.updateEloById30 = updateEloById30;
