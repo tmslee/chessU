@@ -35,6 +35,7 @@ const matches = {};
 const matchConfirmStatus = {};
 const userSockets = {};
 
+
 const dequeue = function(Q, id) {
   if(Q !== undefined && Q.length > 0){
     Q.forEach( (data, idx) => {
@@ -83,32 +84,47 @@ io.on("connection", (socket) => {
           queue = casualQ;
         }
       }
-
       queue.push(data);
       console.log("queue: " , queue);
-
       if (queue.length > 1){
-        const sortedQueue = sortUsers(queue, data.type, data.timeLimit);
-        const first = sortedQueue.pop();
-        const second = sortedQueue.pop(); // [{user} , {opp} ]  [ {opp} ]
-
-        const firstUser = first.currentUser;
-        const secondUser = second.currentUser;
-        dequeue(queue, firstUser.id);
-        dequeue(queue, secondUser.id);
-        // send a msg back to users  "match found"
-        io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser});
-        io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser});
+        // const sortedQueue = sortUsers(queue, data.type, data.timeLimit);
+        // const first = sortedQueue.pop();
+        // const second = sortedQueue.pop(); // [{user} , {opp} ]  [ {opp} ]
+        // const firstUser = first.currentUser;
+        // const secondUser = second.currentUser;
+        // dequeue(queue, firstUser.id);
+        // dequeue(queue, secondUser.id);
+        // // send a msg back to users  "match found"
+        // io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser});
+        // io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser});
         
-        matches[firstUser.id] = secondUser.id;
-        matches[secondUser.id] = firstUser.id;
-        matchConfirmStatus[firstUser.id] = 0;
-        matchConfirmStatus[secondUser.id] = 0;
-        userSockets[firstUser.id] = first.socketId;
-        userSockets[secondUser.id] = second.socketId;
-        console.log("matches: ", matches);
-        console.log("confirm status: ", matchConfirmStatus);
-        console.log("userSockets: ", userSockets);
+        // matches[firstUser.id] = secondUser.id;
+        // matches[secondUser.id] = firstUser.id;
+        // matchConfirmStatus[firstUser.id] = 0;
+        // matchConfirmStatus[secondUser.id] = 0;
+        // userSockets[firstUser.id] = first.socketId;
+        // userSockets[secondUser.id] = second.socketId;
+        // console.log("matches: ", matches);
+        // console.log("confirm status: ", matchConfirmStatus);
+        // console.log("userSockets: ", userSockets);
+
+        const matchups = sortUsers(queue, data.type, data.timeLimit);
+        console.log(matchups, "MATCHUPS")
+        while (matchups.length !== 0) {
+          const match = matchups.pop();
+          const first = match[0];
+          const second = match[1];
+          const firstUser = first.currentUser;
+          const secondUser = second.currentUser;
+          dequeue(queue, firstUser.id);
+          dequeue(queue, secondUser.id);
+          io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser});
+          io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser});
+          matchConfirmStatus[firstUser.id] = 0;
+          matchConfirmStatus[secondUser.id] = 0;
+          userSockets[firstUser.id] = first.socketId;
+          userSockets[secondUser.id] = second.socketId;
+        }
       }
     }
   });
