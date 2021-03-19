@@ -29,12 +29,13 @@ export default function UserInfo (props) {
     <div className="user-box">
     {/* <button onClick={() => setActive(true)} >change avatar</button>  */}
       <div className="user-icon">
-        <img id="avatar" onClick={() => setActive(true)} src={avatar.current} alt=""/> 
+        <img id="avatar" src={avatar.current} alt=""/> 
+        <button id="edit-img"onClick={() => setActive(true)}><img src="http://simpleicon.com/wp-content/uploads/camera.png"/></button>
       </div>
-        <button onClick={() => setSettings(true)} id="edit">Edit Profile</button>
       <div className="user-info">
         <a>{currentUser.username}</a>
       </div>
+        <button onClick={() => setSettings(true)} id="edit">Edit Profile</button>
     </div>
     </>
   )
