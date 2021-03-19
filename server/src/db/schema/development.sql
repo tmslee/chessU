@@ -1,5 +1,5 @@
-INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
-  'alvin', 'alvin@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1800, 1200, 1700
+INSERT INTO users (username, email, profile_img, password, ranked30, ranked10, casual) VALUES (
+  'alvin', 'alvin@gmail.com','https://www.w3schools.com/w3images/avatar2.png', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1800, 1200, 1700
 );
 INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
   'thomas', 'thomas@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 900, 1200, 1800

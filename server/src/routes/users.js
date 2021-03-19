@@ -8,7 +8,8 @@ const {
   editUser,
   deleteUser,
   getUserWithId,
-  getUserWithName
+  getUserWithName,
+  editAvatar
 } = require('../db_helpers/db_user_helpers');
 
 module.exports = db => {
@@ -50,6 +51,7 @@ module.exports = db => {
     })
   })
 
+  //-------------- UPDATE USER -------------------------
   
   router.put('/users/:id', (req, res) => {
     const {username, email, password} = req.body;
@@ -61,7 +63,20 @@ module.exports = db => {
     })
     .catch( err => {
       res.send(err);
+    });
+  });
+
+  router.put('/users/:id/avatar', (req, res) => {
+    const { avatar } = req.body;
+    const userId = req.params.id;
+
+    editAvatar(avatar, userId)
+    .then( user => {
+      res.json(user);
     })
+    .catch( err => {
+      res.send(err.message);
+    });
   });
 
   router.delete('/users/:id', (req, res) => {
@@ -73,7 +88,7 @@ module.exports = db => {
     })
     .catch( err => {
       res.send(err);
-    })
+    });
   });
 
   // -------------------- LOGIN -------------------
@@ -124,4 +139,4 @@ module.exports = db => {
       .catch(e => res.send(e));
   });
   return router;
-}
+};

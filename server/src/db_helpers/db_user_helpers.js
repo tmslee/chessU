@@ -67,7 +67,16 @@ const getUserWithName = function(name) {
 
 exports.getUserWithName = getUserWithName;
 
+const editAvatar = function(avatar, userId) {
+  return db.query(`
+  UPDATE users SET 
+    profile_img = $1::text
+  WHERE id = $2::integer 
+  RETURNING *;`,
+  [avatar, userId]
+  ).then(res => res.rows[0])
+};
 
-
+exports.editAvatar = editAvatar;
 
 
