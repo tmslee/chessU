@@ -93,7 +93,6 @@ function Game(props) {
     }
     record["matchID"] = props.gameInfo.matchId;
     record["action"] = `from: ${move.from}, to: ${move.to}`;
-    record["timeLimit"] = state.duration;
     console.log('send', record);
     try {
       const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
@@ -116,6 +115,7 @@ function Game(props) {
     } else {
       matchResult['loser'] = matchResult['white'];
     }
+    matchResult["timeLimit"] = state.duration;
     console.log('match id', state.roomId, matchId);
     const idMatch = props.gameInfo.matchId;
     console.log(matchResult);
