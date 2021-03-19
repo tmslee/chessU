@@ -35,20 +35,26 @@ export default function useUserList(currentUser) {
   const removeFriend = async function (currentUserID, userID) {
     await axios.delete(`http://localhost:8001/api/friends/${currentUserID}/${userID}`)
     getFriends();
+    getFriendRequests();
     getFriendRequestsByMe();
   }
   const sendFriendRequest = async function (currentUserID, userID) {
     await axios.post(`http://localhost:8001/api/friends/${currentUserID}/${userID}`);
     getFriends();
+    getFriendRequests();
     getFriendRequestsByMe();
   }
   const acceptFriendRequest = async function (currentUserID, userID) {
     await axios.post(`http://localhost:8001/api/friendRequests/${currentUserID}/${userID}`);
+    getFriends();
     getFriendRequests();
+    getFriendRequestsByMe();
   }
   const declineFriendRequest = async function (currentUserID, userID) {
     await axios.delete(`http://localhost:8001/api/friendRequests/${currentUserID}/${userID}`);
+    getFriends();
     getFriendRequests();
+    getFriendRequestsByMe();
   }
 
   useEffect(() => {
