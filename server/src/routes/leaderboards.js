@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { 
-  ranked30
+  ranked30, 
+  ranked10
 } = require("../db_helpers/db_leaderboard_helpers")
 
 module.exports = db => {
@@ -13,7 +14,12 @@ module.exports = db => {
         res.json(users)
       })
       .catch( err => res.json(err))
-    } 
+    } else if (type === 'ranked10') {
+      ranked10()
+      .then( users => {
+        res.json(users)
+      })
+    }
   })
 
 

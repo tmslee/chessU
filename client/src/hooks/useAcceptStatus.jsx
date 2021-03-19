@@ -23,7 +23,7 @@ const useAcceptStatus = (
    ) => {
   const socketRef = useRef();
 
-  const { currentUser, type, opponent } = gameOptions;
+  const { currentUser, type, opponent, timeLimit } = gameOptions;
   // match accept states /////////////////////////////////////
   const[userStatus, setUserStatus] = useState(0);
   const[opponentStatus, setOpponentStatus] = useState(0);
@@ -44,6 +44,7 @@ const useAcceptStatus = (
     socketRef.current.on("connect", ()=> {
       //send confirmation back to server
       socketRef.current.emit(MATCH_CONFIRM, {
+        timeLimit,
         type,
         // userId: gameOptions.currentUser.id,
         currentUser,
@@ -65,7 +66,8 @@ const useAcceptStatus = (
         console.log("match made");
         opponentAccept();
         console.log(data, opponent)
-        loadGame(data, currentUser, opponent, matchId);
+        const timeLimit = data.timeLimit;
+        loadGame(data, currentUser, opponent, matchId, timeLimit);
         // setGameInfo( {
         //   matchId : data.matchId,
         //   colors : data.colors, // { white : id, black : id }

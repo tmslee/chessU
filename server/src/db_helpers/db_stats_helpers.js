@@ -2,9 +2,9 @@ const db = require("../db");
 
 const totalWins = function(userId) {
   return db.query(`
-  SELECT wins as count(winner)
+  SELECT count(winner) as wins 
   FROM matches 
-  WHERE winner = $1`,
+  WHERE winner = $1;`,
   [userId]
   ).then(res => res.rows[0])
 };
@@ -13,9 +13,9 @@ exports.totalWins = totalWins;
 
 const totalLosses = function(userId) {
   return db.query(`
-  SELECT losses as count(loser)
+  SELECT count(loser) as losses
   FROM matches 
-  WHERE loser = $1`,
+  WHERE loser = $1;`,
   [userId]
   ).then(res => res.rows[0])
 };
@@ -24,9 +24,9 @@ exports.totalLosses = totalLosses;
 
 const totalMatches = function(userId) {
   return db.query(`
-  SELECT count(id) 
+  SELECT count(id) as tot_matches 
   FROM matches
-  WHERE user1_id = $1 OR user2_id = $1 `,
+  WHERE user1_id = $1 OR user2_id = $1;`,
   [userId]
   ).then(res => res.rows[0])
 };
@@ -35,7 +35,8 @@ exports.totalMatches = totalMatches;
 
 const totalActions = function(userId) {
   return db.query(`
-  SELECT count(id) FROM action_logs 
+  SELECT count(id) as tot_actions
+  FROM action_logs 
   WHERE user_id = $1;`,
   [userId]
   ).then(res => res.rows[0])

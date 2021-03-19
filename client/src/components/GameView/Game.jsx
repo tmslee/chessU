@@ -8,16 +8,44 @@ import Popup from './Popup';
 import MovesLog from "./MovesLog"
 import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
+import axios from "axios";
 
 function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
+  // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
+  // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
   console.log(props);
-  // if()
-  // const usernameBlack = 'alvin';
-  // const usernameWhite = 'haopeng';
 
-  const usernameBlack = 'alvin';
-  const usernameWhite = 'haopeng';
+  const isRanked = true;
+  let usernameWhite;
+  let usernameBlack;
+  let chessboardOrientation;
+  // decide who is white or black
+  if (props.currentUser.id === props.gameInfo.colors.white){
+    usernameWhite = props.currentUser.username;
+    if (usernameWhite === props.gameInfo.name1){
+      usernameBlack = props.gameInfo.name2;
+    } else {
+      usernameBlack = props.gameInfo.name1;
+    }
+    chessboardOrientation = 'white';
+  } else {
+    usernameBlack = props.currentUser.username;
+    if (usernameBlack === props.gameInfo.name1){
+      usernameWhite = props.gameInfo.name2;
+    } else {
+      usernameWhite = props.gameInfo.name1;
+    }
+    chessboardOrientation = 'black';
+  }
+  console.log('white', usernameWhite, 'black', usernameBlack);
+
+  let duration;
+  if(props.gameInfo.timeLimit === null){
+    duration = false;
+  } else {
+    duration = props.gameInfo.timeLimit;
+  }
 
   const [state, setState] = useState({
     position: "start",
@@ -29,7 +57,8 @@ function Game(props) {
     chessmoves: [],
     winner:'',
     roomId: matchId,
-    isReceived: true
+    isReceived: true,
+    duration
   })
 
   const roomId = state.roomId;
@@ -55,6 +84,58 @@ function Game(props) {
       winner
     }));
   }
+  const movesRecord = async function(move) {
+    const record = {};
+    if(move['player'] == usernameWhite){
+      record['userID'] = props.gameInfo.colors.white;
+    } else {
+      record['userID'] = props.gameInfo.colors.black;
+    }
+    record["matchID"] = props.gameInfo.matchId;
+    record["action"] = `from: ${move.from}, to: ${move.to}`;
+    console.log('send', record);
+    try {
+      const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
+      console.log('send successfully');
+      return recordMatch;
+    } catch (err) {
+      console.log(err, "error")
+    }
+  };
+  console.log('match id', state.roomId, matchId, props.gameInfo.matchId);
+
+  const resultRecord = async function(){
+    const matchResult = {
+      white: props.gameInfo.colors.white, 
+      black: props.gameInfo.colors.black,
+      winner: props.currentUser.id,
+    };
+    if (matchResult['white'] === matchResult['winner']){
+      matchResult['loser'] = matchResult['black'];
+    } else {
+      matchResult['loser'] = matchResult['white'];
+    }
+    console.log('match id', state.roomId, matchId);
+    const idMatch = props.gameInfo.matchId;
+    console.log(matchResult);
+    try{
+      const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
+      console.log('record')
+      return result;
+    } catch (err) {
+      console.log(err, "error")
+    }
+  }
+
+  // the winner client side will send the result
+  const resultSend = function(){ 
+    resultRecord();
+    if (game.current.turn() === 'b'){
+      gameover('White');
+    } else {
+      gameover('Black');
+    }
+  }
 
   // if the move is not made by current user
   // reset the chessboard based on received move made by other user
@@ -74,7 +155,7 @@ function Game(props) {
       moveReceived['player'] = usernameWhite;
       chessmoves.unshift(moveReceived);
     }
-
+    
     if (!game.current.game_over()){
       if (state.isWhiteRunning){
         setState(prev => ({...prev,
@@ -93,13 +174,9 @@ function Game(props) {
           isReceived: false
         }));
       }
-      // console.log(game.current.turn());
+      movesRecord(moveReceived);
     } else {
-      if (game.current.turn() === 'b'){
-        gameover('White');
-      } else {
-        gameover('Black');
-      }
+      resultSend();
     }
   }
 
@@ -148,13 +225,10 @@ function Game(props) {
           isReceived: true
         }));
       }
+      // movesRecord(moveMade);
       // console.log(game.current.turn());
     } else {
-      if (game.current.turn() === 'b'){
-        gameover('White');
-      } else {
-        gameover('Black');
-      }
+      resultSend();
     }
   }
   
@@ -162,44 +236,69 @@ function Game(props) {
     setState(prev => ({...prev, modalShow: bool }));
   }
   
-  const regame = function(){
-    setState({ 
-      position: "start",
-      isBlackRunning: false,
-      isWhiteRunning: true,
-      isGameOver: false,
-      modalShow: false,
-      chessmoves: [],
-      winner:'',
-      isReceived: true
-    });
-  }
+  // let invitationFromOpponent = false;
+  // // receive the regame invitation sent by your opponent
+  // const { regameInfo, sendRegameInfo } = useRegame(roomId);
+  // if(!regameInfo.madeByCurrentUser && regameInfo.length !== 0){
+    // setModalShow(false);
+  //   invitationFromOpponent = true;
+  // }
+
+  // const regame = function(){
+  //   if (isRanked){
+  //     window.location.assign("/");
+  //   } else {
+  //     // for casual mode, they can replay once again
+  //     sendRegameInfo(props.currentUser.id);
+  //     setState({ 
+  //       position: "start",
+  //       isBlackRunning: false,
+  //       isWhiteRunning: true,
+  //       isGameOver: false,
+  //       modalShow: false,
+  //       chessmoves: [],
+  //       winner:'',
+  //       isReceived: true
+  //     });
+  //   }
+  // }
+
+  // const backToHome = function(){
+  //   window.location.assign("/");
+  // }
 
   return (
     <div className="gameView">
       <div className="countdown">
+        {state.duration &&  
         <Countdown color={"white"} 
         username={usernameWhite}
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
-        timeout={gameover}/>
+        duration={state.duration}
+        timeout={gameover}/>}
+        {state.duration &&  
         <Countdown color={"black"}
         username={usernameBlack}
         isGameOver={state.isGameOver}
         isRunning={state.isBlackRunning}
-        timeout={gameover}/>
+        duration={state.duration}
+        timeout={gameover}/>}
       </div>
       <div className="chessboard">
       {/* orientation={'black'} */}
-        <ChessBoard position={state.position} onDrop={onDrop} roomId={state.roomId}/>
+        <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
         <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
         <Chat roomId={state.roomId}/>
       </div>
       <Popup
         show={state.modalShow}
         onHide={() => setModalShow(false)}
-        regame={regame}
+        // regame={regame}
+        // backToHome={backToHome}
         winner={state.winner}
+        isRanked={isRanked}
+        // invitationFromOpponent={invitationFromOpponent}
       />
     </div>
   );

@@ -11,7 +11,8 @@ export default function UserListItem(props) {
     removeFriend,
     sendFriendRequest,
     acceptFriendRequest,
-    declineFriendRequest
+    declineFriendRequest,
+    gameType
   } = props;
   //type: "user" or "request" 
 
@@ -35,7 +36,12 @@ export default function UserListItem(props) {
           <h5>{user.username}</h5>
         </Col>
         <Col>
-          <h5>Elo: {user.elo}</h5>
+        {gameType === "ranked30" &&
+          <h5>Elo: {user.ranked30}</h5>
+        }
+        {gameType === "ranked10" &&
+          <h5>Elo: {user.ranked10}</h5>
+        }
         </Col>
         <Col>
           {currentUser && isFriend && 

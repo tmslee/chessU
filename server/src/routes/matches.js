@@ -1,58 +1,57 @@
 const router = require("express").Router();
+const {
+  allMatches,
+  addMatch,
+  getMatchById,
+  updateMatch
+} = require("../db_helpers/db_match_helpers");
 
 module.exports = db => {
-  router.get('/matches', async (req, res) => {
-    try {
-      const allMatches = await db.query(`SELECT * FROM matches;`);
-      res.json(allMatches.rows);
-    } catch (err) {
-      console.error(err.message);
-    }
+  router.get('/matches', (req, res) => {
+    allMatches()
+    .then( matches => {
+      res.json(matches);
+    })
+    .catch( err => {
+      res.send(err);
+    });
   });
 
-  router.post('/matches', async (req, res) => {
+  router.post('/matches', (req, res) => {
     const {type, user1ID, user2ID} = req.body;
-    try {
-      const newMatch = await db.query(
-        `INSERT INTO matches (type, user1_id, user2_id) VALUES (
-          $1::text, $2::integer, $3::integer
-        ) RETURNING *;`,
-        [type, user1ID, user2ID]);
-      res.json(newMatch.rows);
-    } catch (err) {
-      console.error(err.message);
-    }
+    addMatch(type, user1ID, user2ID)
+    .then( match => {
+      res.json(match);
+    })
+    .catch( err => {
+      res.send(err);
+    });
   });
 
-  router.get('/matches/:matchID', async (req, res) => {
+  router.get('/matches/:matchID', (req, res) => {
     const matchID = req.params.matchID;
-    try {
-      const match = await db.query(`SELECT * FROM matches where id = $1;`, [matchID]);
-      res.json(match.rows);
-    } catch (err) {
-      console.error(err.message);
-    }
+
+    getMatchById(matchID)
+    .then( match => {
+      res.json(match);
+    })
+    .catch( err => {
+      res.send(err);
+    });
   });
 
-  router.put('/matches/:matchID', async (req, res) => {
-    const {type, user1ID, user2ID, winner, loser} = req.body;
+  router.put('/matches/:matchID', (req, res) => {
+    const {white, black, winner, loser} = req.body;
     const matchID = req.params.matchID;
-    try {
-      const updatedMatch = await db.query(`
-        UPDATE matches SET 
-          type = $1::text,
-          user1_id = $2::integer, 
-          user2_id = $3::integer,  
-          winner = $4::integer,
-          loser = $5::integer
-        WHERE id = $6::integer
-        RETURNING *;`,
-        [type, user1ID, user2ID, winner, loser, matchID]);
-      res.json(updatedMatch.rows);
-    } catch (err) {
-      console.error(err.message);
-    }
+
+    updateMatch(white, black, winner, loser, matchID)
+    .then( match => {
+      res.json(match);
+    })
+    .catch( err => {
+      res.send(err);
+    });
   });
 
   return router;
-}
+};

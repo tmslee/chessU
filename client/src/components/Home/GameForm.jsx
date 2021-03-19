@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import axios from 'axios';
 
 import "./styles/HomeMenu.scss"
 import {Button, Modal, Form, Row, Col} from "react-bootstrap";
@@ -32,6 +33,21 @@ export default function GameForm(props) {
     newGameOptions = {...newGameOptions, difficulty};
     setGameOptions(newGameOptions);
   };
+
+  // create a match in DB for ai game
+  const gameStartRecord = async function(gameOptions){
+    const gameinfo = {
+      type: 'AI',
+      user1ID: gameOptions.currentUser.id,
+      user2ID: null
+    }
+    try{
+      const createMatchInDB = await axios.post("http://localhost:8001/api/matches", gameinfo)
+      return createMatchInDB;
+    } catch(err) {
+      console.log(err, "error")
+    }
+  }
 
   return (
     <Form onSubmit={event => event.preventDefault()}>
@@ -115,7 +131,13 @@ export default function GameForm(props) {
           Cancel
         </Button>
         {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> }
-        {(gameOptions.type === AI) && <Button variant="primary" onClick={() => loadGame(gameOptions)}>Start Game</Button> }
+        {(gameOptions.type === AI) && <Button variant="primary" onClick={() => {
+          gameStartRecord(gameOptions).then(res => {
+            console.log(gameOptions);
+            const matchId = res.data.id;
+            loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
+          });
+          }}>Start Game</Button> }
       </Modal.Footer>
     </Form>
   );
