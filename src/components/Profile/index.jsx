@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UserInfo from "./UserInfo";
 import Statistics from "./Statistics";
 import Settings from "./Settings";
+import ProfileTabs from "./ProfileTabs";
 import axios from "axios";
 
 export default function Profile (props) {
@@ -42,6 +43,7 @@ export default function Profile (props) {
           currentUser={currentUser}
           setSettings={setSettings}
         />
+        <ProfileTabs />
         <Statistics
           currentUser={currentUser}
           statsInfo={statsInfo}
