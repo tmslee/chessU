@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
 
-export default function Popup(props){
+export default function PopupWin(props){
   // const regame = props.regame;
   const winner = props.winner;
   const result = function(winner){

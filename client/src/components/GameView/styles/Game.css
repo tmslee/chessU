@@ -1,5 +1,5 @@
 .gameView {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -7,18 +7,39 @@
   align-items: center;
 }
 
+@media (max-width: 1024px){
+  .gameView {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.chess-main{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .timer{
   margin-left: 1em;
   margin-right: 1em;
-  margin-top: 1em;
 }
 
+.alert{
+  margin-bottom: 0;
+}
 .countdown{
   width: 100%;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
+  margin-top: 1em;
 }
 
 .chessboard{

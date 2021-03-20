@@ -3,10 +3,11 @@ import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";
 import Countdown from '../GameView/Timer';
-import Popup from '../GameView/Popup';
+import PopupWin from '../GameView/PopupWin';
 import MovesLog from "../GameView/MovesLog"
 import Chess from "chess.js";
 import axios from "axios";
+import Chat from "../ChatRoom/Chat"
 
 export default function AiGame(props){
   console.log(props);
@@ -171,6 +172,7 @@ export default function AiGame(props){
   }
 
   return (
+    <>
     <div className="gameView">
       <div className="countdown">
         {state.duration &&         
@@ -181,15 +183,21 @@ export default function AiGame(props){
         duration={state.duration}
         />}
       </div>
-      <div className="chessboard">
-        <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
-        <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+      <div className="chess-main">
+        <div className="chessboard">
+          <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
+        </div>
+        <div className="move_log">
+          <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+          {/* <Chat roomId={state.roomId}/> */}
+        </div>
       </div>
-      <Popup
+      <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
         winner={state.winner}
       />
     </div>
+    </>
   );
 }
