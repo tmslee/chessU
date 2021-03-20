@@ -2,12 +2,15 @@
 
   position: relative;
   background-color:white;
-  width: 40%;
-  height: 55%;
+  // width: 40%;
+  width: 80%;
+  // height: 55%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 25px;
+  border-style: solid;
   
   .modal-login-content {
     display: flex;
@@ -26,4 +29,18 @@
     }
   }
 
+}
+
+@media (min-width: 560px) {
+  .modal-login {
+    width: 60%;
+    height: 55%;
+  }
+}
+
+@media (min-width: 960px) {
+  .modal-login {
+    width: 30%;
+    height: 55%;
+  }
 }
