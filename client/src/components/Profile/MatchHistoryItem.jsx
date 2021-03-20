@@ -5,10 +5,13 @@ export default function MatchHistoryItem(props) {
 
   const { match, currentUser } = props;
   const gameType = match.type;
-  const color = currentUser.username === match.winner? {backgroundColor: "green" } : {backgroundColor: "red"};
+  const backColor = currentUser.username === match.winner? {backgroundColor: "green" } : {backgroundColor: "red"};
+  const opponent = match.winner === currentUser.username? match.loser : match.winner;
+  const white = match.white === currentUser.id? currentUser.username : opponent;
+  const black = match.black === currentUser.id? currentUser.username : opponent;
   let winnerElo;
   let loserElo;
-  
+
   if (gameType === "RANKED30") {
     winnerElo = match.winranked30elo;
     loserElo = match.loseranked30elo;
@@ -20,9 +23,8 @@ export default function MatchHistoryItem(props) {
     loserElo = match.losecasualelo;
   };
 
-
   return (
-  <div className="match" style={color} >
+  <div className="match" style={backColor} >
     <a>{gameType}</a>
     <img src={match.winner_img} />
     <a> {match.winner} </a>
