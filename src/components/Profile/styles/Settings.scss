@@ -2,11 +2,12 @@
   position: relative;
   background-color: white;
   width: 80%;
-  height: 55%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 25px;
+  border-style: solid;
 
   .modal-settings-content {
     display: flex;
@@ -20,6 +21,7 @@
       justify-content: space-around;
       align-items: center;
       width: 60%;
+      font-size: 20px;
     }
 
     #save {
@@ -34,5 +36,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: left;
+    font-size: 28px;
+    font-weight: normal;
+  }
+}
+
+
+@media (min-width: 560px) {
+  .modal-settings {
+    width: 60%;
+    height: 55%;
+  }
+}
+
+@media (min-width: 960px) {
+  .modal-settings {
+    width: 30%;
+    height: 55%;
   }
 }
