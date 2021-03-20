@@ -48,3 +48,9 @@
   justify-content: center;
   align-items: center;
 }
+
+.chat-button{
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
