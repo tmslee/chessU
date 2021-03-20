@@ -127,7 +127,9 @@ const getMatchesByUser = function(userId) {
   u2.ranked30 as loseRanked30Elo,
   u2.ranked10 as loseRanked10Elo,
   u2.casual as loseCasualElo,
-  m.type as type
+  m.type as type,
+  m.white as white,
+  m.black as black
   FROM
   users u1 JOIN 
   matches m ON u1.id = m.winner 
