@@ -12,7 +12,7 @@ export default function ChangeAvatar (props) {
       </button>
       <button onClick={() => 
       setTabs({stats:false, history: true})}>
-        Match History
+        History
         </button>
     </div>
   )
