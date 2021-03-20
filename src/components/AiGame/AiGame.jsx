@@ -7,8 +7,7 @@ import PopupWin from '../GameView/PopupWin';
 import MovesLog from "../GameView/MovesLog"
 import Chess from "chess.js";
 import axios from "axios";
-import Chat from "../ChatRoom/Chat"
-import { Button, Modal } from 'react-bootstrap';
+import PopupConfirm from "../GameView/PopupConfirm";
 
 export default function AiGame(props){
   console.log(props);
@@ -37,7 +36,7 @@ export default function AiGame(props){
     winner:'',
     roomId: matchId,
     duration,
-    chatPopup: false
+    isResign: false
   })
 
   let ai = useRef(null);
@@ -173,11 +172,9 @@ export default function AiGame(props){
     setState(prev => ({...prev, modalShow: bool }));
   }
 
-   // adds class to darken background color
-  //  const duringPopUp = state.chatPopup ? " during-popup" : ""
-  //  const setPopUp = function(bool){
-  //   setState(prev => ({...prev, chatPopup: bool }));
-  //  }
+  const setResign = function(bool){
+    setState(prev => ({...prev, isResign: bool }));
+  }
 
   return (
     <>
@@ -200,12 +197,16 @@ export default function AiGame(props){
           <div className="move_log">
             <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
           </div>
-          {/* <Chat roomId={state.roomId}/> */}
+          <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
         </div>
       <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
         winner={state.winner}
+      />
+      <PopupConfirm show={state.isResign}
+      resultSend={resultSend}
+      onHide={() => setResign(false)}
       />
       </div>
     </div>
