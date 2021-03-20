@@ -52,13 +52,13 @@ export default function HomeMenu(props) {
   return (
     <>
       <div className="menu">
-        <button className="lined thin" onClick={() => {showModal(RANKED)}}>
+        <button id="ranked" className="lined thin" onClick={() => {showModal(RANKED)}}>
           Ranked
         </button>
-        <button className="lined thin" onClick={() => {showModal(CASUAL)}}>
+        <button id= "casual" className="lined thin" onClick={() => {showModal(CASUAL)}}>
           CASUAL
         </button>
-        <button className="lined thin" onClick={() => {showModal(AI)}}>
+        <button id = "ai" className="lined thin" onClick={() => {showModal(AI)}}>
           vs AI
         </button>
       </div>

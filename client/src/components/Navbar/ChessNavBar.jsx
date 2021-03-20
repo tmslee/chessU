@@ -22,7 +22,7 @@ export default function ChessNavBar(props) {
   const onProfile = window.location.pathname === "/profile";
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" style={{...{zIndex:1}, ...{background:'#F0F0D8'}}}>
       
       <Navbar.Brand onClick={() => handleClick("/")}>
         <img
@@ -43,15 +43,6 @@ export default function ChessNavBar(props) {
           {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
           {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
           <Nav.Link onClick={() => handleClick("/community")}>Community</Nav.Link>
-
-          <NavDropdown title="Quick Play" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Ranked</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Casual</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">vs AI</NavDropdown.Item>
-
-            {/* <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
-          </NavDropdown>
         </Nav>
         {username && onProfile &&
           <Fragment>
