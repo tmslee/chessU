@@ -9,7 +9,8 @@ const {
   deleteUser,
   getUserWithId,
   getUserWithName,
-  editAvatar
+  editAvatar,
+  getMatchesByUser
 } = require('../db_helpers/db_user_helpers');
 
 module.exports = db => {
@@ -138,5 +139,16 @@ module.exports = db => {
       })
       .catch(e => res.send(e));
   });
+
+  router.get('/users/:id/matches', (req, res) => {
+    const userId = req.params.id;
+
+    getMatchesByUser(userId)
+    .then( matches => {
+      res.json(matches)
+    })
+    .catch(e => res.send(e));
+  });
+
   return router;
 };

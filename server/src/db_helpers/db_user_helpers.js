@@ -113,3 +113,29 @@ const updateEloByIdCasual = function(updatedElo, userId){
 }
 
 exports.updateEloByIdCasual = updateEloByIdCasual;
+
+const getMatchesByUser = function(userId) {
+  return db.query(`
+  SELECT 
+  u1.username as winner, 
+  u1.profile_img as winner_img,
+  u1.ranked30 as winRanked30Elo,
+  u1.ranked10 as winRanked10Elo,
+  u1.casual as winCasualElo, 
+  u2.username as loser, 
+  u2.profile_img as loser_img,
+  u2.ranked30 as loseRanked30Elo,
+  u2.ranked10 as loseRanked10Elo,
+  u2.casual as loseCasualElo,
+  m.type as type
+  FROM
+  users u1 JOIN 
+  matches m ON u1.id = m.winner 
+  JOIN users u2 ON u2.id = m.loser
+  WHERE u1.id = $1 OR u2.id = $1;
+  `, [userId])
+  .then(res => res.rows)
+}
+
+exports.getMatchesByUser = getMatchesByUser;
+
