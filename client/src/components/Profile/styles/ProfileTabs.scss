@@ -1,0 +1,15 @@
+.profile-btn-group {
+  // margin: px 5% 0px 5%;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+
+  button {
+    width: 33.3%;
+  }
+
+  .bttn-primary {
+    color: black;
+  }
+}

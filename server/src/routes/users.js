@@ -9,7 +9,8 @@ const {
   deleteUser,
   getUserWithId,
   getUserWithName,
-  editAvatar
+  editAvatar,
+  getMatchesByUser
 } = require('../db_helpers/db_user_helpers');
 
 module.exports = db => {
@@ -36,7 +37,7 @@ module.exports = db => {
   });
 
   router.post('/users', (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
     password = bcrypt.hashSync(password, 10);
 
     addUser(username, email, password)
@@ -54,8 +55,9 @@ module.exports = db => {
   //-------------- UPDATE USER -------------------------
   
   router.put('/users/:id', (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
     const userId = req.params.id;
+    password = bcrypt.hashSync(password, 10);
 
     editUser(username, email, password, userId)
     .then( user => {
@@ -138,5 +140,16 @@ module.exports = db => {
       })
       .catch(e => res.send(e));
   });
+
+  router.get('/users/:id/matches', (req, res) => {
+    const userId = req.params.id;
+
+    getMatchesByUser(userId)
+    .then( matches => {
+      res.json(matches)
+    })
+    .catch(e => res.send(e));
+  });
+
   return router;
 };
