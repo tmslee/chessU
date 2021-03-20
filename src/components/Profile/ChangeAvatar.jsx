@@ -51,7 +51,7 @@ export default function ChangeAvatar (props) {
         onChange={e => validate(e.target.value)}
         placeholder="Img Url"
         />
-        <button onClick={handleSubmit}>Save</button>
+        <button type="submit" onClick={handleSubmit}>Save</button>
       </form>
         <button onClick={() => setActive(false)} className="modal-close">X</button>
     </div>
