@@ -6,6 +6,15 @@
   .stats {
     display: flex;
     flex-direction: column;
+    width: 80%;
   }
 
+  table {
+    border:none;
+    border-collapse: collapse;
+
+    td {
+      width: 100px;
+    }
+  }
 }
