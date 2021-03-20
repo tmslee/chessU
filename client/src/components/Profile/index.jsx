@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import UserInfo from "./UserInfo";
 import Statistics from "./Statistics";
 import Settings from "./Settings";
+import ProfileTabs from "./ProfileTabs";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import MatchHistory from './MatchHistory';
 
 export default function Profile (props) {
   const {token, currentUser, setActive, getCurrentUser, setCurrentUser} = props
   const [settings, setSettings] = useState(false);
   const [statsInfo, setStatsInfo] = useState();
-
-  // const history = useHistory();
+  const [tabs, setTabs] = useState({
+    stats: true,
+    history: false
+  });
   
   useEffect(() => {
     if (!currentUser){
@@ -18,9 +21,9 @@ export default function Profile (props) {
     } else {
       setActive(prev => ({...prev, login: false }));
       axios.get(`http://localhost:8001/api/stats/${currentUser.id}`)
-      .then( res => setStatsInfo(res))
+      .then( res => setStatsInfo(res));
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   useEffect(() => {
     if (!currentUser){
@@ -28,10 +31,10 @@ export default function Profile (props) {
     } else {
       setActive(prev => ({...prev, login: false }));
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   return (
-    <>
+    <div>
     {currentUser &&  statsInfo &&
       <>
         {settings && <Settings 
@@ -45,12 +48,23 @@ export default function Profile (props) {
           currentUser={currentUser}
           setSettings={setSettings}
         />
+        <ProfileTabs 
+          setTabs={setTabs}
+          tabs={tabs}
+        />
+        {tabs.stats && 
         <Statistics
           currentUser={currentUser}
           statsInfo={statsInfo}
         />
+        }
+        {tabs.history &&
+        <MatchHistory
+          currentUser={currentUser}
+        />
+        }
       </>
     }
-    </>
+    </div>
   )
-}
+};

@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 const {
   allUsers,
   addUser,
   editUser,
   deleteUser,
   getUserWithId,
-  getUserWithName
+  getUserWithName,
+  editAvatar,
+  getMatchesByUser
 } = require('../db_helpers/db_user_helpers');
 
 module.exports = db => {
@@ -33,7 +37,8 @@ module.exports = db => {
   });
 
   router.post('/users', (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
+    password = bcrypt.hashSync(password, 10);
 
     addUser(username, email, password)
     .then( user => {
@@ -47,10 +52,12 @@ module.exports = db => {
     })
   })
 
+  //-------------- UPDATE USER -------------------------
   
   router.put('/users/:id', (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
     const userId = req.params.id;
+    password = bcrypt.hashSync(password, 10);
 
     editUser(username, email, password, userId)
     .then( user => {
@@ -58,7 +65,20 @@ module.exports = db => {
     })
     .catch( err => {
       res.send(err);
+    });
+  });
+
+  router.put('/users/:id/avatar', (req, res) => {
+    const { avatar } = req.body;
+    const userId = req.params.id;
+
+    editAvatar(avatar, userId)
+    .then( user => {
+      res.json(user);
     })
+    .catch( err => {
+      res.send(err.message);
+    });
   });
 
   router.delete('/users/:id', (req, res) => {
@@ -70,7 +90,7 @@ module.exports = db => {
     })
     .catch( err => {
       res.send(err);
-    })
+    });
   });
 
   router.get('/users/username/:name', (req, res) => {
@@ -86,8 +106,8 @@ module.exports = db => {
     return getUserWithName(name)
       .then(user => {
         if (user) {
-          // if (bcrypt.compareSync(password, user.password)) {
-          if (password === user.password) {
+          if (bcrypt.compareSync(password, user.password)) {
+          // if (password === user.password) {
             return user;
           }
         }
@@ -127,5 +147,16 @@ module.exports = db => {
       })
       .catch(e => res.send(e));
   });
+
+  router.get('/users/:id/matches', (req, res) => {
+    const userId = req.params.id;
+
+    getMatchesByUser(userId)
+    .then( matches => {
+      res.json(matches)
+    })
+    .catch(e => res.send(e));
+  });
+
   return router;
-}
+};

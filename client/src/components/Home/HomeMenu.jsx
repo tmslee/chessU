@@ -53,17 +53,16 @@ export default function HomeMenu(props) {
   
   return (
     <>
-      <header>Queue up for a game</header>
-      <div>
-        <Button variant="primary" onClick={() => {showModal(RANKED)}}>
+      <div className="menu">
+        <button id="ranked" className="lined thin" onClick={() => {showModal(RANKED)}}>
           Ranked
-        </Button>
-        <Button variant="primary" onClick={() => {showModal(CASUAL)}}>
-          Casual
-        </Button>
-        <Button variant="primary" onClick={() => {showModal(AI)}}>
+        </button>
+        <button id= "casual" className="lined thin" onClick={() => {showModal(CASUAL)}}>
+          CASUAL
+        </button>
+        <button id = "ai" className="lined thin" onClick={() => {showModal(AI)}}>
           vs AI
-        </Button>
+        </button>
       </div>
   
       <GameOptionsModal

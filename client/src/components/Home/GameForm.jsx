@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
 
-import "./styles/HomeMenu.scss"
+import "./styles/HomeMenu.scss";
 import {Button, Modal, Form, Row, Col} from "react-bootstrap";
 
 const RANKED = "RANKED";
@@ -51,14 +51,14 @@ export default function GameForm(props) {
       type: 'AI',
       user1ID: gameOptions.currentUser.id,
       user2ID: null
-    }
+    };
     try{
-      const createMatchInDB = await axios.post("http://localhost:8001/api/matches", gameinfo)
+      const createMatchInDB = await axios.post("http://localhost:8001/api/matches", gameinfo);
       return createMatchInDB;
     } catch(err) {
-      console.log(err, "error")
-    }
-  }
+      console.log(err, "error");
+    };
+  };
 
   return (
     <Form onSubmit={event => event.preventDefault()}>

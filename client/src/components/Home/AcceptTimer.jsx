@@ -25,7 +25,7 @@ export default function AcceptTimer(props) {
   const declineThenGameOptions = async function () {
     await declineMatch();
     returnToGameOptions();
-  }
+  };
 
   return (
     <div className = "timer">
@@ -72,4 +72,4 @@ export default function AcceptTimer(props) {
       </Modal.Footer>
     </div>
   );
-}
+};

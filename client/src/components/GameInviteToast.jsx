@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {Toast, Button} from "react-bootstrap";
-import useIncomingInvite from "../hooks/useIncomingInvite";
 import io from "socket.io-client";
 
 const SOCKET_SERVER_URL = "http://localhost:8001";

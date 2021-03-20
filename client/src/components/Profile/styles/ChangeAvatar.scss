@@ -1,0 +1,130 @@
+// .modal-avatar {
+
+//   position: relative;
+//   background-color:white;
+//   width: 300px;
+//   height: 300px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   border-radius: 50%;
+//   text-align: center;
+//   border-style: solid;
+
+//   .modal-avatar-content {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     border: 20px solid black;
+
+//     .modal-avatar-form {
+
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: space-around;
+//       align-items: center;
+//       width: 60%;
+
+//     }
+//   }
+//   #no-img {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+//   .avatar-close {
+//     position:absolute;
+//     top: 10px;
+//     right:10px;
+//     font-weight:bold;
+//     width: 10px;
+//     height: 10px;
+//     cursor: pointer;
+//     background-color: white;
+//   }
+// }
+
+// #avatar-preview {
+//   border: black;
+//   border-radius: 50%;
+//   width: 250px;
+//   height: 250px;
+// }
+
+// .modal-url {
+//   position: relative;
+//   background-color:white;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   border-radius: 25px;
+//   margin-top: 10px;
+//   margin-bottom: 100px;
+// }
+
+// .url-error {
+//   margin-top:10px;
+//   margin-bottom: -10px;
+//   width: 150px;
+// }
+
+// @media (min-width: 960px) {
+//   .modal-avatar {
+//     width: 500px;
+//     height: 500px;
+
+//     .avatar-close {
+//       top: 45px;
+//       right: 45px;
+//     }
+//   }
+// }
+
+
+.modal-avatar {
+
+  position: relative;
+  background-color:white;
+  // width: 40%;
+  width: 80%;
+  // height: 55%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border-radius: 25px;
+  border-style: solid;
+  
+  .modal-avatar-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .modal-avatar-form {
+      display: flex;
+      justify-content: center;
+
+    }
+
+    #avatar-preview {
+      border: black;
+      border-radius: 50%;
+      width: 250px;
+      height: 250px;
+    }
+  }
+  .url-error {
+    // margin-top:10px;
+    margin-bottom: -10px;
+    width: 150px;
+  }
+}

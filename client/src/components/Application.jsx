@@ -3,7 +3,7 @@ import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
 import Profile from "./Profile/index";
-import { useHistory, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
 import Community from "./Community/Community";
@@ -16,10 +16,10 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import io from "socket.io-client";
 import GameInviteToast from "./GameInviteToast";
-import useIncomingInvite from "../hooks/useIncomingInvite";
 
 // const SOCKET_SERVER_URL = "http://localhost:8001";
 // const LOGIN = "LOGIN";
+import "bootswatch/dist/sketchy/bootstrap.min.css";
 
 export default function Application() {
   // const socketRef = useRef();
@@ -72,12 +72,12 @@ export default function Application() {
       console.log(res);
       return res.data;
     })
-  }
+  };
 
   const logout = function (){
     localStorage.clear();
     setToken(getToken());
-  }
+  };
 
 
   return (
@@ -124,7 +124,7 @@ export default function Application() {
           (<Game 
             {...props} 
             gameInfo = {gameInfo}
-            currentUser = {currentUser}  // colors : { white: user1, black: user2 }
+            currentUser = {currentUser}
           />)
         }/>
         <Route path="/aigame/:id" render={(props) => (
@@ -162,4 +162,4 @@ export default function Application() {
     </Router>
     </>
   );
-}
+};
