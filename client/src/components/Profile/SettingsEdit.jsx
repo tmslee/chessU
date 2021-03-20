@@ -84,7 +84,7 @@ export default function SettingsEdit(props) {
           />
         </label>
         <div>
-          <button type="submit">Save Changes</button>
+          <button type="submit">Save</button>
         </div>
       </form>
   )
