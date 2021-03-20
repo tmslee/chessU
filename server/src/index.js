@@ -218,7 +218,9 @@ io.on("connection", (socket) => {
         io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId:null });
       } else if (opponentStatus === 1) { //opponent accepted{
           removeFromMatches(matches, userId);
-          console.log('making match');
+          console.log(`making match for: `);
+          console.log(currentUser);
+          console.log(opponent);
           // const white = userId;
           // const black = opponent;
           const colors = { white : userId, black : opponent };
