@@ -23,6 +23,8 @@ const DEQUEUE = "DEQUEUE";
 const RANKED = "RANKED"
 const CASUAL = "CASUAL";
 
+const RESIGN ="RESIGN";
+
 const confirmation = [];
 
 // const rankedQ = [];
@@ -55,6 +57,11 @@ io.on("connection", (socket) => {
   // Listen for new messages and send it to everyone in the room
   socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
     io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+  });
+
+  // Listen for resign info
+  socket.on(RESIGN, (data) => {
+    io.in(roomId).emit(RESIGN, data);
   });
   
   // Listen for new user who queues up

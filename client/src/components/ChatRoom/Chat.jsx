@@ -6,7 +6,6 @@ import useChat from "../../hooks/chat";
 const Chat = (props) => {
   const roomId = props.roomId;
   const { messages, sendMessage } = useChat(roomId);
-  const { setPopUp } = props;
   const [newMessage, setNewMessage] = useState("");
 
   const handleNewMessageChange = (event) => {
@@ -19,12 +18,16 @@ const Chat = (props) => {
   };
 
   const messageShow = function(){
-    return messages.map((message, i) => (
-      <li key={i}
-        className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message"}`}>
-        {message.body}
-      </li>
-    ))
+    return messages.map((message, i) => {
+      if(message.body){
+        return(
+          <li key={i}
+            className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message"}`}>
+            {message.body}
+          </li>
+        )
+      }}
+    )
   }
 
   return (
