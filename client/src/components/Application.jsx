@@ -16,6 +16,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import io from "socket.io-client";
 import GameInviteToast from "./GameInviteToast";
+import useIncomingInvite from "../hooks/useIncomingInvite";
 
 // const SOCKET_SERVER_URL = "http://localhost:8001";
 // const LOGIN = "LOGIN";
@@ -33,18 +34,19 @@ export default function Application() {
   const [currentUser, setCurrentUser] = useState();
   const [gameRoute, setGameRoute] = useState();
   const [gameInfo, setGameInfo] = useState();
-  
-  // useEffect(() => {
-  //   //everytime we change currentUser we set socketId server side
-  //   if (currentUser) {
-  //     socketRef.current.on("connect", ()=> {
-  //       socketRef.current.emit(LOGIN, {
-  //         currentUser,
-  //         socketId: socketRef.current.id
-  //       })
-  //     });
-  //   }
-  // }, [currentUser]);
+  const [invitedStatus, setInvitedStatus] = useState(false);
+
+  // const history = useHistory();
+  // const loadGame = function (data, currentUser, opponent, matchId, timeLimit) {
+  //   setGameInfo({
+  //     matchId : data.matchId,
+  //     colors : data.colors, // { white : id, black : id }
+  //     name1 : currentUser.username,
+  //     name2 : opponent.username,
+  //     timeLimit
+  //   })
+  //   history.push(`/game/${matchId}`);
+  // }
 
   console.log('re-render application')
   useEffect(()=> {
@@ -77,6 +79,7 @@ export default function Application() {
     setToken(getToken());
   }
 
+
   return (
     <>
     <Router>
@@ -90,6 +93,8 @@ export default function Application() {
     <GameInviteToast
       currentUser={currentUser}
       setGameInfo={setGameInfo}
+      invitedStatus={invitedStatus}
+      setInvitedStatus={setInvitedStatus}
     />
 
     <main>
@@ -112,6 +117,7 @@ export default function Application() {
             currentUser={currentUser} 
             setGameRoute={setGameRoute} 
             setGameInfo={setGameInfo}
+            setInvitedStatus={setInvitedStatus}
           />)
         }/>
           <Route exact path="/game/:id" render={(props) => 

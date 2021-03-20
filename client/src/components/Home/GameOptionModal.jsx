@@ -46,7 +46,8 @@ export default function GameOptionsModal(props) {
     setGameOptions, 
     closeModal,
     setGameRoute,
-    setGameInfo
+    setGameInfo,
+    setInvitedStatus
   } = props;
 
   const {
@@ -81,6 +82,7 @@ export default function GameOptionsModal(props) {
         name2 : opponent.username 
       })
       history.push(`/aigame/${matchId}`);
+      setInvitedStatus(false);
       return
     } 
 
@@ -110,11 +112,13 @@ export default function GameOptionsModal(props) {
     console.log("setting opponent to null");
     setGameOptions({...gameOptions, opponent: null});
     goToView(SELECT_OPTIONS);
+    setInvitedStatus(false);
   }
 
   const returnToMenu = function () {
     console.log("returning to home page...");
     closeModal();
+    setInvitedStatus(false);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
