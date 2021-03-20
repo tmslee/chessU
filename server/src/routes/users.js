@@ -37,7 +37,7 @@ module.exports = db => {
   });
 
   router.post('/users', (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
     password = bcrypt.hashSync(password, 10);
 
     addUser(username, email, password)
@@ -55,7 +55,7 @@ module.exports = db => {
   //-------------- UPDATE USER -------------------------
   
   router.put('/users/:id', (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
     const userId = req.params.id;
     password = bcrypt.hashSync(password, 10);
 
