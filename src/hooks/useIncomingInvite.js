@@ -55,7 +55,6 @@ const useIncomingInvite = (currentUser, loadGame) => {
       //set invited status to false
       setInvitedStatus(false);
     });
-
   });
 
   useEffect(()=> {
