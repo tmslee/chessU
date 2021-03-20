@@ -50,14 +50,6 @@
     margin-right: auto;
 }
 
-/* .send-message-button {
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
-    background: #31a24c;
-    padding: 6px 6px;
-    border: none;
-} */
 
 .messages-container, .new-message-input-field, .send-message-button {
     border-color: black;
@@ -66,7 +58,6 @@
 .text-send{
     display: flex;
     flex-direction: row;
-    /* align-items: stretch; */
     justify-content: space-between
 }
 
