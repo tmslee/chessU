@@ -3,9 +3,12 @@ import React, {useState} from "react";
 import "./ChatRoom.css";
 import useChat from "../../hooks/chat";
 
+import { Button } from 'react-bootstrap';
+
 const Chat = (props) => {
   const roomId = props.roomId;
   const { messages, sendMessage } = useChat(roomId);
+  const { setPopUp } = props;
   const [newMessage, setNewMessage] = useState("");
 
   const handleNewMessageChange = (event) => {
@@ -25,20 +28,21 @@ const Chat = (props) => {
       </li>
     ))
   }
+
   return (
     <div className="chat-room-container">
       <div className="messages-container">
         <ol className="messages-list">{messageShow()}</ol>
       </div>
-      <textarea
-        value={newMessage}
-        onChange={handleNewMessageChange}
-        placeholder="Write message..."
-        className="new-message-input-field"
-      />
-      <button onClick={handleSendMessage} className="send-message-button">
-        Send
-      </button>
+      <div class="text-send">
+        <textarea
+          value={newMessage}
+          onChange={handleNewMessageChange}
+          placeholder="Write message..."
+          className="new-message-input-field"
+        />
+        <Button onClick={handleSendMessage} variant="outline-success">Send</Button>
+      </div>
     </div>
   );
 };

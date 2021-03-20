@@ -8,6 +8,7 @@ import MovesLog from "../GameView/MovesLog"
 import Chess from "chess.js";
 import axios from "axios";
 import Chat from "../ChatRoom/Chat"
+import { Button, Modal } from 'react-bootstrap';
 
 export default function AiGame(props){
   console.log(props);
@@ -35,7 +36,8 @@ export default function AiGame(props){
     chessmoves: [],
     winner:'',
     roomId: matchId,
-    duration
+    duration,
+    chatPopup: false
   })
 
   let ai = useRef(null);
@@ -171,6 +173,12 @@ export default function AiGame(props){
     setState(prev => ({...prev, modalShow: bool }));
   }
 
+   // adds class to darken background color
+  //  const duringPopUp = state.chatPopup ? " during-popup" : ""
+  //  const setPopUp = function(bool){
+  //   setState(prev => ({...prev, chatPopup: bool }));
+  //  }
+
   return (
     <>
     <div className="gameView">
@@ -189,14 +197,14 @@ export default function AiGame(props){
         </div>
         <div className="move_log">
           <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
-          {/* <Chat roomId={state.roomId}/> */}
         </div>
-      </div>
+        <Chat roomId={state.roomId}/>
       <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
         winner={state.winner}
       />
+      </div>
     </div>
     </>
   );
