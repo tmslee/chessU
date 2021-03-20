@@ -74,8 +74,8 @@ const initializeMatchConfirm = function (firstUser, secondUser, firstSocket, sec
   matches[secondUser.id] = firstUser.id;
   matchConfirmStatus[firstUser.id] = 0;
   matchConfirmStatus[secondUser.id] = 0;
-  userSockets[firstUser.id] = firstSocket;
-  userSockets[secondUser.id] = secondSocket;
+  // userSockets[firstUser.id] = firstSocket;
+  // userSockets[secondUser.id] = secondSocket;
 }
 
 io.on("connection", (socket) => {

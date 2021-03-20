@@ -7,8 +7,7 @@ const SOCKET_INIT ="SOCKET_INIT";
 
 const SOCKET_SERVER_URL = "http://localhost:8001";
 
-const useIncomingInvite = (currentUser, loadGame) => {
-  const socketRef = useRef();
+const useIncomingInvite = (currentUser, loadGame, socket) => {
   
   const [gameTimeLimit, setGameTimeLimit] = useState(null);
   const [gameType, setGameType] = useState(null);
@@ -17,13 +16,13 @@ const useIncomingInvite = (currentUser, loadGame) => {
   const [invitedStatus, setInvitedStatus] = useState(false);
   const [acceptStatus, setAcceptStatus] = useState(0);
 
-  socketRef.current = io(SOCKET_SERVER_URL);
+  socket.current = io(SOCKET_SERVER_URL);
 
   useEffect(()=> {
-    socketRef.current.on("connect", () => {
-      if(currentUser && socketRef.current.id){
-        socketRef.current.emit(SOCKET_INIT, {
-          socketId:socketRef.current.id,
+    socket.current.on("connect", () => {
+      if(currentUser && socket.current.id){
+        socket.current.emit(SOCKET_INIT, {
+          socketId:socket.current.id,
           userId: currentUser.id,
           name: currentUser.username
         });  
@@ -32,39 +31,42 @@ const useIncomingInvite = (currentUser, loadGame) => {
   });
 
   useEffect(()=> {
-    socketRef.current.on(GAME_INVITE, (data)=> {
-      console.log("invite received");
-      const {gameOptions} = data;
-      // console.log(gameOptions);
-      setGameTimeLimit(gameOptions.timeLimit);
-      setGameType(gameOptions.type);
-      setGameOpponent(gameOptions.currentUser);
-      //set gameOptions from server's game invite message 
-      setInvitedStatus(true);
-    });
-
-    socketRef.current.on(MATCH_CONFIRM, (data) => {
-      //if confirmation match id is null -> we exit
-      const {matchId} = data;
-      if (!data.matchId) {
-        console.log("match declined");
-      } else {
-        console.log("match made");
-        loadGame(data, currentUser, gameOpponent, matchId, gameTimeLimit);
-      }
-      //set invited status to false
-      setInvitedStatus(false);
-    });
-  });
+    if(!invitedStatus) {
+      socket.current.on(GAME_INVITE, (data)=> {
+        console.log("invite received");
+        const {gameOptions} = data;
+        // console.log(gameOptions);
+        setGameTimeLimit(gameOptions.timeLimit);
+        setGameType(gameOptions.type);
+        setGameOpponent(gameOptions.currentUser);
+        //set gameOptions from server's game invite message 
+        setInvitedStatus(true);
+      });
+    }
+    else{
+      socket.current.on(MATCH_CONFIRM, (data) => {
+        //if confirmation match id is null -> we exit
+        const {matchId} = data;
+        if (!data.matchId) {
+          console.log("match declined");
+        } else {
+          console.log("match made");
+          loadGame(data, currentUser, gameOpponent, matchId, gameTimeLimit);
+        }
+        //set invited status to false
+        setInvitedStatus(false);
+      });
+    }
+  }, [invitedStatus]);
 
   useEffect(()=> {
       if (acceptStatus === 1 || acceptStatus === -1) {
         setInvitedStatus(false);
-        socketRef.current.emit(MATCH_CONFIRM, {
+        socket.current.emit(MATCH_CONFIRM, {
           timeLimit: gameTimeLimit,
           type: gameType,
           currentUser,
-          socketId: socketRef.current.id,
+          socketId: socket.current.id,
           confirmation: acceptStatus
         });
         setAcceptStatus(0);

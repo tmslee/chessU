@@ -10,7 +10,8 @@ export default function GameAccept(props) {
     returnToGameOptions, 
     loadGame, 
     setGameRoute, 
-    setGameInfo
+    setGameInfo,
+    socket
   } = props;
 
   return (
@@ -21,6 +22,7 @@ export default function GameAccept(props) {
       loadGame = {loadGame}
       setGameRoute = {setGameRoute}
       setGameInfo = {setGameInfo}
+      socket={socket}
     />
   );
 };

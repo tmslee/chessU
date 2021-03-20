@@ -46,7 +46,8 @@ export default function GameOptionsModal(props) {
     setGameOptions, 
     closeModal,
     setGameRoute,
-    setGameInfo
+    setGameInfo,
+    socket
   } = props;
 
   const {
@@ -54,7 +55,7 @@ export default function GameOptionsModal(props) {
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
-  const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
+  const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView, socket);
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
@@ -192,12 +193,14 @@ export default function GameOptionsModal(props) {
           returnToGameOptions={returnToGameOptions}
           setGameRoute = {setGameRoute}
           setGameInfo = {setGameInfo}
+          socket={socket}
         />
       }     
       {mode === INVITE_OPPONENT &&
         <InviteOpponent
           gameOptions={gameOptions}
           goToView={goToView}
+          socket={socket}
         />
       }
       {mode === WAITING_FOR_OPPONENT &&

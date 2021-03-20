@@ -17,11 +17,11 @@ const SOCKET_SERVER_URL = "http://localhost:8001";
 const RANKED_ACCEPT = "RANKED_ACCEPT";
 
 //  userInfo = { userId, type, elo }
-const useQueue = (gameOptions, setGameOptions, goToView) => {
+const useQueue = (gameOptions, setGameOptions, goToView, socket) => {
   const { currentUser, type, timeLimit } = gameOptions;
-  const socketRef = useRef();
   console.log(currentUser);
 
+  socket.current = io(SOCKET_SERVER_URL);
   // queue states ////////////////////////////////////////
   const[inQueue, setQueue] = useState(false);
   const enqueue = function () {
@@ -34,25 +34,24 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
 
   // state change handling
   useEffect(() => {
-    socketRef.current = io(SOCKET_SERVER_URL);
-    socketRef.current.on("connect", () => {
-      console.log(socketRef.current.id);
+    socket.current.on("connect", () => {
+      console.log(socket.current.id);
 
       if (inQueue) {
         console.log(`joining queue: sending message to socket from user:`);
         // send socket message that youre going into queue
         // we need gameOptions here to determine which message we are sending
-        console.log('before sending to socketio', socketRef.current.id);
+        console.log('before sending to socketio', socket.current.id);
 
-        socketRef.current.emit(ENQUEUE, {
+        socket.current.emit(ENQUEUE, {
           timeLimit,
           type,
           currentUser,
-          socketId: socketRef.current.id,
+          socketId: socket.current.id,
         })
         
         // listening from server/socket
-        socketRef.current.on(ENQUEUE, (data) => {
+        socket.current.on(ENQUEUE, (data) => {
           console.log(data);
           
           const opponent = data.opponent;
@@ -73,13 +72,13 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
 
       } else if(currentUser) {
         //send a dequeue messsage to socket 
-        socketRef.current.emit(DEQUEUE, {
+        socket.current.emit(DEQUEUE, {
           timeLimit,
           type,
           // userId: currentUser.id,
           // elo: currentUser.elo,
           currentUser,
-          socketId: socketRef.current.id,
+          socketId: socket.current.id,
         })
       }
     });

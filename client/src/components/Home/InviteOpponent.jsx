@@ -7,8 +7,8 @@ import useMatchInvite from "../../hooks/useMatchInvite";
 const ERROR = "ERROR";
 
 export default function InviteOpponent(props) {
-  const {goToView, gameOptions} = props;
-  const {opponentStatus} = useMatchInvite(gameOptions.currentUser, gameOptions, goToView);
+  const {goToView, gameOptions, socket} = props;
+  const {opponentStatus} = useMatchInvite(gameOptions.currentUser, gameOptions, goToView, socket);
   
   return (
     <>

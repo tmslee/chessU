@@ -5,7 +5,8 @@ import useChat from "../../hooks/chat";
 
 const Chat = (props) => {
   const roomId = props.roomId;
-  const { messages, sendMessage } = useChat(roomId);
+  const mySocketRef = props.mySocketRef;
+  const { messages, sendMessage } = useChat(roomId, mySocketRef);
   const [newMessage, setNewMessage] = useState("");
 
   const handleNewMessageChange = (event) => {

@@ -4,7 +4,7 @@ import {Toast, Button} from "react-bootstrap";
 import useIncomingInvite from "../hooks/useIncomingInvite";
 
 export default function GameInviteToast(props) {
-  const {currentUser, setGameInfo} = props;
+  const {currentUser, setGameInfo, socket} = props;
   const history = useHistory();
 
   const loadGame = function (data, currentUser, opponent, matchId, timeLimit) {
@@ -14,7 +14,7 @@ export default function GameInviteToast(props) {
       name1 : currentUser.username,
       name2 : opponent.username,
       timeLimit
-    })
+    });
     history.push(`/game/${matchId}`);
   }
 
@@ -24,7 +24,7 @@ export default function GameInviteToast(props) {
     acceptStatus, 
     setAcceptStatus,
     gameOpponent
-  } = useIncomingInvite(currentUser, loadGame);
+  } = useIncomingInvite(currentUser, loadGame, socket);
 
   return(
     <Toast 

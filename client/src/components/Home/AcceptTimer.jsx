@@ -11,7 +11,8 @@ export default function AcceptTimer(props) {
     returnToGameOptions, 
     loadGame, 
     setGameRoute,
-    setGameInfo
+    setGameInfo,
+    socket
   } = props;
 
   const [col, setCol] = useState("success");
@@ -20,7 +21,7 @@ export default function AcceptTimer(props) {
     opponentStatus, 
     acceptMatch, 
     declineMatch
-  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute, setGameInfo, initialAcceptStatus);
+  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute, setGameInfo, initialAcceptStatus, socket);
 
   const declineThenGameOptions = async function () {
     await declineMatch();

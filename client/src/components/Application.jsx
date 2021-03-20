@@ -17,12 +17,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import io from "socket.io-client";
 import GameInviteToast from "./GameInviteToast";
 
-// const SOCKET_SERVER_URL = "http://localhost:8001";
-// const LOGIN = "LOGIN";
+const SOCKET_SERVER_URL = "http://localhost:8001";
+const LOGIN = "LOGIN";
 
 export default function Application() {
-  // const socketRef = useRef();
-  // socketRef.current = io(SOCKET_SERVER_URL);
+  const socketRef = useRef();
+  socketRef.current = io(SOCKET_SERVER_URL);
 
   const [active, setActive] = useState({
     login: false,
@@ -33,18 +33,20 @@ export default function Application() {
   const [currentUser, setCurrentUser] = useState();
   const [gameRoute, setGameRoute] = useState();
   const [gameInfo, setGameInfo] = useState();
+  const [socket, setSocket] = useState(socketRef.current);
+  const [mySocketRef, setSocketRef] = useState(socketRef);
   
-  // useEffect(() => {
-  //   //everytime we change currentUser we set socketId server side
-  //   if (currentUser) {
-  //     socketRef.current.on("connect", ()=> {
-  //       socketRef.current.emit(LOGIN, {
-  //         currentUser,
-  //         socketId: socketRef.current.id
-  //       })
-  //     });
-  //   }
-  // }, [currentUser]);
+  useEffect(() => {
+    //everytime we change currentUser we set socketId server side
+    if (currentUser) {
+      mySocketRef.current.on("connect", ()=> {
+        mySocketRef.current.emit(LOGIN, {
+          currentUser,
+          socketId: mySocketRef.current.id
+        })
+      });
+    }
+  }, [currentUser]);
 
   console.log('re-render application')
   useEffect(()=> {
@@ -90,6 +92,7 @@ export default function Application() {
     <GameInviteToast
       currentUser={currentUser}
       setGameInfo={setGameInfo}
+      socket={mySocketRef}
     />
 
     <main>
@@ -112,6 +115,7 @@ export default function Application() {
             currentUser={currentUser} 
             setGameRoute={setGameRoute} 
             setGameInfo={setGameInfo}
+            socket={mySocketRef}
           />)
         }/>
           <Route exact path="/game/:id" render={(props) => 
@@ -119,6 +123,7 @@ export default function Application() {
             {...props} 
             gameInfo = {gameInfo}
             currentUser = {currentUser}  // colors : { white: user1, black: user2 }
+            mySocketRef = {mySocketRef}
           />)
         }/>
         <Route path="/aigame/:id" render={(props) => (

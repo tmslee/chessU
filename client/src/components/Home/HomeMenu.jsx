@@ -22,6 +22,7 @@ export default function HomeMenu(props) {
     currentUser, 
     setGameRoute, 
     setGameInfo,
+    socket
   } = props; 
 
   const [showState, setShowState] = useState(false);
@@ -71,6 +72,7 @@ export default function HomeMenu(props) {
         closeModal={closeModal}
         setGameRoute={setGameRoute}
         setGameInfo={setGameInfo}
+        socket={socket}
       />
     </>
   );

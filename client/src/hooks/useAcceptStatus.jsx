@@ -20,9 +20,10 @@ const useAcceptStatus = (
    loadGame, 
    setGameRoute,
    setGameInfo,
-   initialAcceptStatus
+   initialAcceptStatus,
+   socket
    ) => {
-  const socketRef = useRef();
+  // const socketRef = useRef();
 
   const { currentUser, type, opponent, timeLimit } = gameOptions;
   // match accept states /////////////////////////////////////
@@ -40,16 +41,16 @@ const useAcceptStatus = (
     returnToGameOptions();
   }
 
+  socket.current = io(SOCKET_SERVER_URL);
   useEffect(() => {
-    socketRef.current = io(SOCKET_SERVER_URL);
-    socketRef.current.on("connect", ()=> {
+    socket.current.on("connect", ()=> {
       //send confirmation back to server
-      socketRef.current.emit(MATCH_CONFIRM, {
+      socket.current.emit(MATCH_CONFIRM, {
         timeLimit,
         type,
         // userId: gameOptions.currentUser.id,
         currentUser,
-        socketId: socketRef.current.id,
+        socketId: socket.id,
         confirmation: userStatus
       });
     });
@@ -57,7 +58,7 @@ const useAcceptStatus = (
 
   useEffect(() => {
     //listen for opponent confirmation
-    socketRef.current.on(MATCH_CONFIRM, (data) => {
+    socket.current.on(MATCH_CONFIRM, (data) => {
       //if confirmation match id is null -> we exit
       const {matchId} = data;
       if (!data.matchId) {

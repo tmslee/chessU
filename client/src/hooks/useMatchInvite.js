@@ -9,25 +9,25 @@ const OPPONENT_STATUS = "OPPONENT_STATUS"
 
 const SOCKET_SERVER_URL = "http://localhost:8001";
 
-const useMatchInvite = (currentUser, gameOptions, goToView) => {
-  const socketRef = useRef();
-  socketRef.current = io(SOCKET_SERVER_URL);
+const useMatchInvite = (currentUser, gameOptions, goToView, socket) => {
+  // const socketRef = useRef();
+  socket.current = io(SOCKET_SERVER_URL);
   const [opponentStatus, setOpponentStatus] = useState(0);
 
   useEffect(() => {
     if (opponentStatus === 0) {
       //ask for opponent status
-      socketRef.current.on("connect", ()=> {
-        socketRef.current.emit(GET_OPPONENT_STATUS, {
+      socket.current.on("connect", ()=> {
+        socket.current.emit(GET_OPPONENT_STATUS, {
           currentUser,
           opponent: gameOptions.opponent,
           gameOptions,
-          socketId: socketRef.current.id,
+          socketId: socket.current.id,
         })
       });
 
       //listen for server response about opponent status
-      socketRef.current.on(OPPONENT_STATUS, (data) => {
+      socket.current.on(OPPONENT_STATUS, (data) => {
         const {status} = data;
         //update state accordingly
         if (status) setOpponentStatus(1);

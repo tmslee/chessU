@@ -14,6 +14,8 @@ function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
   // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
   // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
+  const mySocketRef = props.mySocketRef
+
   console.log(props);
 
   const isRanked = true;
@@ -62,7 +64,7 @@ function Game(props) {
   })
 
   const roomId = state.roomId;
-  let { currentMove, sendMove } = useMove(roomId);
+  let { currentMove, sendMove } = useMove(roomId, mySocketRef);
 
   // set current positions from Chess.js
   let game = useRef(null);
@@ -289,7 +291,7 @@ function Game(props) {
       {/* orientation={'black'} */}
         <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
         <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
-        <Chat roomId={state.roomId}/>
+        <Chat roomId={state.roomId} mySocketRef={mySocketRef}/>
       </div>
       <Popup
         show={state.modalShow}
