@@ -115,6 +115,7 @@ function Game(props) {
     } else {
       matchResult['loser'] = matchResult['white'];
     }
+    matchResult["timeLimit"] = state.duration;
     console.log('match id', state.roomId, matchId);
     const idMatch = props.gameInfo.matchId;
     console.log(matchResult);
@@ -129,7 +130,6 @@ function Game(props) {
 
   // the winner client side will send the result
   const resultSend = function(){ 
-    resultRecord();
     if (game.current.turn() === 'b'){
       gameover('White');
     } else {
@@ -229,6 +229,7 @@ function Game(props) {
       // console.log(game.current.turn());
     } else {
       resultSend();
+      resultRecord();
     }
   }
   

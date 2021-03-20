@@ -1,12 +1,13 @@
 .modal-settings {
   position: relative;
   background-color: white;
-  width: 40%;
-  height: 55%;
+  width: 80%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 25px;
+  border-style: solid;
 
   .modal-settings-content {
     display: flex;
@@ -20,7 +21,37 @@
       justify-content: space-around;
       align-items: center;
       width: 60%;
-      
+      font-size: 20px;
     }
+
+    #save {
+      // width: 100%;
+      // height: 100%;
+      border-radius: 10px;
+    }
+  }
+
+  .modal-settings-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    font-size: 28px;
+    font-weight: normal;
+  }
+}
+
+
+@media (min-width: 560px) {
+  .modal-settings {
+    width: 60%;
+    height: 55%;
+  }
+}
+
+@media (min-width: 960px) {
+  .modal-settings {
+    width: 30%;
+    height: 55%;
   }
 }
