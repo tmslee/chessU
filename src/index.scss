@@ -19,9 +19,10 @@ html, body{
   // flex-direction:column;
   // justify-content:center;
   background:#F0F0D8;
+  
   font-family: 'Patrick Hand SC', cursive;
   button {
-  width: 100%;
+  // width: 100%;
   align-self:center;
   background:transparent;
   padding:1rem 1rem;
@@ -61,7 +62,7 @@ html, body{
     &.dashed.thin{
       border:dashed 2px #41403E;
     }
-  }
+  } 
 }
 
 @media (max-width:620px){
