@@ -57,6 +57,7 @@ module.exports = db => {
   router.put('/users/:id', (req, res) => {
     const {username, email, password} = req.body;
     const userId = req.params.id;
+    password = bcrypt.hashSync(password, 10);
 
     editUser(username, email, password, userId)
     .then( user => {
