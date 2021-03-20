@@ -4,7 +4,7 @@ import React from "react";
 import { useState, useRef } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
-import Popup from './Popup';
+import PopupWin from './PopupWin';
 import MovesLog from "./MovesLog"
 import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
@@ -292,7 +292,7 @@ function Game(props) {
         <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
         <Chat roomId={state.roomId}/>
       </div>
-      <Popup
+      <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
         // regame={regame}

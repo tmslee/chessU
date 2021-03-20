@@ -18,6 +18,8 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
+    "react-chat-elements": "^10.14.0",
+    "react-chat-widget": "^3.0.5",
     "react-compound-timer": "^1.2.0",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.1",
