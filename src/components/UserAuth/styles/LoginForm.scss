@@ -11,6 +11,11 @@
   justify-content: center;
   border-radius: 25px;
   border-style: solid;
+  font-size: 20px;
+
+  h1 {
+    font-size: 50px;
+  }
   
   .modal-login-content {
     display: flex;
@@ -29,12 +34,23 @@
     }
   }
 
+  .modal-close {
+    // border-radius: 10px;
+  }
+
+  .submit {
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+
 }
 
 @media (min-width: 560px) {
   .modal-login {
     width: 60%;
     height: 55%;
+    font-size: 20px;
+
   }
 }
 
@@ -42,5 +58,6 @@
   .modal-login {
     width: 30%;
     height: 55%;
+    font-size: 25px;
   }
 }
