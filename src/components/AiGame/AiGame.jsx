@@ -189,16 +189,19 @@ export default function AiGame(props){
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
         duration={state.duration}
+        timeout={gameover}
         />}
       </div>
       <div className="chess-main">
         <div className="chessboard">
           <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
         </div>
-        <div className="move_log">
-          <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+        <div className="move-chat">
+          <div className="move_log">
+            <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+          </div>
+          {/* <Chat roomId={state.roomId}/> */}
         </div>
-        <Chat roomId={state.roomId}/>
       <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
