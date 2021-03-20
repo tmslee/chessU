@@ -96,7 +96,7 @@ const sortUsers = function(arr, type, time){
   }
 }
 
-console.log(sortUsers(test, "RANKED", 30));
+// console.log(sortUsers(test, "RANKED", 30));
 
 
 
