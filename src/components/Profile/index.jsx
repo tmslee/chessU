@@ -4,11 +4,16 @@ import Statistics from "./Statistics";
 import Settings from "./Settings";
 import ProfileTabs from "./ProfileTabs";
 import axios from "axios";
+import MatchHistory from './MatchHistory';
 
 export default function Profile (props) {
   const {token, currentUser, setActive, getCurrentUser, setCurrentUser} = props
   const [settings, setSettings] = useState(false);
   const [statsInfo, setStatsInfo] = useState();
+  const [tabs, setTabs] = useState({
+    stats: true,
+    history: false
+  });
   
   useEffect(() => {
     if (!currentUser){
@@ -29,7 +34,7 @@ export default function Profile (props) {
   }, [currentUser]);
 
   return (
-    <>
+    <div>
     {currentUser &&  statsInfo &&
       <>
         {settings && <Settings 
@@ -43,13 +48,23 @@ export default function Profile (props) {
           currentUser={currentUser}
           setSettings={setSettings}
         />
-        <ProfileTabs />
+        <ProfileTabs 
+          setTabs={setTabs}
+          tabs={tabs}
+        />
+        {tabs.stats && 
         <Statistics
           currentUser={currentUser}
           statsInfo={statsInfo}
         />
+        }
+        {tabs.history &&
+        <MatchHistory
+          currentUser={currentUser}
+        />
+        }
       </>
     }
-    </>
+    </div>
   )
 };
