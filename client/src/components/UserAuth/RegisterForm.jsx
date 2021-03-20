@@ -79,7 +79,7 @@ export default function RegisterForm(props) {
           />
         </label>
         <div>
-          <button onClick={clearError} type="submit">Submit</button>
+          <button id="register-submit" onClick={clearError} type="submit">Submit</button>
         </div>
       </form>
       </div>

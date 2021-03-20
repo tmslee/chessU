@@ -62,7 +62,7 @@ export default function LoginForm( props ) {
           />
         </label>
         <div>
-          <button type="submit">Submit</button>
+          <button className="submit" type="submit">Submit</button>
         </div>
       </form>
       </div>

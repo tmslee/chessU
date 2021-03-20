@@ -23,8 +23,19 @@
       justify-content: space-around;
       align-items: center;
       width: 60%;
+
+      #register-submit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        // margin: auto;
+        margin-top: 10px;
+        border-radius: 10px;
+      }
     }
   }
+
 }
 
 @media (min-width: 560px) {
