@@ -6,6 +6,7 @@ import useAcceptStatus from "../../hooks/useAcceptStatus";
 export default function AcceptTimer(props) {
 
   const {
+    initialAcceptStatus,
     gameOptions, 
     returnToGameOptions, 
     loadGame, 
@@ -19,7 +20,7 @@ export default function AcceptTimer(props) {
     opponentStatus, 
     acceptMatch, 
     declineMatch
-  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute, setGameInfo);
+  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute, setGameInfo, initialAcceptStatus);
 
   const declineThenGameOptions = async function () {
     await declineMatch();

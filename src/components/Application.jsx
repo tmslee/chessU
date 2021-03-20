@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
@@ -9,12 +9,20 @@ import ChessNavBar from "./Navbar/ChessNavBar";
 import Community from "./Community/Community";
 import LeaderBoards from "./Community/LeaderBoards";
 import useToken from "../hooks/useToken";
+
 import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
+import io from "socket.io-client";
+import GameInviteToast from "./GameInviteToast";
+
+// const SOCKET_SERVER_URL = "http://localhost:8001";
+// const LOGIN = "LOGIN";
 
 export default function Application() {
+  // const socketRef = useRef();
+  // socketRef.current = io(SOCKET_SERVER_URL);
 
   const [active, setActive] = useState({
     login: false,
@@ -25,6 +33,18 @@ export default function Application() {
   const [currentUser, setCurrentUser] = useState();
   const [gameRoute, setGameRoute] = useState();
   const [gameInfo, setGameInfo] = useState();
+  
+  // useEffect(() => {
+  //   //everytime we change currentUser we set socketId server side
+  //   if (currentUser) {
+  //     socketRef.current.on("connect", ()=> {
+  //       socketRef.current.emit(LOGIN, {
+  //         currentUser,
+  //         socketId: socketRef.current.id
+  //       })
+  //     });
+  //   }
+  // }, [currentUser]);
 
   console.log('re-render application')
   useEffect(()=> {
@@ -66,6 +86,12 @@ export default function Application() {
     active={active}
     logout={logout}
     />
+
+    <GameInviteToast
+      currentUser={currentUser}
+      setGameInfo={setGameInfo}
+    />
+
     <main>
       {active.login && 
       <LoginForm 
