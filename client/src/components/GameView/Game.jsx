@@ -289,8 +289,12 @@ function Game(props) {
       <div className="chessboard">
       {/* orientation={'black'} */}
         <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
-        <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
-        <Chat roomId={state.roomId}/>
+        <div className="move-chat">
+          <div className="move_log">
+            <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+          </div>
+          <Chat roomId={state.roomId}/>
+        </div>
       </div>
       <PopupWin
         show={state.modalShow}

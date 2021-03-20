@@ -1,5 +1,4 @@
 .gameView {
-  /* width: 100%; */
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -7,7 +6,7 @@
   align-items: center;
 }
 
-@media (max-width: 1024px){
+@media (max-width:620px){
   .gameView {
     width: 100%;
     display: flex;
@@ -16,11 +15,23 @@
     justify-content: center;
     align-items: center;
   }
+  .chess-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+.move-chat{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .chess-main{
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: flex-start;
 }

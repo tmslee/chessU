@@ -3,8 +3,6 @@ import React, {useState} from "react";
 import "./ChatRoom.css";
 import useChat from "../../hooks/chat";
 
-import { Button } from 'react-bootstrap';
-
 const Chat = (props) => {
   const roomId = props.roomId;
   const { messages, sendMessage } = useChat(roomId);
@@ -41,7 +39,7 @@ const Chat = (props) => {
           placeholder="Write message..."
           className="new-message-input-field"
         />
-        <Button onClick={handleSendMessage} variant="outline-success">Send</Button>
+        <button onClick={handleSendMessage} type="button" className="btn btn-outline-success send-message-button">Send</button>
       </div>
     </div>
   );

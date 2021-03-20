@@ -11,10 +11,6 @@ import LeaderBoards from "./Community/LeaderBoards";
 import useToken from "../hooks/useToken";
 import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
-<<<<<<< HEAD
-import 'bootstrap/dist/css/bootstrap.min.css';
-=======
->>>>>>> development
 import "bootswatch/dist/sketchy/bootstrap.min.css";
 
 export default function Application() {
