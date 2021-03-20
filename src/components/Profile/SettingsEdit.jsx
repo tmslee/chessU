@@ -1,11 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-// import "./styles/Settings.scss"
-
-const updateUser = function(newUserInfo, id) {
-  axios.put(`http://localhost:8001/api/users/${id}`, newUserInfo)
-  .then( res => console.log(res));
-};
+import FormError from "../Errors/FormError";
 
 export default function SettingsEdit(props) {
 
@@ -14,15 +9,38 @@ export default function SettingsEdit(props) {
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
   const [password, setPassword] = useState(currentUser.password);
+  const [error, setError] = useState(false);
+
+  const clearError = () => {
+    setError(false);
+  };
+
+  const updateUser = function(newUserInfo, id) {
+    return axios.put(`http://localhost:8001/api/users/${id}`, newUserInfo)
+    .then( res => {
+      console.log(res.data.id);
+      if(!res.data.id) {
+        return false;
+      }
+      return true;
+    });
+  };
 
   const handleSubmit = (e) => {
+    clearError();
     e.preventDefault();
     updateUser({
-      username: username,
-      email: email,
-      password: password
+      username,
+      email,
+      password
     }, currentUser.id)
-    setEdit(false);
+    .then( res => {
+      if(res) {
+        setEdit(false);
+      } else {
+        setError(true);
+      }
+    });
 
     if(token){
       getCurrentUser(token).then( res => {
@@ -35,6 +53,9 @@ export default function SettingsEdit(props) {
 
   return (
     <form className="modal-settings-form" onSubmit={handleSubmit}>
+        {error && 
+        <FormError message="Username already exists" />
+        }
         <label>
           <p>Username</p>
           <input 
@@ -67,5 +88,4 @@ export default function SettingsEdit(props) {
         </div>
       </form>
   )
-
-}
+};
