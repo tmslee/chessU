@@ -10,4 +10,16 @@
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+
+  #ranked, #casual, #ai {
+    width: 100%;
+  }
+}
+
+@media (min-width: 960px) {
+  .menu {
+    #ranked, #casual, #ai {
+      width: 80%;
+    }
+  }
 }
