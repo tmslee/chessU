@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState} from 'react';
 import {ListGroup, Form, Button, Col} from "react-bootstrap";
 import UserListItem from './UserListItem';
+import "./styles/SearchUser.scss";
 
 export default function SearchUser(props) {
   const {
@@ -77,10 +78,11 @@ export default function SearchUser(props) {
   return (
     <div>
       <Form onSubmit={submitSearch}>
-        <Form.Row>
-          <Col>
-            <Form.Group controlId="usernameSearch">
+        <Form.Row className="search-form">
+          <Col className="search-bar-container">
+            <Form.Group controlId="usernameSearch" className="search-bar">
               <Form.Control 
+               className="search-bar"
                 type="text" 
                 placeholder="Search by username" 
                 onChange={event => setSearchTerm(event.target.value)}

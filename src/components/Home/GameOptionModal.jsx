@@ -59,7 +59,7 @@ export default function GameOptionsModal(props) {
   }, [gameOptions]);
 
   const history = useHistory();
-  const loadGame = function (data, currentUser, opponent, matchId, timeLimit) {
+  const loadGame = async function (data, currentUser, opponent, matchId, timeLimit) {
     // leaveQueue(gameOptions.currentUserID);
     console.log("ai loading game...");
     if (opponent.username === 'AI'){
@@ -85,12 +85,17 @@ export default function GameOptionsModal(props) {
       name1 : currentUser.username,
       name2 : opponent.username 
     });
+
     setGameInfo({
       matchId : data.matchId,
       colors : data.colors, // { white : id, black : id }
       name1 : currentUser.username,
       name2 : opponent.username,
-      timeLimit
+      timeLimit,
+      opponentRanked10: opponent.ranked10,
+      opponentRanked30: opponent.ranked30,
+      opponentCasual: opponent.casual,
+      matchType: data.type,
     })
     goToView(LOADING);
     history.push(`/game/${matchId}`);

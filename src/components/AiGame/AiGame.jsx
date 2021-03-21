@@ -3,7 +3,7 @@ import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";
 import Countdown from '../GameView/Timer';
-import PopupWin from '../GameView/PopupWin';
+import PopupWin from './PopupWin';
 import MovesLog from "../GameView/MovesLog"
 import Chess from "chess.js";
 import axios from "axios";
@@ -14,6 +14,10 @@ export default function AiGame(props){
   const currentUserId = props.currentUser.id
   const { matchId } = props.match.params; 
   const difficulty = props.gameInfo.difficulty - 1;
+
+  const eloRanked10 = props.currentUser.ranked10;
+  const eloRanked30 = props.currentUser.ranked30;
+  const eloRankedCasual = props.currentUser.casual;
 
   const usernameWhite = props.currentUser.username;
   const usernameBlack = 'AI';
@@ -178,6 +182,16 @@ export default function AiGame(props){
 
   const timeLimitShow = duration ? duration + 'mins' : 'unlimited' ;
 
+  const difficultyShow = function(){
+    if (difficulty === 0){
+      return 'easy'
+    } else if (difficulty === 1) {
+      return 'normal'
+    } else {
+      return 'hard';
+    }
+  }
+
   return (
     <>
     <div className="gameView">
@@ -197,9 +211,13 @@ export default function AiGame(props){
             <div className="card-header">GAME INFO</div>
             <div className="card-body">
               <h4 className="card-title">Player: {usernameWhite}</h4>
+              <p className="card-text">ELO rank/10mins: {eloRanked10}</p>
+              <p className="card-text">ELO rank/30mins: {eloRanked30}</p>
+              <p className="card-text">ELO casual: {eloRankedCasual}</p>
               <h4 className="card-title">Opponent: AI</h4>
               <p className="card-text">Game Mode: Vs AI</p>
               <p className="card-text">Time Limit: {timeLimitShow}</p>
+              <p className="card-text">Difficulty: {difficultyShow()}</p>
               <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
             </div>
           </div>
