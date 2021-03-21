@@ -1,5 +1,4 @@
-const eloUpdate = async function(winnerId, winner_elo, loserId, loser_elo, type, timeLimit){
-  console.log('elo update function', winnerId, winner_elo, loserId, loser_elo, type, timeLimit)
+const eloUpdate = function(winnerName, winner_elo, loserName, loser_elo){
 
   const eloDifference = 400;
   const transformedRatingWinner = Math.pow(10, winner_elo / eloDifference);
@@ -12,8 +11,8 @@ const eloUpdate = async function(winnerId, winner_elo, loserId, loser_elo, type,
   // K = 32 and get the updated elo rating
   const updatedWinner = Math.round(winner_elo + 32 * (1 - expectedScoreWinner));
   const updatedLoser = Math.round(loser_elo + 32 * (0 - expectedScoreLoser));
-  console.log(updatedWinner, updatedLoser);
 
+  return {winnerName, winner_elo, updatedWinner, loserName, winner_elo, updatedLoser};
 }
 
 exports.eloUpdate = eloUpdate;
