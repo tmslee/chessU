@@ -176,6 +176,8 @@ export default function AiGame(props){
     setState(prev => ({...prev, isResign: bool }));
   }
 
+  const timeLimitShow = duration ? duration + 'mins' : 'unlimited' ;
+
   return (
     <>
     <div className="gameView">
@@ -190,6 +192,18 @@ export default function AiGame(props){
         />}
       </div>
       <div className="chess-main">
+        <div className="gameInfo">
+          <div className="card border-primary mb-3">
+            <div className="card-header">GAME INFO</div>
+            <div className="card-body">
+              <h4 className="card-title">Player: {usernameWhite}</h4>
+              <h4 className="card-title">Opponent: AI</h4>
+              <p className="card-text">Game Mode: Vs AI</p>
+              <p className="card-text">Time Limit: {timeLimitShow}</p>
+              <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
+            </div>
+          </div>
+        </div>
         <div className="chessboard">
           <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
         </div>
@@ -197,7 +211,6 @@ export default function AiGame(props){
           <div className="move_log">
             <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
           </div>
-          <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
         </div>
       <PopupWin
         show={state.modalShow}
