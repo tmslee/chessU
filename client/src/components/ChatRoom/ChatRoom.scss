@@ -53,16 +53,24 @@
 }
 
 .open-button {
-    background-color: #555;
-    color: white;
-    padding: 16px 20px;
-    border: none;
+    background-color: white;
+    color:black;
+    // padding: 20px 20px;
+    border-style: solid;
     cursor: pointer;
-    opacity: 0.8;
+    // opacity: 0.8;
     position: fixed;
     bottom: 23px;
     right: 28px;
-    width: 280px;
+    // width: 280px;
+    border-radius: 50%;
+    z-index: 5;
   }
 
+
+  @media (min-width: 960px) {
+    .chat-room-container {
+      width: 60%;
+    }
+  }
  
