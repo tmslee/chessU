@@ -15,7 +15,7 @@ export default function FriendList(props) {
   
   const parsedFriendList = friends.map(friend => {
     return (
-      <ListGroup.Item
+      <ListGroup.Item 
         key={friend.id}
       >
         <UserListItem
