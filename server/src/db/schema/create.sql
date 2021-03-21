@@ -10,7 +10,7 @@ CREATE TABLE users (
   username varchar(255) NOT NULL CHECK (username <> ''),
   email varchar(255) NOT NULL CHECK (email <> ''),
   password varchar(255) NOT NULL CHECK (password <> ''),
-  profile_img TEXT DEFAULT NULL,
+  profile_img TEXT DEFAULT 'https://www.w3schools.com/w3images/avatar2.png',
   ranked30 int DEFAULT 1500,
   ranked10 int DEFAULT 1500,
   casual int DEFAULT 1500,
