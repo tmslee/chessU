@@ -51,7 +51,7 @@ export default function ChangeAvatar (props) {
         onChange={e => validate(e.target.value)}
         placeholder="Img Url"
         />
-        <button type="submit" onClick={handleSubmit}>Save</button>
+        <button className="submit" type="submit" onClick={handleSubmit}>Save</button>
       </form>
         <button onClick={() => setActive(false)} className="modal-close">X</button>
     </div>
@@ -59,31 +59,3 @@ export default function ChangeAvatar (props) {
     </>
   )
 };
-
-
-
-// return(
-//   <>
-//   <div className="modal-bg4 bg-active">
-//   <div className="modal-avatar">
-//     <div className="modal-avatar-container">
-//     {avatar.new && <img id="avatar-preview" src={avatar.new} />}
-//     {!avatar.new && <a id="no-img">Image Preview</a>}
-//     </div>
-//   </div>
-//   <div className="url-error">
-//     {error && <FormError message="Invalid Url" />}
-//   </div>
-//   <div className="modal-url">
-//     <form className="modal-avatar-form" onSubmit={handleSubmit}>
-//       <input
-//       type="text"
-//       onChange={e => validate(e.target.value)}
-//       placeholder="Img Url"
-//       />
-//       <button onClick={() => setActive(false)} className="modal-close">X</button>
-//     </form>
-//   </div>
-//   </div>
-//   </>
-// )

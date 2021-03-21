@@ -30,7 +30,7 @@ export default function Settings(props) {
       <a style={{fontWeight:'bold'}}>Password:</a>
       <a>******</a>
       </div>
-      <button id="save" onClick={ () => setEdit(true)}>Edit</button>
+      <button id="edit" onClick={ () => setEdit(true)}>Edit</button>
       </>
       }
       </div>

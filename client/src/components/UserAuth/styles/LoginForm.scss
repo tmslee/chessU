@@ -11,6 +11,11 @@
   justify-content: center;
   border-radius: 25px;
   border-style: solid;
+  font-size: 20px;
+
+  h1 {
+    font-size: 50px;
+  }
   
   .modal-login-content {
     display: flex;
@@ -25,8 +30,22 @@
       justify-content: space-around;
       align-items: center;
       width: 60%;
+      cursor: pointer;
 
     }
+  }
+
+  .to-register {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 18px;
+    text-decoration: underline;
+  }
+
+  .submit {
+    margin-top: 10px;
+    border-radius: 10px;
   }
 
 }
@@ -35,6 +54,8 @@
   .modal-login {
     width: 60%;
     height: 55%;
+    font-size: 20px;
+
   }
 }
 
@@ -42,5 +63,6 @@
   .modal-login {
     width: 30%;
     height: 55%;
+    font-size: 25px;
   }
 }
