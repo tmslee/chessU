@@ -30,7 +30,7 @@ export default function UserListItem(props) {
             width={64}
             height={64}
             className="align-self-start mr-3"
-            src={user.profileImg}
+            src={user.profile_img}
             alt="Generic placeholder"
           />
         </Col>
