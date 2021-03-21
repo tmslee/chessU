@@ -22,6 +22,8 @@ export default function HomeMenu(props) {
     currentUser, 
     setGameRoute, 
     setGameInfo,
+    setActive,
+    active
   } = props; 
 
   const [showState, setShowState] = useState(false);
@@ -48,17 +50,28 @@ export default function HomeMenu(props) {
     console.log("==========================")
 
   }, [gameOptions]) 
+
+  const isLoggedIn = (type) => {
+    if(currentUser) {
+      showModal(type)
+    } else {
+      setActive({
+        ...active,
+        login:true
+      });
+    };
+  };
   
   return (
     <>
       <div className="menu">
-        <button id="ranked" className="lined thin" onClick={() => {showModal(RANKED)}}>
-          Ranked
+        <button id="ranked" className="lined thin" onClick={() => {isLoggedIn(RANKED)}}>
+          RANKED
         </button>
-        <button id= "casual" className="lined thin" onClick={() => {showModal(CASUAL)}}>
+        <button id= "casual" className="lined thin" onClick={() => {isLoggedIn(CASUAL)}}>
           CASUAL
         </button>
-        <button id = "ai" className="lined thin" onClick={() => {showModal(AI)}}>
+        <button id = "ai" className="lined thin" onClick={() => {isLoggedIn(AI)}}>
           vs AI
         </button>
       </div>
