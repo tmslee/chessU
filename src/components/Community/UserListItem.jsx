@@ -61,9 +61,6 @@ export default function UserListItem(props) {
             alt="Generic placeholder"
           />
         </Col>
-        <Col className="user-item-username">
-          <h5>{user.username}</h5>
-        </Col>
 
         <Col className="user-rank">
           <img
@@ -72,6 +69,10 @@ export default function UserListItem(props) {
               src={getRankImg(rank)}
               alt="rank"
             />
+        </Col>
+
+        <Col className="user-item-username">
+          <h5>{user.username}</h5>
         </Col>
 
         <Col  className="user-item-gameType">
