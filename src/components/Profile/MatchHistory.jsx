@@ -19,7 +19,7 @@ export default function MatchHistory(props) {
       getHistory(currentUser.id)
       .then( res => setHistory(res));
     }
-  }, [history]);
+  }, [history, currentUser]);
 
 
   const historyRender = function() {

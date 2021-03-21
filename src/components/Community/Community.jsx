@@ -20,7 +20,6 @@ export default function Community(props) {
     ranked30,
     getFriends,
     getFriendRequests,
-    getFriendRequestsByMe,
     removeFriend,
     sendFriendRequest,
     acceptFriendRequest,

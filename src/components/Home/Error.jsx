@@ -1,11 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 import "./styles/HomeMenu.scss"
-import {Button, Modal, Form} from "react-bootstrap";
-
-const RANKED = "RANKED";
-const CASUAL = "CASUAL";
-const AI = "AI";
+import {Button, Modal} from "react-bootstrap";
 
 export default function Error(props) {
   const {returnToMenu, message} = props;

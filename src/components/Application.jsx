@@ -68,7 +68,6 @@ export default function Application() {
     return axios.get('http://localhost:8001/api/me', {
       headers: headers
     }).then( res => {
-      console.log(res);
       return res.data;
     })
   };

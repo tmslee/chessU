@@ -1,7 +1,7 @@
-import React, {Fragment, useState, useEffect} from "react";
+import React from "react";
 import logo from './../../../src/images/logo.png'
 import "./styles/ChessNavbar.scss"
-import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
+import {Navbar, Nav, Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 
 
@@ -47,9 +47,9 @@ export default function ChessNavBar(props) {
         {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
-          <Fragment className="user-login">
+          <div>
             <p>Logged in as: {username}</p>
-            <Button 
+            <Button className="user-login"
               onClick={ () => {
                 handleClick("/")
                 logout()
@@ -57,22 +57,22 @@ export default function ChessNavBar(props) {
               variant="outline-success"
               // onClick={() => logout()}
             >Log out</Button>
-          </Fragment>
+          </div>
         }
         {username && !onProfile &&
-          <Fragment className="user-login">
+          <div>
             <h6>Logged in as: {username}</h6>
-            <Button 
+            <Button className="user-login"
               variant="outline-success"
               onClick={() => logout()}
             >Log out</Button>
-          </Fragment>
+          </div>
         }
         {!username && 
-        <Fragment className="user-login">
+        <div className="user-login">
           <Button onClick={() => setActive({...active, register: true  })} variant="outline-success">Sign up</Button>
           <Button onClick={() => setActive({...active, login: true  })}variant="outline-success">Log in</Button>
-        </Fragment>
+        </div>
         } 
       </Navbar.Collapse>
     </Navbar>

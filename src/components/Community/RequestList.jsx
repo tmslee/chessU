@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ListGroup} from "react-bootstrap";
 import UserListItem from './UserListItem';
 // import FriendList from ''

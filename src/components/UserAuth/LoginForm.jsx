@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import './styles/LoginForm.scss';
 import FormError from '../Errors/FormError';
 import axios from 'axios';

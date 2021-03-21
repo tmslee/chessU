@@ -1,13 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 import "./styles/GameQueue.scss"
 import {Button, Modal} from "react-bootstrap";
-
-const RANKED = "RANKED";
-const CASUAL = "CASUAL";
-const AI = "AI";
-
-const ACCEPT_MATCH = "ACCEPT_MATCH";
 
 export default function GameQueue(props) {
   const { returnToGameOptions } = props;

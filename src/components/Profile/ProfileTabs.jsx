@@ -5,7 +5,7 @@ export default function ChangeAvatar (props) {
   const { setTabs } = props;
   
   return (
-    <div class="profile-btn-group">
+    <div className="profile-btn-group">
       <button onClick={() => 
       setTabs({stats:true, history: false})}>
         Stats

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Redirect } from "react-router";
 import io from "socket.io-client";
 
 // first queue up send user info to socket
@@ -9,7 +8,6 @@ import io from "socket.io-client";
 // will send back user2 { matchID } 
 // redirect user to matchiD
 
-const QUEUE = "queue";
 const MATCH_CONFIRM = "MATCH_CONFIRM";
 const SOCKET_SERVER_URL = "http://localhost:8001";
 
