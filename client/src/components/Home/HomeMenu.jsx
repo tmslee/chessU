@@ -65,15 +65,15 @@ export default function HomeMenu(props) {
   };
   
   return (
-    <>
+    <div className="home-container">
       <div className="menu">
-        <button id="ranked" className="lined thin" onClick={() => {isLoggedIn(RANKED)}}>
+        <button id="ranked" className="lined thin play-btn" onClick={() => {isLoggedIn(RANKED)}}>
           RANKED
         </button>
-        <button id= "casual" className="lined thin" onClick={() => {isLoggedIn(CASUAL)}}>
+        <button id= "casual" className="lined thin play-btn" onClick={() => {isLoggedIn(CASUAL)}}>
           CASUAL
         </button>
-        <button id = "ai" className="lined thin" onClick={() => {isLoggedIn(AI)}}>
+        <button id = "ai" className="lined thin play-btn" onClick={() => {isLoggedIn(AI)}}>
           vs AI
         </button>
       </div>
@@ -87,6 +87,6 @@ export default function HomeMenu(props) {
         setGameInfo={setGameInfo}
         setInvitedStatus={setInvitedStatus}
       />
-    </>
+    </div>
   );
 }

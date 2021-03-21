@@ -39,15 +39,15 @@ export default function ChessNavBar(props) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
+        <Nav.Link onClick={() => handleClick("/")}>Play</Nav.Link>
+        {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
+        {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
         <Nav.Link onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
-          {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
-          {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
-        
-          {username && <Nav.Link onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
-          {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
+        {username && <Nav.Link onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
+        {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
-          <Fragment>
+          <Fragment className="user-login">
             <p>Logged in as: {username}</p>
             <Button 
               onClick={ () => {
@@ -60,8 +60,8 @@ export default function ChessNavBar(props) {
           </Fragment>
         }
         {username && !onProfile &&
-          <Fragment>
-            <p>Logged in as: {username}</p>
+          <Fragment className="user-login">
+            <h6>Logged in as: {username}</h6>
             <Button 
               variant="outline-success"
               onClick={() => logout()}
@@ -69,7 +69,7 @@ export default function ChessNavBar(props) {
           </Fragment>
         }
         {!username && 
-        <Fragment>
+        <Fragment className="user-login">
           <Button onClick={() => setActive({...active, register: true  })} variant="outline-success">Sign up</Button>
           <Button onClick={() => setActive({...active, login: true  })}variant="outline-success">Log in</Button>
         </Fragment>
