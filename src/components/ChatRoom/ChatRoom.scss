@@ -1,10 +1,16 @@
 .chat-room-container {
-    width: 200px;
-    height: 560px;
-    display: flex;
-    flex-direction: column;
-    border: 3px solid black;
-    border-radius: 4px;
+    // width: 50vw;
+    // height: 560px;
+    // display: flex;
+    // flex-direction: column;
+    // border: 3px solid black;
+    // border-radius: 4px;
+    // position: fixed;
+    // width: 50%;
+    // height: 50%;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
 }
 /* 
 .room-name {
@@ -33,6 +39,7 @@
     padding: 8px 8px;
     resize: none;
     border: 3px solid black;
+    width: 100%;
 }
 
 .message-item {
@@ -62,7 +69,7 @@
 .text-send{
     display: flex;
     flex-direction: row;
-    justify-content: space-between
+    justify-content: left;
 }
 
 .send-message-button {
@@ -83,41 +90,4 @@
     width: 280px;
   }
 
-  .form-popup {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right: 15px;
-    border: 3px solid #f1f1f1;
-    z-index: 9;
-  }
-
-  .form-container {
-    max-width: 300px;
-    padding: 10px;
-    background-color: white;
-  }
-
-  .form-container textarea:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-
-  .form-container .btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom:10px;
-    opacity: 0.8;
-  }
-  
-  .form-container .cancel {
-    background-color: red;
-  }
-  
-  .form-container .btn:hover, .open-button:hover {
-    opacity: 1;
-  }
+ 
