@@ -63,7 +63,7 @@ export default function UserInfo (props) {
         <button id="edit-img"onClick={() => setActive(true)}><img src="http://simpleicon.com/wp-content/uploads/camera.png" alt=""/></button>
       </div>
       <div className="user-info">
-        <a>{currentUser.username}</a>
+        <span>{currentUser.username}</span>
         <img
           className="rank-img"
           alt="rank icon"
