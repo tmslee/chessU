@@ -23,7 +23,7 @@ export default function MatchHistory(props) {
 
 
   const historyRender = function() {
-    return history.map(match => {
+    return history.slice(0).reverse().map(match => {
       return(
         <MatchHistoryItem
         match={match}
