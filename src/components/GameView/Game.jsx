@@ -90,6 +90,7 @@ function Game(props) {
   console.log(currentMove);
   console.log('before', state.isReceived);
 
+  // when the game is over, nav can be clicked
   if(state.isGameOver){
     setInGame(false);
   }
