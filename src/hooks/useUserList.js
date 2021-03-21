@@ -48,19 +48,19 @@ export default function useUserList(currentUser) {
           return "bronze";
       }
     } else if (rem > increment){ //remiander is greater than increment
-      if (0 <= idx <= increment-1) return "master";
-      else if (increment <= idx <= increment*2-1) return 'diamond'; 
-      else if (increment*2 <= idx <= increment*3-1) return 'plat'; 
-      else if (increment*3 <= idx <= increment*4-1) return 'gold'; 
-      else if (increment*4 <= idx <= increment*5-1) return 'silver'; 
+      if (0 <= idx && idx <= increment-1) return "master";
+      else if (increment <= idx && idx <= increment*2-1) return 'diamond'; 
+      else if (increment*2 <= idx && idx <= increment*3-1) return 'plat'; 
+      else if (increment*3 <= idx && idx <= increment*4-1) return 'gold'; 
+      else if (increment*4 <= idx && idx <= increment*5-1) return 'silver'; 
       else return 'bronze';
     } 
     else { //remainder is less than increment 
-      if (numUsers-increment <= idx <= numUsers-1) return "bronze";
-      else if (numUsers-increment*2 <= idx <= numUsers-increment-1) return 'silver'; 
-      else if (numUsers-increment*3 <= idx <= numUsers-increment*2-1) return 'gold'; 
-      else if (numUsers-increment*4 <= idx <= numUsers-increment*3-1) return 'plat'; 
-      else if (numUsers-increment*5 <= idx <= numUsers-increment*4-1) return 'diamond'; 
+      if (numUsers-increment <= idx && idx <= numUsers-1) return "bronze";
+      else if (numUsers-increment*2 <= idx && idx <= numUsers-increment-1) return 'silver'; 
+      else if (numUsers-increment*3 <= idx && idx <= numUsers-increment*2-1) return 'gold'; 
+      else if (numUsers-increment*4 <= idx && idx <= numUsers-increment*3-1) return 'plat'; 
+      else if (numUsers-increment*5 <= idx && idx <= numUsers-increment*4-1) return 'diamond'; 
       else return 'master';
     }
   }
