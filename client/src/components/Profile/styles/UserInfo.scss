@@ -46,9 +46,16 @@ main {
 
   .user-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     font-size: 32px;
+    height:32px;
+    margin: .25em 0;
+
+    .rank-img{
+      height:100%;
+      margin: 0 0 0 .25em;
+    }
   }
 
   #edit {
