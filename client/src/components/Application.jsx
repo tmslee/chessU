@@ -85,6 +85,8 @@ export default function Application() {
             currentUser={currentUser} 
             setGameRoute={setGameRoute} 
             setGameInfo={setGameInfo}
+            setActive={setActive} 
+            active={active}
           />)
         }/>
           <Route exact path="/game/:id" render={(props) => 
