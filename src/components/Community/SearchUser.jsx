@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {ListGroup, Form, Button, Col} from "react-bootstrap";
 import { First } from 'react-bootstrap/esm/PageItem';
 import UserListItem from './UserListItem';
+import "./styles/SearchUser.scss";
 // import FriendList from ''
 
 export default function SearchUser(props) {
@@ -83,10 +84,11 @@ export default function SearchUser(props) {
   return (
     <div>
       <Form onSubmit={submitSearch}>
-        <Form.Row>
-          <Col>
-            <Form.Group controlId="usernameSearch">
+        <Form.Row className="search-form">
+          <Col className="search-bar-container">
+            <Form.Group controlId="usernameSearch" className="search-bar">
               <Form.Control 
+               className="search-bar"
                 type="text" 
                 placeholder="Search by username" 
                 onChange={event => setSearchTerm(event.target.value)}

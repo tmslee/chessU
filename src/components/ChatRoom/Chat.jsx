@@ -49,7 +49,8 @@ const Chat = (props) => {
         left: "50%",
         transform: "translate(-50%, -50%)",
         background: "white",
-        zIndex: "5"
+        zIndex: "5",
+        animation: "slide-up 0.5s"
       }
       setStyle(newStyle)
     } else {

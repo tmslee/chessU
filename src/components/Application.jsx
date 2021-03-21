@@ -16,6 +16,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import io from "socket.io-client";
 import GameInviteToast from "./GameInviteToast";
+import './Application.scss'
 
 // const SOCKET_SERVER_URL = "http://localhost:8001";
 // const LOGIN = "LOGIN";
@@ -97,7 +98,7 @@ export default function Application() {
       setInvitedStatus={setInvitedStatus}
     />
 
-    <main>
+    <main className="main-container">
       {active.login && 
       <LoginForm 
       setActive={setActive}
@@ -110,7 +111,7 @@ export default function Application() {
       active={active} 
       setToken={setToken}
       /> }
-      <Switch>
+      <Switch >
         <Route path="/" exact render={(props) => 
           (<HomeMenu 
             {...props} 
