@@ -1,3 +1,43 @@
+.user-item-row{
+  width:100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  .user-item-image{
+    display:flex;
+    align-self:center;
+    flex-grow:1;
+  }
+  .user-item-username{
+    display:flex;
+    align-self:center;
+    flex-grow:1;
+  }
+  .user-rank{
+    display:flex;
+    align-self:center;
+    flex-grow:1;
+  }
+  .user-item-gameType{
+   display:flex;
+    align-self:center;
+    flex-grow:2;
+  }
+  .user-item-buttons{
+    display:flex;
+    justify-content: center;
+    align-self:center;
+    flex-grow:5;
+    width:100%;
+
+    .user-item-btn-container{
+      display: flex;
+      flex-direction: row;
+      width:100%;
+    }
+  }
+}
+
 img {
   border-radius: 50%;
 }

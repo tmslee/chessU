@@ -5,6 +5,7 @@ import FriendList from './FriendList'
 import RequestList from './RequestList'
 import SearchUser from './SearchUser'
 import useUserState from './../../hooks/useUserList';
+import './styles/Community.scss';
 
 
 export default function Community(props) {
@@ -16,13 +17,16 @@ export default function Community(props) {
     friends,
     requests,
     myRequests,
+    ranked10,
+    ranked30,
     getFriends,
     getFriendRequests,
     getFriendRequestsByMe,
     removeFriend,
     sendFriendRequest,
     acceptFriendRequest,
-    declineFriendRequest
+    declineFriendRequest,
+    getOverallRank
   } = useUserState(currentUser);
 
   return (
@@ -44,6 +48,9 @@ export default function Community(props) {
             sendFriendRequest={sendFriendRequest}
             acceptFriendRequest={acceptFriendRequest}
             declineFriendRequest={declineFriendRequest}
+            ranked10={ranked10}
+            ranked30={ranked30}
+            getOverallRank={getOverallRank}
           />
         </Tab>
         <Tab eventKey="Requests" title={`Requests (${requests.length})`}>
@@ -54,6 +61,9 @@ export default function Community(props) {
             sendFriendRequest={sendFriendRequest}
             acceptFriendRequest={acceptFriendRequest}
             declineFriendRequest={declineFriendRequest}
+            ranked10={ranked10}
+            ranked30={ranked30}
+            getOverallRank={getOverallRank}
           />
         </Tab>
         <Tab eventKey="Search" title="Search">
@@ -66,6 +76,9 @@ export default function Community(props) {
             sendFriendRequest={sendFriendRequest}
             acceptFriendRequest={acceptFriendRequest}
             declineFriendRequest={declineFriendRequest}
+            ranked10={ranked10}
+            ranked30={ranked30}
+            getOverallRank={getOverallRank}
           />
         </Tab>
       </Tabs>
