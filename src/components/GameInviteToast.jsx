@@ -94,7 +94,7 @@ export default function GameInviteToast(props) {
   return(
     <Toast 
       show={invitedStatus} 
-      onClose={() => {setAcceptStatus(-1);}}
+      // onClose={() => {setAcceptStatus(-1);}}
       style={{
         position: 'absolute',
         bottom: 0,
