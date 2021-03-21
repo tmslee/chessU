@@ -3,10 +3,11 @@ import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";
 import Countdown from '../GameView/Timer';
-import Popup from '../GameView/Popup';
+import PopupWin from '../GameView/PopupWin';
 import MovesLog from "../GameView/MovesLog"
 import Chess from "chess.js";
 import axios from "axios";
+import PopupConfirm from "../GameView/PopupConfirm";
 
 export default function AiGame(props){
   console.log(props);
@@ -34,7 +35,8 @@ export default function AiGame(props){
     chessmoves: [],
     winner:'',
     roomId: matchId,
-    duration
+    duration,
+    isResign: false
   })
 
   let ai = useRef(null);
@@ -170,7 +172,14 @@ export default function AiGame(props){
     setState(prev => ({...prev, modalShow: bool }));
   }
 
+  const setResign = function(bool){
+    setState(prev => ({...prev, isResign: bool }));
+  }
+
+  const timeLimitShow = duration ? duration + 'mins' : 'unlimited' ;
+
   return (
+    <>
     <div className="gameView">
       <div className="countdown">
         {state.duration &&         
@@ -179,17 +188,41 @@ export default function AiGame(props){
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
         duration={state.duration}
+        timeout={gameover}
         />}
       </div>
-      <div className="chessboard">
-        <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
-        <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
-      </div>
-      <Popup
+      <div className="chess-main">
+        <div className="gameInfo">
+          <div className="card border-primary mb-3">
+            <div className="card-header">GAME INFO</div>
+            <div className="card-body">
+              <h4 className="card-title">Player: {usernameWhite}</h4>
+              <h4 className="card-title">Opponent: AI</h4>
+              <p className="card-text">Game Mode: Vs AI</p>
+              <p className="card-text">Time Limit: {timeLimitShow}</p>
+              <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
+            </div>
+          </div>
+        </div>
+        <div className="chessboard">
+          <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
+        </div>
+        <div className="move-chat">
+          <div className="move_log">
+            <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+          </div>
+        </div>
+      <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
         winner={state.winner}
       />
+      <PopupConfirm show={state.isResign}
+      resultSend={resultSend}
+      onHide={() => setResign(false)}
+      />
+      </div>
     </div>
+    </>
   );
 }

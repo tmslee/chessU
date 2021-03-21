@@ -1,0 +1,85 @@
+.gameView {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width:620px){
+  .gameView {
+    width: 30%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .chess-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .chessboard{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    // border: 3px solid black;
+  }
+}
+
+.move-chat{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.chess-main{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.timer{
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.alert{
+  margin-bottom: 0;
+}
+.countdown{
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+}
+
+.chessboard{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  // border: 3px solid black;
+}
+
+.chat-button{
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
+
+.gameInfo{
+  width: 200px;
+  height: 300px;
+  margin-right: 1em;
+}

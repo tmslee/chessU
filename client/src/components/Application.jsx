@@ -117,6 +117,8 @@ export default function Application() {
             currentUser={currentUser} 
             setGameRoute={setGameRoute} 
             setGameInfo={setGameInfo}
+            setActive={setActive} 
+            active={active}
             setInvitedStatus={setInvitedStatus}
           />)
         }/>

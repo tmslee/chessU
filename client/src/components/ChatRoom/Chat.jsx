@@ -18,27 +18,32 @@ const Chat = (props) => {
   };
 
   const messageShow = function(){
-    return messages.map((message, i) => (
-      <li key={i}
-        className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message"}`}>
-        {message.body}
-      </li>
-    ))
+    return messages.map((message, i) => {
+      if(message.body){
+        return(
+          <li key={i}
+            className={`message-item ${ message.ownedByCurrentUser ? "my-message" : "received-message"}`}>
+            {message.body}
+          </li>
+        )
+      }}
+    )
   }
+
   return (
     <div className="chat-room-container">
       <div className="messages-container">
         <ol className="messages-list">{messageShow()}</ol>
       </div>
-      <textarea
-        value={newMessage}
-        onChange={handleNewMessageChange}
-        placeholder="Write message..."
-        className="new-message-input-field"
-      />
-      <button onClick={handleSendMessage} className="send-message-button">
-        Send
-      </button>
+      <div class="text-send">
+        <textarea
+          value={newMessage}
+          onChange={handleNewMessageChange}
+          placeholder="Write message..."
+          className="new-message-input-field"
+        />
+        <button onClick={handleSendMessage} type="button" className="btn btn-outline-success send-message-button">Send</button>
+      </div>
     </div>
   );
 };
