@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
 import "./styles/UserListItem.scss";
+import bronze from './../../../src/images/bronze.png'
+import silver from './../../../src/images/silver.png'
+import gold from './../../../src/images/gold.png'
+import plat from './../../../src/images/plat.png'
+import diamond from './../../../src/images/diamond.png'
+import master from './../../../src/images/master.png'
 
 export default function UserListItem(props) {
   const {
@@ -13,7 +19,8 @@ export default function UserListItem(props) {
     sendFriendRequest,
     acceptFriendRequest,
     declineFriendRequest,
-    gameType
+    gameType,
+    rank
   } = props;
   //type: "user" or "request" 
 
@@ -21,6 +28,25 @@ export default function UserListItem(props) {
 
   const inviteToGame = function () {
     console.log('inviting to game');
+  }
+
+  const getRankImg = function (rank) {
+    switch(rank) {
+      case "bronze":
+        return bronze;
+      case "silver":
+        return silver;
+      case "gold":
+        return gold;
+      case "plat":
+        return plat;
+      case "diamond":
+        return diamond;
+      case "master":
+        return master;
+      default:
+        return bronze;
+    }
   }
   
   return (
@@ -38,6 +64,16 @@ export default function UserListItem(props) {
         <Col className="user-item-username">
           <h5>{user.username}</h5>
         </Col>
+
+        <Col className="user-rank">
+          <img
+              height={50}
+              className="align-self-start mr-3"
+              src={getRankImg(rank)}
+              alt="rank"
+            />
+        </Col>
+
         <Col  className="user-item-gameType">
         {gameType === "ranked30" &&
           <h5>Elo: {user.ranked30}</h5>
