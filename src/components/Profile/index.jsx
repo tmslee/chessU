@@ -5,6 +5,7 @@ import Settings from "./Settings";
 import ProfileTabs from "./ProfileTabs";
 import axios from "axios";
 import MatchHistory from './MatchHistory';
+import './styles/index.scss'
 
 export default function Profile (props) {
   const {token, currentUser, setActive, getCurrentUser, setCurrentUser} = props
@@ -34,7 +35,7 @@ export default function Profile (props) {
   }, [currentUser]);
 
   return (
-    <div>
+    <div className="profile-container">
     {currentUser &&  statsInfo &&
       <>
         {settings && <Settings 
