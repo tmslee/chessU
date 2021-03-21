@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import "./ChatRoom.scss";
 import useChat from "../../hooks/chat";
@@ -10,6 +10,21 @@ const Chat = (props) => {
   const [style, setStyle] = useState({
     display: 'none'
   })
+  const [width, setWindowWidth] = useState(0);
+
+  useEffect(() => { 
+
+    updateDimensions();
+
+    window.addEventListener("resize", updateDimensions);
+    return () => 
+      window.removeEventListener("resize",updateDimensions);
+   }, [])
+
+   const updateDimensions = () => {
+     const width = window.innerWidth > 1023 ? window.innerWidth * 0.5 : window.innerWidth * 0.8
+     setWindowWidth(width)
+   }
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -28,7 +43,7 @@ const Chat = (props) => {
         border: "3px solid black",
         borderRadius: "15px",
         position: "fixed",
-        width: "80%",
+        width: width,
         height: "80%",
         top: "50%",
         left: "50%",
@@ -73,7 +88,7 @@ const Chat = (props) => {
           className="new-message-input-field"
         />
         <button onClick={handleSendMessage} type="button" className="btn btn-outline-success send-message-button">Send</button>
-        <button onClick={handleChat} type="button" className="btn btn-outline-success send-message-button">Close</button>
+        <button onClick={handleChat} type="button" className="btn btn-outline-danger send-message-button">Close</button>
       </div>
     </div>
     </div>
