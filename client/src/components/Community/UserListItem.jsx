@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
+import "./styles/UserListItem.scss";
 
 export default function UserListItem(props) {
   const {
