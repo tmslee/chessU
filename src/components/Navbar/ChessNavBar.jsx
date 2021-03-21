@@ -1,29 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
 import logo from './../../../src/images/logo.png'
 import "./styles/ChessNavbar.scss"
-import {Navbar, Nav, Button} from "react-bootstrap";
+import {Navbar, Nav, Button, Modal} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
-
+import useResign from "../../hooks/resign";
 
 export default function ChessNavBar(props) {
   const {
     username,
     setActive,
     active,
-    logout
+    logout,
+    inGame
   } = props;
 
-  const history = useHistory();
+  // let { concede, sendConcedeMessage } = useResign(roomId);
 
+  const history = useHistory();
+  const [show, setShow] = useState(false);
+
+  
   const handleClick = function(url) {
-    history.push(url);
-  }
+    if (!inGame) {
+      history.push(url);
+    } else {
+        setShow(true);
+      }
+    }
   
   const onProfile = window.location.pathname === "/profile";
 
   return (
     <Navbar bg="light" expand="lg" style={{...{zIndex:1}, ...{background:'#F0F0D8'}}} className="navbar">
-      
+      {show && <Modal>
+        <Modal.Header>
+          <h4>STOP!</h4>
+        </Modal.Header>
+      </Modal> }
       <div className="logo" onClick={() => handleClick("/")}>
       <Navbar.Brand >
         <img

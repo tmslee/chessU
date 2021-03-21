@@ -22,8 +22,6 @@ import './Application.scss'
 import "bootswatch/dist/sketchy/bootstrap.min.css";
 
 export default function Application() {
-  // const socketRef = useRef();
-  // socketRef.current = io(SOCKET_SERVER_URL);
 
   const [active, setActive] = useState({
     login: false,
@@ -34,18 +32,7 @@ export default function Application() {
   const [currentUser, setCurrentUser] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [invitedStatus, setInvitedStatus] = useState(false);
-
-  // const history = useHistory();
-  // const loadGame = function (data, currentUser, opponent, matchId, timeLimit) {
-  //   setGameInfo({
-  //     matchId : data.matchId,
-  //     colors : data.colors, // { white : id, black : id }
-  //     name1 : currentUser.username,
-  //     name2 : opponent.username,
-  //     timeLimit
-  //   })
-  //   history.push(`/game/${matchId}`);
-  // }
+  const [inGame, setInGame] = useState(false);
 
   console.log('re-render application')
   useEffect(()=> {
@@ -73,8 +60,12 @@ export default function Application() {
   };
 
   const logout = function (){
-    localStorage.clear();
-    setToken(getToken());
+    if (!inGame) {
+      localStorage.clear();
+      setToken(getToken());
+    } else {
+      alert("You must finish the game before you logout!!!")
+    }
   };
 
 
@@ -86,6 +77,7 @@ export default function Application() {
     setActive={setActive} 
     active={active}
     logout={logout}
+    inGame={inGame}
     />
 
     <GameInviteToast
@@ -124,6 +116,7 @@ export default function Application() {
             {...props} 
             gameInfo = {gameInfo}
             currentUser = {currentUser}
+            setInGame={setInGame}
           />)
         }/>
         <Route path="/aigame/:id" render={(props) => (
