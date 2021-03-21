@@ -8,6 +8,8 @@ export default function PopupWin(props){
   const isReceivedResign = props.isReceivedResign;
   const currentUserNotWins = props.currentUserNotWins;
   const currentUserWins = props.currentUserWins;
+  const diffWinner = Math.abs(currentUserWins.winner_elo - currentUserWins.updatedWinner);
+  const diffLoser = Math.abs(currentUserNotWins.winner_elo - currentUserNotWins.updatedWinner);
   const isWin = props.isWin;
   const result = function(winner){
     if (winner){
@@ -24,10 +26,8 @@ export default function PopupWin(props){
       <Modal.Header closeButton><h4>Game Over! {result(winner)} {isReceivedResign && "Your opponent resigned."}</h4></Modal.Header>
       <Modal.Body>
         {isWin ? 
-        <><p>winner: {currentUserWins.winnerName} origin elo:{currentUserWins.winner_elo} new elo: {currentUserWins.updatedWinner}</p>
-        <p>loser: {currentUserWins.loserName} origin elo:{currentUserWins.loser_elo} new elo: {currentUserWins.updatedLoser}</p></> : 
-        <><p>winner: {currentUserNotWins.winnerName} origin elo:{currentUserNotWins.winner_elo} new elo: {currentUserNotWins.updatedWinner}</p>
-        <p>loser: {currentUserNotWins.loserName} origin elo:{currentUserNotWins.loser_elo} new elo: {currentUserNotWins.updatedLoser}</p></>}
+        <><p>winner: {currentUserWins.winnerName} ELO: {currentUserWins.winner_elo} + {diffWinner} = {currentUserWins.updatedWinner}</p></> : 
+        <><p>loser: {currentUserNotWins.loserName} ELO:{ currentUserNotWins.loser_elo} - {diffLoser} = {currentUserNotWins.updatedLoser}</p></>}
       </Modal.Body>
       <Modal.Footer>
         <Link to={{pathname: "/"}} >

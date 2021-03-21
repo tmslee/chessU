@@ -313,7 +313,7 @@ function Game(props) {
               <p className="card-text">ELO rank/10mins: {opponentRanked10}</p>
               <p className="card-text">ELO rank/30mins: {opponentRanked30}</p>
               <p className="card-text">ELO casual: {opponentCasual}</p>
-              <p className="card-text">Game Mode: Ranked/Casual</p>
+              <p className="card-text">Game Mode: {matchType}</p>
               <p className="card-text">Time Limit: {timeLimitShow}</p>
               <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
             </div>
