@@ -3,15 +3,6 @@ import React, { useEffect, useState } from 'react';
 import MatchHistoryItem from "./MatchHistoryItem";
 import "./styles/MatchHistory.scss";
 
-const rankMap = {
-  "bronze":0,
-  "silver":1,
-  "gold":2,
-  "plat":3,
-  "diamond":4,
-  "master":5
-};
-
 const getHistory = (id) => {
   return axios.get(`http://localhost:8001/api/users/${id}/matches`)
   .then( res => res.data);
