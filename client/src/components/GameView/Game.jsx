@@ -25,6 +25,9 @@ function Game(props) {
   const opponentRanked10 = props.gameInfo.opponentRanked10;
   const opponentRanked30 = props.gameInfo.opponentRanked30;
   const opponentCasual = props.gameInfo.opponentCasual;
+  const setInGame = props.setInGame;
+
+  setInGame(true);
 
   const isRanked = true;
   let usernameWhite;
@@ -86,6 +89,10 @@ function Game(props) {
   console.log('re-render');
   console.log(currentMove);
   console.log('before', state.isReceived);
+
+  if(state.isGameOver){
+    setInGame(false);
+  }
 
   const gameover = function(winner){
     setState(prev => ({...prev,
