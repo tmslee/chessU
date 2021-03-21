@@ -5,6 +5,7 @@ import FriendList from './FriendList'
 import RequestList from './RequestList'
 import SearchUser from './SearchUser'
 import useUserState from './../../hooks/useUserList';
+import './styles/Community.scss';
 
 
 export default function Community(props) {

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
+import "./styles/UserListItem.scss";
 
 export default function UserListItem(props) {
   const {
@@ -23,9 +24,9 @@ export default function UserListItem(props) {
   }
   
   return (
-    <Container>
-      <Row>
-        <Col>
+    <Container className="user-item-container">
+      <Row className="user-item-row">
+        <Col className="user-item-image">
           <img
             width={64}
             height={64}
@@ -34,10 +35,10 @@ export default function UserListItem(props) {
             alt="Generic placeholder"
           />
         </Col>
-        <Col>
+        <Col className="user-item-username">
           <h5>{user.username}</h5>
         </Col>
-        <Col>
+        <Col  className="user-item-gameType">
         {gameType === "ranked30" &&
           <h5>Elo: {user.ranked30}</h5>
         }
@@ -45,21 +46,17 @@ export default function UserListItem(props) {
           <h5>Elo: {user.ranked10}</h5>
         }
         </Col>
-        <Col>
+        <Col className="user-item-buttons">
           {currentUserID !== user.id && currentUser && isFriend && 
             <Row>
               <Button variant="danger" onClick={() => {removeFriend(currentUser.id, user.id)}}>remove friend</Button>
             </Row> 
           }
           {currentUserID !== user.id && currentUser && !isFriend && isRequesting &&
-            <> 
-            <Row>
+          <Container className="user-item-btn-container">
               <Button variant="primary" onClick={() => {acceptFriendRequest(currentUser.id, user.id)}}>accept friend request</Button>
-            </Row>
-            <Row>
               <Button variant="danger" onClick={() => {declineFriendRequest(currentUser.id, user.id)}}>decline friend request</Button>
-            </Row> 
-            </>
+          </Container>
           }
           
           {currentUserID !== user.id && currentUser && !isFriend && !isRequesting && !isPending &&
