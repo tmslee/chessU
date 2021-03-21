@@ -1,7 +1,7 @@
 import './styles/Game.scss';
 import ChessBoard from "chessboardjsx";
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
 import PopupWin from './PopupWin';
@@ -13,10 +13,17 @@ import PopupConfirm from "./PopupConfirm";
 import useResign from "../../hooks/resign";
 
 function Game(props) {
-  const { matchId } = props.match.params; // which is also chat room id
-  // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
-  // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
+  const { matchId } = props.match.params;
+  const matchType = props.gameInfo.matchType;
   console.log(props);
+
+  const eloRanked10 = props.currentUser.ranked10;
+  const eloRanked30 = props.currentUser.ranked30;
+  const eloRankedCasual = props.currentUser.casual;
+
+  const opponentRanked10 = props.gameInfo.opponentRanked10;
+  const opponentRanked30 = props.gameInfo.opponentRanked30;
+  const opponentCasual = props.gameInfo.opponentCasual;
 
   const isRanked = true;
   let usernameWhite;
@@ -257,7 +264,11 @@ function Game(props) {
   
   console.log(concede);
   if(!concede.concededByCurrentUser && concede.length !== 0 && !state.isReceivedResign){
-    resultSend();
+    if (usernameWhite === props.currentUser.username){
+      gameover('white');
+    } else {
+      gameover('black');
+    }
     resultRecord();
     setisReceivedResign(true);
   }
@@ -287,8 +298,14 @@ function Game(props) {
           <div className="card border-primary mb-3">
             <div className="card-header">GAME INFO</div>
             <div className="card-body">
-              <h4 className="card-title">Player1: {props.gameInfo.name1}</h4>
-              <h4 className="card-title">Player2: {props.gameInfo.name2}</h4>
+              <h4 className="card-title">You: {props.gameInfo.name1}</h4>
+              <p className="card-text">ELO rank/10mins: {eloRanked10}</p>
+              <p className="card-text">ELO rank/30mins: {eloRanked30}</p>
+              <p className="card-text">ELO casual: {eloRankedCasual}</p>
+              <h4 className="card-title">Opponent: {props.gameInfo.name2}</h4>
+              <p className="card-text">ELO rank/10mins: {opponentRanked10}</p>
+              <p className="card-text">ELO rank/30mins: {opponentRanked30}</p>
+              <p className="card-text">ELO casual: {opponentCasual}</p>
               <p className="card-text">Game Mode: Ranked/Casual</p>
               <p className="card-text">Time Limit: {timeLimitShow}</p>
               <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
