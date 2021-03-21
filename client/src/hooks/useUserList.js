@@ -130,8 +130,8 @@ export default function useUserList(currentUser) {
     getFriendRequestsByMe();
   }
   const getOverallRank = function (ranked30, ranked10, user) {
-    const rank30 = getRank(currentUser, ranked30);
-    const rank10 = getRank(currentUser, ranked10);
+    const rank30 = getRank(user, ranked30);
+    const rank10 = getRank(user, ranked10);
     const overallRank = rankMap[rank30] >= rankMap[rank10] ? rank30 : rank10;
     return overallRank;
   }
