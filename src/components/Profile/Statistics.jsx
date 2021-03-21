@@ -22,10 +22,6 @@ export default function Statistics(props) {
     <div className="stats-box">
       <div className="stats">
         <table className="table-striped">
-          <thead>
-            <th scope="col"></th>
-            <th scope="col"></th>
-          </thead>
           <tbody>
           <tr>
             <th scope="row">W/L</th>
