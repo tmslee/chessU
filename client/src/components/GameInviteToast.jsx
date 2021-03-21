@@ -102,8 +102,7 @@ export default function GameInviteToast(props) {
       }}
     >
       <Toast.Header>
-        <strong className="mr-auto">Game Invite</strong>
-        <small>from {incomingGameInfo? incomingGameInfo.opponent.username : null}</small>
+        <strong className="mr-auto">Game Invite from {incomingGameInfo? incomingGameInfo.currentUser.username : null}</strong>
       </Toast.Header>
       <Toast.Body>
         <Button variant="primary" onClick={async () => {
