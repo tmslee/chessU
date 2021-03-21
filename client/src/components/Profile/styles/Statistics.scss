@@ -14,7 +14,13 @@
     border-collapse: collapse;
 
     td {
-      width: 100px;
+      width: 50px;
     }
+  }
+}
+
+@media (min-width: 960px) {
+  .stats-box {
+    // width: 80%;
   }
 }
