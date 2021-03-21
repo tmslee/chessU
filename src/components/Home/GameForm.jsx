@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
+import "./styles/GameForm.scss";
 
 import "./styles/HomeMenu.scss";
 import {Button, Modal, Form, Row, Col} from "react-bootstrap";
@@ -14,6 +15,7 @@ export default function GameForm(props) {
     setGameOptions, 
     enqueue, 
     loadGame, 
+    inviteToGame,
     returnToMenu
   } = props;
 
@@ -24,9 +26,19 @@ export default function GameForm(props) {
     setGameOptions(newGameOptions);
   };
 
-  const setOpponent = (opponentID) => {    
-    newGameOptions = {...newGameOptions, opponentID};
-    setGameOptions(newGameOptions);
+  const setOpponent = (opponentName) => {
+    axios.get(`http://localhost:8001/api/users/username/${opponentName}`)
+    .then(res => {
+      const opponent = res.data;
+      console.log(res.data);
+      if(opponent) {
+        newGameOptions = {...newGameOptions, opponent};
+        setGameOptions(newGameOptions);
+      } else {
+        newGameOptions = {...newGameOptions, opponent: null};
+        setGameOptions(newGameOptions);
+      }
+    });
   };
   
   const setDifficulty = (difficulty) => {    
@@ -130,14 +142,21 @@ export default function GameForm(props) {
         <Button variant="secondary" onClick={returnToMenu}>
           Cancel
         </Button>
-        {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> }
-        {(gameOptions.type === AI) && <Button variant="primary" onClick={() => {
-          gameStartRecord(gameOptions).then(res => {
+        {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && !gameOptions.opponent &&
+          <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> 
+        }
+        {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && gameOptions.opponent &&
+          <Button variant="primary" onClick={() => inviteToGame(gameOptions)}>Send Invite</Button> 
+        }
+        {(gameOptions.type === AI) && 
+          <Button variant="primary" onClick={() => {
+            gameStartRecord(gameOptions).then(res => {
             console.log(gameOptions);
             const matchId = res.data.id;
             loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
           });
-          }}>Start Game</Button> }
+          }}>Start Game</Button> 
+        }
       </Modal.Footer>
     </Form>
   );

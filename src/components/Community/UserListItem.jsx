@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
+import "./styles/UserListItem.scss";
 
 export default function UserListItem(props) {
   const {
@@ -30,7 +31,7 @@ export default function UserListItem(props) {
             width={64}
             height={64}
             className="align-self-start mr-3"
-            src={user.profileImg}
+            src={user.profile_img}
             alt="Generic placeholder"
           />
         </Col>
@@ -47,14 +48,9 @@ export default function UserListItem(props) {
         </Col>
         <Col>
           {currentUserID !== user.id && currentUser && isFriend && 
-            <>
-            <Row>
-              <Button variant="primary" onClick={() => {inviteToGame(currentUser.id, user.id)}}>invite to a game</Button>
-            </Row>
             <Row>
               <Button variant="danger" onClick={() => {removeFriend(currentUser.id, user.id)}}>remove friend</Button>
             </Row> 
-            </>
           }
           {currentUserID !== user.id && currentUser && !isFriend && isRequesting &&
             <> 
