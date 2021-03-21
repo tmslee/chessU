@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
+import "./styles/GameForm.scss";
 
 import "./styles/HomeMenu.scss";
 import {Button, Modal, Form, Row, Col} from "react-bootstrap";
