@@ -19,13 +19,14 @@ const useAcceptStatus = (
   returnToGameOptions,
    loadGame, 
    setGameRoute,
-   setGameInfo
+   setGameInfo,
+   initialAcceptStatus
    ) => {
   const socketRef = useRef();
 
   const { currentUser, type, opponent, timeLimit } = gameOptions;
   // match accept states /////////////////////////////////////
-  const[userStatus, setUserStatus] = useState(0);
+  const[userStatus, setUserStatus] = useState(initialAcceptStatus);
   const[opponentStatus, setOpponentStatus] = useState(0);
 
 
@@ -50,7 +51,7 @@ const useAcceptStatus = (
         currentUser,
         socketId: socketRef.current.id,
         confirmation: userStatus
-      })
+      });
     });
   }, [userStatus]);
 
