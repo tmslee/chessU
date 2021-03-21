@@ -24,7 +24,7 @@ export default function ChessNavBar(props) {
     if (!inGame) {
       history.push(url);
     } else {
-        setShow(true);
+        alert("Finish the GAME!!!!");
       }
     }
   
