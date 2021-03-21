@@ -11,7 +11,12 @@
   .user-item-username{
     display:flex;
     align-self:center;
-    flex-grow:2;
+    flex-grow:1;
+  }
+  .user-rank{
+    display:flex;
+    align-self:center;
+    flex-grow:1;
   }
   .user-item-gameType{
    display:flex;
