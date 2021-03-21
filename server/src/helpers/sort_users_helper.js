@@ -68,7 +68,7 @@ const sortUsers = function(arr, type, time){
       return a.currentUser.casual - b.currentUser.casual
     })
     for (let i = sortedArr.length - 1; i > 0; i--) {
-      if (sortedArr[i].currentUser.casual - sortedArr[i - 1].currentUser.casual <= 100){
+      if (sortedArr[i].currentUser.casual - sortedArr[i - 1].currentUser.casual <= 300){
         matchups.push(sortedArr.slice( i - 1, i + 1))
       }
     }
@@ -78,7 +78,7 @@ const sortUsers = function(arr, type, time){
       return a.currentUser.casual - b.currentUser.casual
     })
     for (let i = sortedArr.length - 1; i > 0; i--) {
-      if (sortedArr[i].currentUser.casual - sortedArr[i - 1].currentUser.casual <= 100){
+      if (sortedArr[i].currentUser.casual - sortedArr[i - 1].currentUser.casual <= 300){
         matchups.push(sortedArr.slice( i - 1, i + 1))
       }
     }
@@ -88,7 +88,7 @@ const sortUsers = function(arr, type, time){
       return a.currentUser.casual - b.currentUser.casual
     })
     for (let i = sortedArr.length - 1; i > 0; i--) {
-      if (sortedArr[i].currentUser.casual - sortedArr[i - 1].currentUser.casual <= 100){
+      if (sortedArr[i].currentUser.casual - sortedArr[i - 1].currentUser.casual <= 300){
         matchups.push(sortedArr.slice( i - 1, i + 1))
       }
     }
