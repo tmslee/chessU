@@ -57,7 +57,7 @@ export default function MatchHistoryItem(props) {
 
   return (
   <div className="match" style={backColor} >
-    <a>{gameType}</a>
+    <span>{gameType}</span>
     <img 
       alt="profile_img"
       className="profile-img"
@@ -68,8 +68,8 @@ export default function MatchHistoryItem(props) {
       alt='rank icon' 
       src={getRankImg(getOverallRankByUserName(ranked30, ranked10, match.winner))} 
     />
-    <a> {match.winner} </a>
-    <a> {winnerElo}</a>
+    <span> {match.winner} </span>
+    <span> {winnerElo}</span>
     <img 
       alt="profile_img"
       className="profile-img"
@@ -80,8 +80,8 @@ export default function MatchHistoryItem(props) {
       alt='rank icon' 
       src={getRankImg(getOverallRankByUserName(ranked30, ranked10, match.loser))} 
     />
-    <a> {match.loser} </a>
-    <a> {loserElo}</a>
+    <span> {match.loser} </span>
+    <span> {loserElo}</span>
   </div>
   )
 };

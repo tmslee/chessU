@@ -1,5 +1,5 @@
 import { Alert, Button, Modal } from 'react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Timer from "react-compound-timer";
 import useAcceptStatus from "../../hooks/useAcceptStatus";
 
@@ -10,7 +10,6 @@ export default function AcceptTimer(props) {
     gameOptions, 
     returnToGameOptions, 
     loadGame, 
-    setGameRoute,
     setGameInfo
   } = props;
 
@@ -20,7 +19,7 @@ export default function AcceptTimer(props) {
     opponentStatus, 
     acceptMatch, 
     declineMatch
-  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameRoute, setGameInfo, initialAcceptStatus);
+  } = useAcceptStatus(gameOptions, returnToGameOptions, loadGame, setGameInfo, initialAcceptStatus);
 
   const declineThenGameOptions = async function () {
     await declineMatch();

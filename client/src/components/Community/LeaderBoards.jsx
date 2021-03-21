@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Form, Tabs, Tab, ListGroup} from "react-bootstrap";
+import {Tabs, Tab, ListGroup} from "react-bootstrap";
 import UserListItem from "./UserListItem";
 import axios from "axios";
 import useUserState from './../../hooks/useUserList';
@@ -13,9 +13,6 @@ export default function LeaderBoards(props) {
     friends,
     requests,
     myRequests,
-    getFriends,
-    getFriendRequests,
-    getFriendRequestsByMe,
     removeFriend,
     sendFriendRequest,
     acceptFriendRequest,
