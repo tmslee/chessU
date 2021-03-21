@@ -46,7 +46,7 @@ export default function GameOptionsModal(props) {
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
-  const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
+  const {enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {

@@ -1,10 +1,4 @@
-import {useState, useEffect} from "react";
-
-const SELECT_OPTIONS = "SELECT_OPTIONS";
-const IN_Q = "IN_Q";
-const ACCEPT_MATCH = "ACCEPT_MATCH";
-const LOADING = "LOADING";
-const ERROR = "ERROR";
+import {useState} from "react";
 
 const useEnqueueFlow = function (initial) {
   const [mode, setMode] = useState(initial)

@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-import "./styles/GameQueue.scss"
-import {Button, Modal} from "react-bootstrap";
+import "./styles/GameQueue.scss";
+import {Modal} from "react-bootstrap";
 import useMatchInvite from "../../hooks/useMatchInvite";
-
-const ERROR = "ERROR";
 
 export default function InviteOpponent(props) {
   const {goToView, gameOptions} = props;

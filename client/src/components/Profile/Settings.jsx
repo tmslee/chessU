@@ -23,12 +23,12 @@ export default function Settings(props) {
       {!edit && 
       <>
       <div className="modal-settings-info" >
-      <a style={{fontWeight:'bold'}}>Username:</a>
-      <a>{currentUser.username}</a>
-      <a style={{fontWeight:'bold'}}>Email:</a>
-      <a>{currentUser.email}</a>
-      <a style={{fontWeight:'bold'}}>Password:</a>
-      <a>******</a>
+      <span style={{fontWeight:'bold'}}>Username:</span>
+      <span>{currentUser.username}</span>
+      <span style={{fontWeight:'bold'}}>Email:</span>
+      <span>{currentUser.email}</span>
+      <span style={{fontWeight:'bold'}}>Password:</span>
+      <span>******</span>
       </div>
       <button id="edit" onClick={ () => setEdit(true)}>Edit</button>
       </>

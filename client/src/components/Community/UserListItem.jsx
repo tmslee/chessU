@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
 import "./styles/UserListItem.scss";
 import bronze from './../../../src/images/bronze.png'
@@ -22,13 +22,8 @@ export default function UserListItem(props) {
     gameType,
     rank
   } = props;
-  //type: "user" or "request" 
 
   const currentUserID = currentUser? currentUser.id : null;
-
-  const inviteToGame = function () {
-    console.log('inviting to game');
-  }
 
   const getRankImg = function (rank) {
     switch(rank) {

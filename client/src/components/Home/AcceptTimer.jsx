@@ -1,5 +1,5 @@
 import { Alert, Button, Modal } from 'react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Timer from "react-compound-timer";
 import useAcceptStatus from "../../hooks/useAcceptStatus";
 

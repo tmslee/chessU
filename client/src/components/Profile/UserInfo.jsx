@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ChangeAvatar from './ChangeAvatar';
 import "./styles/UserInfo.scss"
 
@@ -11,10 +10,6 @@ export default function UserInfo (props) {
     current: currentUser.profile_img,
     new: ''
   });
-
-  useEffect( () => {
-
-  }, currentUser)
 
   return (
     <>
@@ -30,10 +25,10 @@ export default function UserInfo (props) {
     {/* <button onClick={() => setActive(true)} >change avatar</button>  */}
       <div className="user-icon">
         <img id="avatar" src={avatar.current} alt=""/> 
-        <button id="edit-img"onClick={() => setActive(true)}><img src="http://simpleicon.com/wp-content/uploads/camera.png"/></button>
+        <button id="edit-img"onClick={() => setActive(true)}><img src="http://simpleicon.com/wp-content/uploads/camera.png" alt=""/></button>
       </div>
       <div className="user-info">
-        <a>{currentUser.username}</a>
+        <span>{currentUser.username}</span>
       </div>
         <button onClick={() => setSettings(true)} id="edit">Edit Profile</button>
     </div>

@@ -25,13 +25,13 @@ export default function MatchHistoryItem(props) {
 
   return (
   <div className="match" style={backColor} >
-    <a>{gameType}</a>
-    <img src={match.winner_img} />
-    <a> {match.winner} </a>
-    <a> {winnerElo}</a>
-    <img src={match.loser_img} />
-    <a> {match.loser} </a>
-    <a> {loserElo}</a>
+    <span>{gameType}</span>
+    <img src={match.winner_img} alt="" />
+    <span> {match.winner} </span>
+    <span> {winnerElo}</span>
+    <img src={match.loser_img} alt="" />
+    <span> {match.loser} </span>
+    <span> {loserElo}</span>
   </div>
   )
 };
