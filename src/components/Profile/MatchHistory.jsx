@@ -17,27 +17,26 @@ export default function MatchHistory(props) {
   useEffect( () => {
     if(!history) {
       getHistory(currentUser.id)
-      .then( res => setHistory(res))
+      .then( res => setHistory(res));
     }
-  }, [history])
+  }, [history]);
 
 
   const historyRender = function() {
-    return history.map(match => {
+    return history.slice(0).reverse().map(match => {
       return(
         <MatchHistoryItem
         match={match}
         currentUser={currentUser}
         />
-      )
+      );
     });
-  } 
-  console.log(history)
+  }; 
   
   return (
     <div className="matches">
     {history && <>{historyRender()}</>}
     </div>
-  )
+  );
 
 };
