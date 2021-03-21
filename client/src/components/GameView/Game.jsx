@@ -11,12 +11,20 @@ import useMove from "../../hooks/moves"
 import axios from "axios";
 import PopupConfirm from "./PopupConfirm";
 import useResign from "../../hooks/resign";
+import { eloUpdate } from "../../hooks/eloUpdate";
 
 function Game(props) {
-  const { matchId } = props.match.params; // which is also chat room id
-  // currentUser: {id: 3, username: "haopeng", email: "haopeng@gmail.com", password: "password", profile_img: null, …}
-  // gameInfo: {matchId: 7, colors: {white: 3, black: 1}, name1: "haopeng", name2: "alvin"}
+  const { matchId } = props.match.params;
+  const matchType = props.gameInfo.matchType;
   console.log(props);
+
+  const eloRanked10 = props.currentUser.ranked10;
+  const eloRanked30 = props.currentUser.ranked30;
+  const eloCasual = props.currentUser.casual;
+
+  const opponentRanked10 = props.gameInfo.opponentRanked10;
+  const opponentRanked30 = props.gameInfo.opponentRanked30;
+  const opponentCasual = props.gameInfo.opponentCasual;
 
   const isRanked = true;
   let usernameWhite;
@@ -130,15 +138,6 @@ function Game(props) {
     }
   }
 
-  // the winner client side will send the result
-  const resultSend = function(){ 
-    if (game.current.turn() === 'b'){
-      gameover('White');
-    } else {
-      gameover('Black');
-    }
-  }
-
   // if the move is not made by current user
   // reset the chessboard based on received move made by other user
   if(!currentMove.movedByCurrentUser && currentMove.length !== 0 && state.isReceived){
@@ -178,15 +177,14 @@ function Game(props) {
       }
       movesRecord(moveReceived);
     } else {
-      resultSend();
+      // resultSend();
+      gameover(props.gameInfo.name2)
     }
   }
 
   currentMove.movedByCurrentUser = true;
 
-  // user makes a move
-  //The logic to be performed on piece drop. See chessboardjsx.com/integrations for examples.
-  // Signature: function({ sourceSquare: string, targetSquare: string, piece: string }) => void
+  // current user makes a move
   const onDrop = ({sourceSquare, targetSquare}) => {
     // return position change when the move is valid
     console.log(sourceSquare, targetSquare);
@@ -228,7 +226,7 @@ function Game(props) {
         }));
       }
     } else {
-      resultSend();
+      gameover(props.gameInfo.name1);
       resultRecord();
     }
   }
@@ -245,24 +243,44 @@ function Game(props) {
     setState(prev => ({...prev, isReceivedResign: bool}))
   }
 
+  // when you concede
   const declareConcede = function(){
     console.log('You concede!');
+    gameover(props.gameInfo.name2);
     sendConcedeMessage(true);
-    if (usernameWhite === props.currentUser.username){
-      gameover('black');
-    } else {
-      gameover('white');
-    }
   }
   
+  // when your opponent concedes
   console.log(concede);
   if(!concede.concededByCurrentUser && concede.length !== 0 && !state.isReceivedResign){
-    resultSend();
-    resultRecord();
+    gameover(props.gameInfo.name1);
     setisReceivedResign(true);
+    resultRecord();
   }
 
   const timeLimitShow = duration ? duration + 'mins' : 'unlimited' ;
+
+  // updated elo shows
+  let currentUserElo;
+  let opponentElo;
+  if (matchType === "RANKED" && props.gameInfo.timeLimit === 30){
+    currentUserElo = eloRanked30;
+    opponentElo = opponentRanked30;
+  } else if (matchType === "RANKED" && props.gameInfo.timeLimit === 10){
+    currentUserElo = eloRanked10;
+    opponentElo = opponentRanked10;
+  } else {
+    currentUserElo = eloCasual;
+    opponentElo = opponentCasual;
+  }
+
+  const eloUpdateInfo = {currentUserName: props.gameInfo.name1, 
+    opponentUserName: 
+    props.gameInfo.name2, 
+    currentUserElo, opponentElo};
+  
+  const currentUserWins = eloUpdate(props.gameInfo.name1, currentUserElo, props.gameInfo.name2, opponentElo);
+  const currentUserNotWins = eloUpdate(props.gameInfo.name2, opponentElo, props.gameInfo.name1, currentUserElo);
 
   return (
     <div className="gameView">
@@ -287,8 +305,14 @@ function Game(props) {
           <div className="card border-primary mb-3">
             <div className="card-header">GAME INFO</div>
             <div className="card-body">
-              <h4 className="card-title">Player1: {props.gameInfo.name1}</h4>
-              <h4 className="card-title">Player2: {props.gameInfo.name2}</h4>
+              <h4 className="card-title">You: {props.gameInfo.name1}</h4>
+              <p className="card-text">ELO rank/10mins: {eloRanked10}</p>
+              <p className="card-text">ELO rank/30mins: {eloRanked30}</p>
+              <p className="card-text">ELO casual: {eloCasual}</p>
+              <h4 className="card-title">Opponent: {props.gameInfo.name2}</h4>
+              <p className="card-text">ELO rank/10mins: {opponentRanked10}</p>
+              <p className="card-text">ELO rank/30mins: {opponentRanked30}</p>
+              <p className="card-text">ELO casual: {opponentCasual}</p>
               <p className="card-text">Game Mode: Ranked/Casual</p>
               <p className="card-text">Time Limit: {timeLimitShow}</p>
               <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
@@ -310,6 +334,10 @@ function Game(props) {
         winner={state.winner}
         isRanked={isRanked}
         isReceivedResign={state.isReceivedResign}
+        isWin={state.winner === props.gameInfo.name1}
+        currentUserWins={currentUserWins}
+        currentUserNotWins={currentUserNotWins}
+        eloUpdateInfo={eloUpdateInfo}
       />
       <PopupConfirm show={state.isResign}
         resultSend={declareConcede}
