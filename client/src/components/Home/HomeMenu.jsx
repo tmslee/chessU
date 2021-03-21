@@ -23,7 +23,8 @@ export default function HomeMenu(props) {
     setGameRoute, 
     setGameInfo,
     setActive,
-    active
+    active,
+    setInvitedStatus
   } = props; 
 
   const [showState, setShowState] = useState(false);
@@ -42,6 +43,7 @@ export default function HomeMenu(props) {
     console.log("options reset") 
     //also need to set currentUser when we reset
     setGameOptions({...EMPTY_GAME, currentUser});
+    setInvitedStatus(false);
   };
 
   useEffect(() => {
@@ -83,6 +85,7 @@ export default function HomeMenu(props) {
         closeModal={closeModal}
         setGameRoute={setGameRoute}
         setGameInfo={setGameInfo}
+        setInvitedStatus={setInvitedStatus}
       />
     </>
   );

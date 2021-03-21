@@ -48,14 +48,9 @@ export default function UserListItem(props) {
         </Col>
         <Col>
           {currentUserID !== user.id && currentUser && isFriend && 
-            <>
-            <Row>
-              <Button variant="primary" onClick={() => {inviteToGame(currentUser.id, user.id)}}>invite to a game</Button>
-            </Row>
             <Row>
               <Button variant="danger" onClick={() => {removeFriend(currentUser.id, user.id)}}>remove friend</Button>
             </Row> 
-            </>
           }
           {currentUserID !== user.id && currentUser && !isFriend && isRequesting &&
             <> 

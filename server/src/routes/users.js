@@ -93,6 +93,13 @@ module.exports = db => {
     });
   });
 
+  router.get('/users/username/:name', (req, res) => {
+    const username = req.params.name;
+    getUserWithName(username)
+    .then(user => res.json(user))
+    .catch(err => res.json(err));
+  })
+
   // -------------------- LOGIN -------------------
 
   const login =  function(name, password) {
