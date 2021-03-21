@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
@@ -14,7 +14,6 @@ import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
-import io from "socket.io-client";
 import GameInviteToast from "./GameInviteToast";
 
 // const SOCKET_SERVER_URL = "http://localhost:8001";
@@ -32,7 +31,6 @@ export default function Application() {
 
   const { token, getToken, setToken } = useToken();
   const [currentUser, setCurrentUser] = useState();
-  const [gameRoute, setGameRoute] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [invitedStatus, setInvitedStatus] = useState(false);
 
@@ -115,7 +113,6 @@ export default function Application() {
           (<HomeMenu 
             {...props} 
             currentUser={currentUser} 
-            setGameRoute={setGameRoute} 
             setGameInfo={setGameInfo}
             setActive={setActive} 
             active={active}

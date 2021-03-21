@@ -1,4 +1,4 @@
-import { Game, move, status, moves, aiMove, getFen } from 'js-chess-engine'
+import { Game } from 'js-chess-engine'
 import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";
