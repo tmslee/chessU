@@ -5,7 +5,7 @@ export default function MatchHistoryItem(props) {
 
   const { match, currentUser } = props;
   const gameType = match.type;
-  const backColor = currentUser.username === match.winner? {backgroundColor: "green" } : {backgroundColor: "red"};
+  const backColor = currentUser.username === match.winner? {backgroundColor: "limegreen" } : {backgroundColor: "indianred"};
   const opponent = match.winner === currentUser.username? match.loser : match.winner;
   const white = match.white === currentUser.id? currentUser.username : opponent;
   const black = match.black === currentUser.id? currentUser.username : opponent;
