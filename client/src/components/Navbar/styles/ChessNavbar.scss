@@ -1,3 +1,16 @@
+.navbar{
+  height: 100%;
+
+  .logo {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    .logo-name{
+      margin: 0 1em 0 -.5em;
+    }
+  }
+}
+
 .navbar-toggler {
   button {
     width: 10px;

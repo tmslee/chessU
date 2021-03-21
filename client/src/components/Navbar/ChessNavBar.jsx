@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from "react";
-
+import logo from './../../../src/images/logo.png'
 import "./styles/ChessNavbar.scss"
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
@@ -22,19 +22,19 @@ export default function ChessNavBar(props) {
   const onProfile = window.location.pathname === "/profile";
 
   return (
-    <Navbar bg="light" expand="lg" style={{...{zIndex:1}, ...{background:'#F0F0D8'}}}>
+    <Navbar bg="light" expand="lg" style={{...{zIndex:1}, ...{background:'#F0F0D8'}}} className="navbar">
       
-      <Navbar.Brand onClick={() => handleClick("/")}>
+      <div className="logo" onClick={() => handleClick("/")}>
+      <Navbar.Brand >
         <img
-          alt=""
-          src="http://shorturl.at/howPQ"
-          width="30"
-          height="30"
+          alt="logo"
+          src={logo}
+          height="75"
           className="d-inline-block align-top"
-        />{' '}
-        ChessU
+        />
       </Navbar.Brand>
-
+      <h3 className="logo-name">ChessU</h3>
+      </div>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -42,7 +42,9 @@ export default function ChessNavBar(props) {
         <Nav.Link onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
           {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
           {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
-          <Nav.Link onClick={() => handleClick("/community")}>Community</Nav.Link>
+        
+          {username && <Nav.Link onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
+          {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
           <Fragment>

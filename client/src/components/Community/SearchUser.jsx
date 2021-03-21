@@ -14,7 +14,10 @@ export default function SearchUser(props) {
     removeFriend,
     sendFriendRequest,
     acceptFriendRequest,
-    declineFriendRequest
+    declineFriendRequest,
+    ranked10,
+    ranked30,
+    getOverallRank
   } = props;
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,6 +61,7 @@ export default function SearchUser(props) {
           sendFriendRequest={sendFriendRequest}
           acceptFriendRequest={acceptFriendRequest}
           declineFriendRequest={declineFriendRequest}
+          rank={getOverallRank(ranked30, ranked10, res)}
         />
       </ListGroup.Item>
     );
