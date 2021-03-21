@@ -9,11 +9,25 @@ const rankMap = {
   "diamond":4,
   "master":5
 };
-export default function useUserList(currentUser) {
 
-  const getRank = function (user, sortedUsers) {
+export default function useGetRank(currentUser) {
+  const [ranked30, setRanked30] = useState([]);
+  const [ranked10, setRanked10] = useState([]);
+
+  const getRankIdx = function (user, sortedUsers){
+    for(let i = 0 ; i < sortedUsers.length ; i++){
+      if(sortedUsers[i].id === user.id) return i;
+    }
+  }
+  const getRankIdxByUser = function (username, sortedUsers){
+    for(let i = 0 ; i < sortedUsers.length ; i++){
+      if(sortedUsers[i].username === username) return i;
+    }
+  }
+
+  const getRank = function (user, sortedUsers, byUsername) {
     const numUsers = sortedUsers.length;
-    const idx = getRankIdx(user, sortedUsers);
+    const idx = byUsername? getRankIdxByUser(user, sortedUsers) : getRankIdx(user, sortedUsers);
     console.log(idx);
     const increment = Math.floor(numUsers/5);
     const rem = numUsers-increment*5;
@@ -51,7 +65,8 @@ export default function useUserList(currentUser) {
       else if (numUsers-increment*5 <= idx <= numUsers-increment*4-1) return 'diamond'; 
       else return 'master';
     }
-    
+  }
+
   const getRanked30 = function () {
     axios.get(`http://localhost:8001/api/leaderboards/ranked30`)
     .then( res => {
@@ -67,17 +82,27 @@ export default function useUserList(currentUser) {
     });
   };
 
+  useEffect(() => {
+    getRanked30();
+    getRanked10();
+  }, [currentUser]);
+
   const getOverallRank = function (ranked30, ranked10, user) {
-    const rank30 = getRank(user, ranked30);
-    const rank10 = getRank(user, ranked10);
+    const rank30 = getRank(user, ranked30, false);
+    const rank10 = getRank(user, ranked10, false);
     const overallRank = rankMap[rank30] >= rankMap[rank10] ? rank30 : rank10;
     return overallRank;
   }
-
+  const getOverallRankByUserName = function (ranked30, ranked10, user) {
+    const rank30 = getRank(user, ranked30, true);
+    const rank10 = getRank(user, ranked10, true);
+    const overallRank = rankMap[rank30] >= rankMap[rank10] ? rank30 : rank10;
+    return overallRank;
+  }
   return {
     ranked10,
     ranked30,
-    getFriends,
-    getOverallRank
+    getOverallRank,
+    getOverallRankByUserName
   }
 }
