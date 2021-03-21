@@ -18,7 +18,6 @@ const useAcceptStatus = (
   gameOptions, 
   returnToGameOptions,
    loadGame, 
-   setGameRoute,
    setGameInfo,
    initialAcceptStatus
    ) => {

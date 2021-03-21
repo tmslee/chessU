@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {Tabs, Tab} from "react-bootstrap";
 import FriendList from './FriendList'
 import RequestList from './RequestList'
