@@ -45,16 +45,15 @@ main {
   }
 
   .user-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     font-size: 32px;
-    height:32px;
-    margin: .25em 0;
+    display: inline-block;
+
 
     .rank-img{
-      height:100%;
-      margin: 0 0 0 .25em;
+      height: 40px;
+      display: inline-block;
+      position: absolute;
+      margin-left: -45px;
     }
   }
 
