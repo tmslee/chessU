@@ -39,8 +39,8 @@ export default function ChangeAvatar (props) {
     <div className="modal-bg4 bg-active">
     <div className="modal-avatar">
       <div className="modal-avatar-content">
-      {avatar.new && <img id="avatar-preview" src={avatar.new} />}
-      {!avatar.new && <a id="no-img">Image Preview</a>}
+      {avatar.new && <img id="avatar-preview" src={avatar.new} alt="" />}
+      {!avatar.new && <span id="no-img">Image Preview</span>}
       </div>
       <div className="url-error">
         {error && <FormError message="Invalid Url" />}

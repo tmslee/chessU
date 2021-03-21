@@ -1,10 +1,8 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {ListGroup, Form, Button, Col} from "react-bootstrap";
-import { First } from 'react-bootstrap/esm/PageItem';
 import UserListItem from './UserListItem';
 import "./styles/SearchUser.scss";
-// import FriendList from ''
 
 export default function SearchUser(props) {
   const {
@@ -23,10 +21,6 @@ export default function SearchUser(props) {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-
-  // useEffect(() => {
-  //   setSearchResult();
-  // }, [searchTerm]);
 
   const isFriend = function (user) {
     for(const friend of friends){

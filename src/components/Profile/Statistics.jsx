@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import "./styles/Statistics.scss";
 
 export default function Statistics(props) {
   const { currentUser, statsInfo } = props;
-  console.log(currentUser)
-
 
   const {
     wins,
@@ -15,8 +13,6 @@ export default function Statistics(props) {
     blackWins,
     avgMatch
   } = statsInfo.data;
-
-  console.log(statsInfo.data.avgMatch)
 
   return (
     <div className="stats-box">

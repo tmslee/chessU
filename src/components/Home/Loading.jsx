@@ -1,14 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 import "./styles/Loading.scss"
-import {Button, Modal, Form} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 
-const RANKED = "RANKED";
-const CASUAL = "CASUAL";
-const AI = "AI";
-
-export default function Loading(props) {
-  const {} = props;
+export default function Loading() {
 
   return (
     <>

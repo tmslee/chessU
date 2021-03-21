@@ -14,7 +14,6 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 const ENQUEUE = "ENQUEUE"
 const DEQUEUE = "DEQUEUE";
 const SOCKET_SERVER_URL = "http://localhost:8001";
-const RANKED_ACCEPT = "RANKED_ACCEPT";
 
 //  userInfo = { userId, type, elo }
 const useQueue = (gameOptions, setGameOptions, goToView) => {

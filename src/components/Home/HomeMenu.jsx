@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
-
-import "./styles/HomeMenu.scss"
-import {Button, Modal} from "react-bootstrap";
-
+import "./styles/HomeMenu.scss";
 import GameOptionsModal from "./GameOptionModal";
 
 const RANKED = "RANKED";

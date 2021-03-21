@@ -9,7 +9,6 @@ export default function GameAccept(props) {
     gameOptions, 
     returnToGameOptions, 
     loadGame, 
-    setGameRoute, 
     setGameInfo
   } = props;
 
@@ -19,7 +18,6 @@ export default function GameAccept(props) {
       gameOptions = {gameOptions}
       returnToGameOptions = {returnToGameOptions}
       loadGame = {loadGame}
-      setGameRoute = {setGameRoute}
       setGameInfo = {setGameInfo}
     />
   );

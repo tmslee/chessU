@@ -30,14 +30,6 @@ const OPPONENT_UNAVAIL = 'OPPONENT_UNAVAIL';
 const WAITING_FOR_OPPONENT = "WAITING_FOR_OPPONENT";
 const ERROR = "ERROR";
 
-// const EMPTY_GAME = {
-//   type:null,
-//   timelimit:null,
-//   difficulty:null,
-//   currentUser:null,
-//   opponentID:null
-// };
-
 export default function GameOptionsModal(props) {
   
   const {
@@ -45,7 +37,6 @@ export default function GameOptionsModal(props) {
     gameOptions, 
     setGameOptions, 
     closeModal,
-    setGameRoute,
     setGameInfo,
     setInvitedStatus
   } = props;
@@ -55,7 +46,7 @@ export default function GameOptionsModal(props) {
     goToView
   } = useEnqueueFlow(SELECT_OPTIONS);
 
-  const {inQueue, enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
+  const {enqueue, dequeue} = useQueue(gameOptions, setGameOptions, goToView);
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
@@ -199,7 +190,6 @@ export default function GameOptionsModal(props) {
           gameOptions = {gameOptions}
           loadGame = {loadGame}
           returnToGameOptions={returnToGameOptions}
-          setGameRoute = {setGameRoute}
           setGameInfo = {setGameInfo}
         />
       }     
@@ -215,7 +205,6 @@ export default function GameOptionsModal(props) {
         gameOptions = {gameOptions}
         loadGame = {loadGame}
         returnToGameOptions={returnToGameOptions}
-        setGameRoute = {setGameRoute}
         setGameInfo = {setGameInfo}
         />
       }

@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChangeAvatar from './ChangeAvatar';
 import "./styles/UserInfo.scss"
 import bronze from './../../../src/images/bronze.png'
@@ -58,19 +57,18 @@ export default function UserInfo (props) {
     />
     }
     <div className="user-box">
-    {/* <button onClick={() => setActive(true)} >change avatar</button>  */}
       <div className="user-icon">
         <img id="avatar" src={avatar.current} alt=""/> 
-        <button id="edit-img"onClick={() => setActive(true)}><img src="http://simpleicon.com/wp-content/uploads/camera.png"/></button>
+        <button id="edit-img"onClick={() => setActive(true)}><img src="http://simpleicon.com/wp-content/uploads/camera.png" alt=""/></button>
       </div>
       <div className="user-info">
-        <a>{currentUser.username}</a>
         <img
           className="rank-img"
           alt="rank icon"
           src={getRankImg(getOverallRank(ranked30, ranked10, currentUser))}
         />
-      </div>
+        <span>{currentUser.username}</span>
+        </div>
         <button onClick={() => setSettings(true)} id="edit">Edit Profile</button>
     </div>
     </>
