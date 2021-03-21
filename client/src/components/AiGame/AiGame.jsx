@@ -3,7 +3,7 @@ import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";
 import Countdown from '../GameView/Timer';
-import PopupWin from '../GameView/PopupWin';
+import PopupWin from './PopupWin';
 import MovesLog from "../GameView/MovesLog"
 import Chess from "chess.js";
 import axios from "axios";
