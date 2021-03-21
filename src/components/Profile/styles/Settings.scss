@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // overflow: initial;
+    
     .modal-settings-form {
       display: flex;
       flex-direction: column;
@@ -24,9 +24,7 @@
       font-size: 20px;
     }
 
-    #save {
-      // width: 100%;
-      // height: 100%;
+    #edit {
       border-radius: 10px;
     }
   }
@@ -39,6 +37,13 @@
     font-size: 28px;
     font-weight: normal;
   }
+
+  .submit {
+    font-size: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+
 }
 
 

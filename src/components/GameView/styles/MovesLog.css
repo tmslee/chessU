@@ -1,12 +1,14 @@
-.moveLogTable{
-  margin: 1em;
+.move_log{
+  margin-left: 1em;
+  margin-right: 1em;
   border: 3px solid black;
+  border-radius: 4px;
 }
 
 .table{
-  width: 560px;
   display: block;
   height: 540px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin: 0;
 }

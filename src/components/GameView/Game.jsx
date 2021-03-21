@@ -1,14 +1,16 @@
-import './styles/Game.css';
+import './styles/Game.scss';
 import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";
 import Chess from "chess.js";
 import Countdown from './Timer';
-import Popup from './Popup';
+import PopupWin from './PopupWin';
 import MovesLog from "./MovesLog"
 import Chat from "../ChatRoom/Chat"
 import useMove from "../../hooks/moves"
 import axios from "axios";
+import PopupConfirm from "./PopupConfirm";
+import useResign from "../../hooks/resign";
 
 function Game(props) {
   const { matchId } = props.match.params; // which is also chat room id
@@ -58,16 +60,18 @@ function Game(props) {
     winner:'',
     roomId: matchId,
     isReceived: true,
-    duration
+    duration,
+    isResign: false,
+    isReceivedResign: false,
   })
 
   const roomId = state.roomId;
   let { currentMove, sendMove } = useMove(roomId);
+  let { concede, sendConcedeMessage } = useResign(roomId);
 
   // set current positions from Chess.js
   let game = useRef(null);
   if (state.position === "start"){
-    // game.current = new Chess();
     game.current = new Chess();
   }
 
@@ -102,7 +106,6 @@ function Game(props) {
       console.log(err, "error")
     }
   };
-  console.log('match id', state.roomId, matchId, props.gameInfo.matchId);
 
   const resultRecord = async function(){
     const matchResult = {
@@ -116,7 +119,6 @@ function Game(props) {
       matchResult['loser'] = matchResult['white'];
     }
     matchResult["timeLimit"] = state.duration;
-    console.log('match id', state.roomId, matchId);
     const idMatch = props.gameInfo.matchId;
     console.log(matchResult);
     try{
@@ -225,8 +227,6 @@ function Game(props) {
           isReceived: true
         }));
       }
-      // movesRecord(moveMade);
-      // console.log(game.current.turn());
     } else {
       resultSend();
       resultRecord();
@@ -236,37 +236,33 @@ function Game(props) {
   const setModalShow = function(bool){
     setState(prev => ({...prev, modalShow: bool }));
   }
+
+  const setResign = function(bool){
+    setState(prev => ({...prev, isResign: bool }));
+  }
+
+  const setisReceivedResign = function(bool){
+    setState(prev => ({...prev, isReceivedResign: bool}))
+  }
+
+  const declareConcede = function(){
+    console.log('You concede!');
+    sendConcedeMessage(true);
+    if (usernameWhite === props.currentUser.username){
+      gameover('black');
+    } else {
+      gameover('white');
+    }
+  }
   
-  // let invitationFromOpponent = false;
-  // // receive the regame invitation sent by your opponent
-  // const { regameInfo, sendRegameInfo } = useRegame(roomId);
-  // if(!regameInfo.madeByCurrentUser && regameInfo.length !== 0){
-    // setModalShow(false);
-  //   invitationFromOpponent = true;
-  // }
+  console.log(concede);
+  if(!concede.concededByCurrentUser && concede.length !== 0 && !state.isReceivedResign){
+    resultSend();
+    resultRecord();
+    setisReceivedResign(true);
+  }
 
-  // const regame = function(){
-  //   if (isRanked){
-  //     window.location.assign("/");
-  //   } else {
-  //     // for casual mode, they can replay once again
-  //     sendRegameInfo(props.currentUser.id);
-  //     setState({ 
-  //       position: "start",
-  //       isBlackRunning: false,
-  //       isWhiteRunning: true,
-  //       isGameOver: false,
-  //       modalShow: false,
-  //       chessmoves: [],
-  //       winner:'',
-  //       isReceived: true
-  //     });
-  //   }
-  // }
-
-  // const backToHome = function(){
-  //   window.location.assign("/");
-  // }
+  const timeLimitShow = duration ? duration + 'mins' : 'unlimited' ;
 
   return (
     <div className="gameView">
@@ -286,21 +282,40 @@ function Game(props) {
         duration={state.duration}
         timeout={gameover}/>}
       </div>
+      <div className="chess-main">
+        <div className="gameInfo">
+          <div className="card border-primary mb-3">
+            <div className="card-header">GAME INFO</div>
+            <div className="card-body">
+              <h4 className="card-title">Player1: {props.gameInfo.name1}</h4>
+              <h4 className="card-title">Player2: {props.gameInfo.name2}</h4>
+              <p className="card-text">Game Mode: Ranked/Casual</p>
+              <p className="card-text">Time Limit: {timeLimitShow}</p>
+              <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
+            </div>
+          </div>
+        </div>
       <div className="chessboard">
-      {/* orientation={'black'} */}
         <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
-        <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
-        <Chat roomId={state.roomId}/>
+        <div className="move-chat">
+          <div className="move_log">
+            <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
+          </div>
+          <Chat roomId={state.roomId}/>
+        </div>
       </div>
-      <Popup
+      <PopupWin
         show={state.modalShow}
         onHide={() => setModalShow(false)}
-        // regame={regame}
-        // backToHome={backToHome}
         winner={state.winner}
         isRanked={isRanked}
-        // invitationFromOpponent={invitationFromOpponent}
+        isReceivedResign={state.isReceivedResign}
       />
+      <PopupConfirm show={state.isResign}
+        resultSend={declareConcede}
+        onHide={() => setResign(false)}
+      />
+      </div>
     </div>
   );
 }
