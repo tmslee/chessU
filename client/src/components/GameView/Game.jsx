@@ -1,4 +1,4 @@
-import './styles/Game.css';
+import './styles/Game.scss';
 import ChessBoard from "chessboardjsx";
 import React from "react";
 import { useState, useRef } from "react";

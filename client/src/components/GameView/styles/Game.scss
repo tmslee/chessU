@@ -8,18 +8,27 @@
 
 @media (max-width:620px){
   .gameView {
-    width: 100%;
+    width: 30%;
     display: flex;
     text-align: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+
   .chess-main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+  }
+
+  .chessboard{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
   }
 }
 
@@ -60,6 +69,7 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+  border: 3px solid black;
 }
 
 .chat-button{
@@ -71,6 +81,5 @@
 .gameInfo{
   width: 200px;
   height: 300px;
-  /* border: 3px solid black; */
   margin-right: 1em;
 }
