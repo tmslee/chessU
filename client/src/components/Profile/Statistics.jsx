@@ -21,7 +21,7 @@ export default function Statistics(props) {
   return (
     <div className="stats-box">
       <div className="stats">
-        <table className="table-striped">
+        <table className="table">
           <tbody>
           <tr>
             <th scope="row">W/L</th>
@@ -40,12 +40,12 @@ export default function Statistics(props) {
             <td>{currentUser.casual}</td>
           </tr>
           <tr>
-            <th scope="row">Total Matches Played</th>
+            <th scope="row">Total Matches</th>
             <td>{matches}</td>
           </tr>
           <tr>
-            <th scope="row">Avg Moves Per Match</th>
-            <td>{actions/matches}</td>
+            <th scope="row">Avg Moves</th>
+            <td>{Math.round(actions/matches *10)/10}</td>
           </tr>
           </tbody>
         </table>
