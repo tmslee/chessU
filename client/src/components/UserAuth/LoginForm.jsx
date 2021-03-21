@@ -66,7 +66,10 @@ export default function LoginForm( props ) {
         </div>
       </form>
       </div>
-      <button onClick={() => setActive({...active, login: false  })} className="modal-close">X</button>
+      <div className="to-register">
+        <span onClick={() => setActive({ register:true, login: false })}>Don't have an account? Sign up!</span>
+      </div>
+      <button onClick={() => setActive({...active, login: false })} className="modal-close">X</button>
     </div>
     </div>
   )

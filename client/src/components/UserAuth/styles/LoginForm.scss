@@ -30,12 +30,17 @@
       justify-content: space-around;
       align-items: center;
       width: 60%;
+      cursor: pointer;
 
     }
   }
 
-  .modal-close {
-    // border-radius: 10px;
+  .to-register {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 18px;
+    text-decoration: underline;
   }
 
   .submit {
