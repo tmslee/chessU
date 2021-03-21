@@ -143,10 +143,11 @@ io.on("connection", (socket) => {
           const second = match[1];
           const firstUser = first.currentUser;
           const secondUser = second.currentUser;
+          const matchType = first.type;
           dequeue(queue, firstUser.id);
           dequeue(queue, secondUser.id);
-          io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser});
-          io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser});
+          io.to(first.socketId).emit(ENQUEUE, {opponent: secondUser, matchType});
+          io.to(second.socketId).emit(ENQUEUE, {opponent: firstUser, matchType});
           initializeMatchConfirm(firstUser, secondUser, first.socketId, second.socketId);
         }
       }
@@ -231,8 +232,8 @@ io.on("connection", (socket) => {
           // const black = opponent;
           const colors = { white : userId, black : opponent };
           addMatch(type, colors.white, colors.black).then(match => {
-            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit });
-            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit });
+            io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit, type });
+            io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit, type });
           });
       } else { //opponent pending -> just update matchConfirmStatus
         matchConfirmStatus[userId] = 1;

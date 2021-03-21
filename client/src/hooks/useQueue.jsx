@@ -54,9 +54,9 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
         // listening from server/socket
         socketRef.current.on(ENQUEUE, (data) => {
           console.log(data);
-          
+          const matchType = data.matchType;
           const opponent = data.opponent;
-          setGameOptions(prev => ({...prev, opponent}));
+          setGameOptions(prev => ({...prev, opponent, matchType}));
           goToView(ACCEPT_MATCH);
           dequeue();
           //we are matched up and send opponent id to AcceptTimer component
