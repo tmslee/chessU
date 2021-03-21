@@ -22,7 +22,6 @@ export default function LeaderBoards(props) {
   useEffect( () => {
     axios.get(`http://localhost:8001/api/leaderboards/${gameType}`)
     .then( res => {
-      console.log("leaderboad users: " , res.data)
       setUsers(res.data)
     });
   }, [gameType])
@@ -56,7 +55,6 @@ export default function LeaderBoards(props) {
   const getRank = function (user, sortedUsers) {
     const numUsers = sortedUsers.length;
     const idx = getRankIdx(user, sortedUsers);
-    console.log(idx);
     const increment = Math.floor(numUsers/5);
     const rem = numUsers-increment*5;
     
@@ -78,25 +76,25 @@ export default function LeaderBoards(props) {
           return "bronze";
       }
     } else if (rem > increment){ //remiander is greater than increment
-      if (0 <= idx <= increment-1) return "master";
-      else if (increment <= idx <= increment*2-1) return 'diamond'; 
-      else if (increment*2 <= idx <= increment*3-1) return 'plat'; 
-      else if (increment*3 <= idx <= increment*4-1) return 'gold'; 
-      else if (increment*4 <= idx <= increment*5-1) return 'silver'; 
+      if (0 <= idx && idx <= increment-1) return "master";
+      else if (increment <= idx && idx <= increment*2-1) return 'diamond'; 
+      else if (increment*2 <= idx && idx <= increment*3-1) return 'plat'; 
+      else if (increment*3 <= idx && idx <= increment*4-1) return 'gold'; 
+      else if (increment*4 <= idx && idx <= increment*5-1) return 'silver'; 
       else return 'bronze';
     } 
     else { //remainder is less than increment 
-      if (numUsers-increment <= idx <= numUsers-1) return "bronze";
-      else if (numUsers-increment*2 <= idx <= numUsers-increment-1) return 'silver'; 
-      else if (numUsers-increment*3 <= idx <= numUsers-increment*2-1) return 'gold'; 
-      else if (numUsers-increment*4 <= idx <= numUsers-increment*3-1) return 'plat'; 
-      else if (numUsers-increment*5 <= idx <= numUsers-increment*4-1) return 'diamond'; 
+      if (numUsers-increment <= idx && idx <= numUsers-1) return "bronze";
+      else if (numUsers-increment*2 <= idx && idx <= numUsers-increment-1) return 'silver'; 
+      else if (numUsers-increment*3 <= idx && idx <= numUsers-increment*2-1) return 'gold'; 
+      else if (numUsers-increment*4 <= idx && idx <= numUsers-increment*3-1) return 'plat'; 
+      else if (numUsers-increment*5 <= idx && idx <= numUsers-increment*4-1) return 'diamond'; 
       else return 'master';
     }
   }
 
   const userListRender = users.map(user => {
-    console.log(user);
+ 
     return(
       <ListGroup.Item
         key={user.id}
@@ -118,8 +116,6 @@ export default function LeaderBoards(props) {
     )
   });
 
-  console.log('done rendering');
-  console.log(userListRender);
   
   // I NEED TO GRAB user object of { profile_img, username, elo, isFriend }
 
