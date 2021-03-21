@@ -262,6 +262,8 @@ function Game(props) {
     setisReceivedResign(true);
   }
 
+  const timeLimitShow = duration ? duration + 'mins' : 'unlimited' ;
+
   return (
     <div className="gameView">
       <div className="countdown">
@@ -280,6 +282,19 @@ function Game(props) {
         duration={state.duration}
         timeout={gameover}/>}
       </div>
+      <div className="chess-main">
+        <div className="gameInfo">
+          <div className="card border-primary mb-3">
+            <div className="card-header">GAME INFO</div>
+            <div className="card-body">
+              <h4 className="card-title">Player1: {props.gameInfo.name1}</h4>
+              <h4 className="card-title">Player2: {props.gameInfo.name2}</h4>
+              <p className="card-text">Game Mode: Ranked/Casual</p>
+              <p className="card-text">Time Limit: {timeLimitShow}</p>
+              <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
+            </div>
+          </div>
+        </div>
       <div className="chessboard">
         <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
         <div className="move-chat">
@@ -287,7 +302,6 @@ function Game(props) {
             <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
           </div>
           <Chat roomId={state.roomId}/>
-          <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
         </div>
       </div>
       <PopupWin
@@ -295,11 +309,13 @@ function Game(props) {
         onHide={() => setModalShow(false)}
         winner={state.winner}
         isRanked={isRanked}
+        isReceivedResign={state.isReceivedResign}
       />
       <PopupConfirm show={state.isResign}
         resultSend={declareConcede}
         onHide={() => setResign(false)}
       />
+      </div>
     </div>
   );
 }
