@@ -1,7 +1,7 @@
 const { updateEloById30, updateEloById10,  updateEloByIdCasual} = require("../db_helpers/db_user_helpers");
 
 const eloUpdate = async function(winnerId, winner_elo, loserId, loser_elo, type, timeLimit){
-  console.log('elo update function', winnerId, winner_elo, loserId, loser_elo, type, timeLimit)
+
 
   const eloDifference = 400;
   const transformedRatingWinner = Math.pow(10, winner_elo / eloDifference);
@@ -14,10 +14,8 @@ const eloUpdate = async function(winnerId, winner_elo, loserId, loser_elo, type,
   // K = 32 and get the updated elo rating
   const updatedWinner = Math.round(winner_elo + 32 * (1 - expectedScoreWinner));
   const updatedLoser = Math.round(loser_elo + 32 * (0 - expectedScoreLoser));
-  console.log(updatedWinner, updatedLoser);
 
   // update elo in DB
-  console.log('type', type, timeLimit)
   if (type === 'RANKED' && timeLimit === 30){
     await updateEloById30(updatedWinner, winnerId);
     await updateEloById30(updatedLoser, loserId);

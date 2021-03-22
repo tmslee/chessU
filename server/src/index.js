@@ -7,7 +7,6 @@ const server = require("http").Server(app);
 const { addMatch } = require("./db_helpers/db_match_helpers.js");
 const  { sortUsers } = require("../src/helpers/sort_users_helper");
 
-// const server = require("http").createServer();
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -44,7 +43,6 @@ const matchConfirmStatus = {};
 const userSockets = {};
 
 const dequeue = function(Q, id) {
-  console.log(Q, "DEQUEUE Q")
   if(Q !== undefined && Q.length > 0){
     Q.forEach( (data, idx) => {
       if(data.currentUser.id === id) {
@@ -126,10 +124,8 @@ io.on("connection", (socket) => {
 
       queue.push(data);
       userIdInQueue.push(data.currentUser.id);
-      console.log(queue, "QUUUUUUUUUUUUUUUUUUUUUE");
       if (queue.length > 1){
         const matchups = sortUsers(queue, data.type, data.timeLimit);
-        console.log(matchups[0][0].currentUser, matchups[0][1].currentUser)
         while (matchups.length !== 0) {
           const match = matchups.pop();
           const first = match[0];
@@ -148,7 +144,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on(DEQUEUE, (data) => {
-    console.log("dequeuing a user", data.currentUser.username);
     if (data.socketId && data.currentUser){
       let queue;
       if (data.type === RANKED){
@@ -169,7 +164,6 @@ io.on("connection", (socket) => {
         }
       };
       dequeue(queue, data.currentUser.id)
-      console.log("queue is currently: ", casualQ30);
     }
   });
    
