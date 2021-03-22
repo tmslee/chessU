@@ -47,6 +47,7 @@ const matchConfirmStatus = {};
 const userSockets = {};
 
 const dequeue = function(Q, id) {
+  console.log(Q, "DEQUEUE Q")
   if(Q !== undefined && Q.length > 0){
     Q.forEach( (data, idx) => {
       if(data.currentUser.id === id) {
@@ -88,8 +89,6 @@ io.on("connection", (socket) => {
   socket.on(LOGIN, (data) => {
     const {currentUser, socketId} = data;
     userSockets[currentUser.id] = socketId;
-    console.log(`socket id for ${currentUser.username}: ${socketId}`);
-
   });
 
   // Listen for new messages and send it to everyone in the room
@@ -116,8 +115,6 @@ io.on("connection", (socket) => {
           queue = rankedQ10;
         } else if (data.timeLimit === 30){
           queue = rankedQ30;
-        // } else {
-        //   queue = rankedQ;
         }
       }
       else if (data.type === CASUAL) {
@@ -132,11 +129,10 @@ io.on("connection", (socket) => {
 
       queue.push(data);
       userIdInQueue.push(data.currentUser.id);
-
-      console.log("queue: " , queue);
+      console.log(queue, "QUUUUUUUUUUUUUUUUUUUUUE");
       if (queue.length > 1){
         const matchups = sortUsers(queue, data.type, data.timeLimit);
-        console.log(matchups, "MATCHUPS")
+        console.log(matchups[0][0].currentUser, matchups[0][1].currentUser)
         while (matchups.length !== 0) {
           const match = matchups.pop();
           const first = match[0];
@@ -155,6 +151,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on(DEQUEUE, (data) => {
+    console.log("dequeuing a user", data.currentUser.username);
     if (data.socketId && data.currentUser){
       let queue;
       if (data.type === RANKED){
@@ -175,19 +172,10 @@ io.on("connection", (socket) => {
         }
       };
       dequeue(queue, data.currentUser.id)
+      console.log("queue is currently: ", casualQ30);
     }
   });
-  
-  // const pairs = [ { socket1 : null, socket2 : null } ] 
-  // when we receive socket1 if true - > change socket1 : true and check if socket2 is null if null keep listening
-  // if socket2 not null and is true delete this pair and create match
-
-  // Listen for rank-mode user to accept
-  // client side query
-  // socketRef.current.emit(RANKED_ACCEPT, {
-  //   socketId: socketRef.current.id,
-  // });
-  
+   
   const removeFromMatches = function (matches, userId) {
     const userId2 = matches[userId];
     if(userId2) {
@@ -207,7 +195,6 @@ io.on("connection", (socket) => {
     const opponentStatus = matchConfirmStatus[opponent];
 
     if (confirmation === -1) { //you have declined
-      console.log("you have declined. opponent socket: ", userSockets[opponent]);
       if(opponentStatus !== 0) {
         removeFromMatches(matches, userId);
         io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId:null });
@@ -218,18 +205,12 @@ io.on("connection", (socket) => {
       }
 
     } else if (confirmation === 1) {
-      console.log("you have accepted");
       if(opponentStatus === -1) { //opponent declined
         removeFromMatches(matches, userId);
         io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId:null });
         io.to(userSockets[opponent]).emit(MATCH_CONFIRM, { matchId:null });
       } else if (opponentStatus === 1) { //opponent accepted{
           removeFromMatches(matches, userId);
-          console.log(`making match for: `);
-          console.log(currentUser);
-          console.log(opponent);
-          // const white = userId;
-          // const black = opponent;
           const colors = { white : userId, black : opponent };
           addMatch(type, colors.white, colors.black).then(match => {
             io.to(userSockets[userId]).emit(MATCH_CONFIRM, { matchId: match.id, colors, timeLimit, type });
@@ -245,17 +226,12 @@ io.on("connection", (socket) => {
 
   socket.on(SOCKET_INIT, data => {
     userSockets[data.userId] = data.socketId;
-    console.log(`listener socket id for :${data.name}` , data.socketId);
   })
 
   socket.on(GET_OPPONENT_STATUS, data => {
-    console.log('getting opponent status');
     const {currentUser, opponent, socketId, gameOptions} = data;
     const opponentSocket = userSockets[opponent.id];
 
-    console.log("socketId: ", opponentSocket);
-    console.log("inqueue? ", inqueue(opponent));
-    console.log("in pending match? " , inPendingMatch(opponent));
     if(opponentSocket && !inqueue(opponent) && !inPendingMatch(opponent)) {
       initializeMatchConfirm(currentUser, opponent, socketId, opponentSocket);
       //beacuse by sending this invite you have already accepted. only need opponent to confirm to go into match
@@ -263,8 +239,6 @@ io.on("connection", (socket) => {
 
       io.to(socketId).emit(OPPONENT_STATUS, {status: true});
       io.to(opponentSocket).emit(GAME_INVITE, {gameOptions});
-      console.log("invite sending out to: ", opponentSocket);
-      // console.log(Object.keys(io.of('/').connected));
     } else {
       io.to(socketId).emit(OPPONENT_STATUS, {status: false});
     }
@@ -274,7 +248,6 @@ io.on("connection", (socket) => {
 
   // Listen for new move and send it to your opponent
   socket.on(NEW_CHESS_MOVE_EVENT, (data) => {
-    console.log('receive a move!', data)
     socket.to(roomId).emit(NEW_CHESS_MOVE_EVENT, data);
     // io.in(roomId).emit(NEW_CHESS_MOVE_EVENT, data);
   });
