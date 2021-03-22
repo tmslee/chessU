@@ -106,7 +106,7 @@ export default function GameOptionsModal(props) {
     dequeue();
     console.log("returning to game settings...");
     console.log("setting opponent to null");
-    setGameOptions({...gameOptions, opponent: null});
+    setGameOptions({...gameOptions, opponent: null, timeLimit: undefined, difficulty: null});
     goToView(SELECT_OPTIONS);
     setInvitedStatus(false);
   }
