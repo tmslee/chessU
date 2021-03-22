@@ -78,7 +78,11 @@ export default function ChessNavBar(props) {
             <h6>Logged in as: {username}</h6>
             <Button className="user-login"
               variant="outline-success"
-              onClick={() => logout()}
+              onClick={
+                () => {
+                  handleClick("/")
+                  logout()
+                }} 
             >Log out</Button>
           </div>
         }
