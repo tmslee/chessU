@@ -28,7 +28,6 @@ export default function useGetRank(currentUser) {
   const getRank = function (user, sortedUsers, byUsername) {
     const numUsers = sortedUsers.length;
     const idx = byUsername? getRankIdxByUser(user, sortedUsers) : getRankIdx(user, sortedUsers);
-    console.log(idx);
     const increment = Math.floor(numUsers/5);
     const rem = numUsers-increment*5;
     
@@ -70,14 +69,12 @@ export default function useGetRank(currentUser) {
   const getRanked30 = function () {
     axios.get(`http://localhost:8001/api/leaderboards/ranked30`)
     .then( res => {
-      console.log("leaderboad users: " , res.data)
       setRanked30(res.data)
     });
   };
   const getRanked10 = function () {
     axios.get(`http://localhost:8001/api/leaderboards/ranked10`)
     .then( res => {
-      console.log("leaderboad users: " , res.data)
       setRanked10(res.data)
     });
   };

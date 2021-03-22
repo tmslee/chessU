@@ -10,7 +10,6 @@ import axios from "axios";
 import PopupConfirm from "../GameView/PopupConfirm";
 
 export default function AiGame(props){
-  console.log(props);
   const currentUserId = props.currentUser.id
   const { matchId } = props.match.params; 
   const difficulty = props.gameInfo.difficulty - 1;
@@ -70,7 +69,6 @@ export default function AiGame(props){
     record["action"] = `from: ${move.from}, to: ${move.to}`;
     try {
       const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
-      console.log('move send successfully');
       return recordMatch;
     } catch (err) {
       console.log(err, "error")
@@ -90,10 +88,8 @@ export default function AiGame(props){
       matchResult['loser'] = props.currentUser.id;
     }
     const idMatch = props.match.params.id;
-    console.log(matchResult);
     try{
       const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
-      console.log('record')
       return result;
     } catch (err) {
       console.log(err, "error")

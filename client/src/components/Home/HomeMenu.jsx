@@ -39,18 +39,10 @@ export default function HomeMenu(props) {
   //this function resets gameOptions too
   const closeModal = function () {
     setShowState(false);
-    console.log("options reset") 
     //also need to set currentUser when we reset
     setGameOptions({...EMPTY_GAME, currentUser});
     setInvitedStatus(false);
   };
-
-  useEffect(() => {
-    console.log("==== options changed ====")
-    console.log(gameOptions);
-    console.log("==========================")
-
-  }, [gameOptions]) 
 
   const isLoggedIn = (type) => {
     if(currentUser) {

@@ -24,7 +24,6 @@ export default function Countdown(props) {
           checkpoints={[{
             time: 0,
             callback: () => {
-              console.log('run our of time!')
               timeout();
             },}
         ]}>

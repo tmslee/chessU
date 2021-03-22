@@ -25,7 +25,6 @@ export default function RegisterForm(props) {
   const registerUser = function(newUser) {
     axios.post('http://localhost:8001/api/users', newUser)
     .then( result => {
-      console.log(result, "DATAAAAA")
       if (!result.data.token) {
         setError(true);
       } else {
