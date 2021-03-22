@@ -11,7 +11,7 @@ const AI = "AI";
 
 const EMPTY_GAME = {
   type:null,
-  timeLimit:null,
+  timeLimit:undefined,
   difficulty:null,
   currentUser: null,
   opponent:null
@@ -19,8 +19,7 @@ const EMPTY_GAME = {
 
 export default function HomeMenu(props) {
   const {
-    currentUser, 
-    setGameRoute, 
+    currentUser,  
     setGameInfo,
     setActive,
     active,
@@ -113,7 +112,6 @@ export default function HomeMenu(props) {
         gameOptions={gameOptions}
         setGameOptions={setGameOptions}
         closeModal={closeModal}
-        setGameRoute={setGameRoute}
         setGameInfo={setGameInfo}
         setInvitedStatus={setInvitedStatus}
       />
