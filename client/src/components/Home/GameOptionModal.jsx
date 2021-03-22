@@ -92,9 +92,9 @@ export default function GameOptionsModal(props) {
     history.push(`/game/${matchId}`);
   }
 
-  const returnToGameOptions = function () {
-    dequeue();
-    setGameOptions({...gameOptions, opponent: null, timeLimit: undefined, difficulty: null});
+  const returnToGameOptions = async function () {
+    await dequeue();
+    await setGameOptions({...gameOptions, opponent: null, timeLimit: undefined, difficulty: null});
     goToView(SELECT_OPTIONS);
     setInvitedStatus(false);
   }
