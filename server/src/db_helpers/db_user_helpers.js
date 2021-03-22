@@ -85,7 +85,7 @@ const updateEloById30 = function(updatedElo, userId){
   WHERE id = $2
   RETURNING *;
   `, [updatedElo, userId])
-  .then(res => console.log('elo update in db', res.rows[0]));
+  .then(res => res.rows[0]);
 }
 
 exports.updateEloById30 = updateEloById30;
@@ -97,7 +97,7 @@ const updateEloById10 = function(updatedElo, userId){
   WHERE id = $2
   RETURNING *;
   `, [updatedElo, userId])
-  .then(res => console.log('elo update in db', res.rows[0]));
+  .then(res => res.rows[0]);
 }
 
 exports.updateEloById10 = updateEloById10;
@@ -109,7 +109,7 @@ const updateEloByIdCasual = function(updatedElo, userId){
   WHERE id = $2
   RETURNING *;
   `, [updatedElo, userId])
-  .then(res => console.log('elo update in db', res.rows[0]));
+  .then(res => res.rows[0]);
 }
 
 exports.updateEloByIdCasual = updateEloByIdCasual;
