@@ -281,6 +281,7 @@ io.on("connection", (socket) => {
 
   // Leave the room if the user closes the socket
   socket.on("disconnect", () => {
+    io.in(roomId).emit(RESIGN, {msg: false});
     socket.leave(roomId);
   });
 });
