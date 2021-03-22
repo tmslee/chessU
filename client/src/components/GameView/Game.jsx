@@ -26,8 +26,11 @@ function Game(props) {
   const opponentRanked30 = props.gameInfo.opponentRanked30;
   const opponentCasual = props.gameInfo.opponentCasual;
   const setInGame = props.setInGame;
+  const setShowResign=props.setShowResign;
 
   setInGame(true);
+
+  let draggable = false;
 
   const isRanked = true;
   let usernameWhite;
@@ -42,6 +45,7 @@ function Game(props) {
       usernameBlack = props.gameInfo.name1;
     }
     chessboardOrientation = 'white';
+    draggable=true;
   } else {
     usernameBlack = props.currentUser.username;
     if (usernameBlack === props.gameInfo.name1){
@@ -74,6 +78,7 @@ function Game(props) {
     duration,
     isResign: false,
     isReceivedResign: false,
+    draggable
   })
 
   const roomId = state.roomId;
@@ -101,7 +106,8 @@ function Game(props) {
       isBlackRunning: false,
       isGameOver: true,
       modalShow: true,
-      winner
+      winner,
+      isResign: false,
     }));
   }
   const movesRecord = async function(move) {
@@ -172,7 +178,8 @@ function Game(props) {
           isBlackRunning: true,
           position: game.current.fen(),
           chessmoves,
-          isReceived: false
+          isReceived: false,
+          draggable: true
         }));
       } else {
         setState(prev => ({...prev,
@@ -180,7 +187,8 @@ function Game(props) {
           isBlackRunning: false,
           position: game.current.fen(),
           chessmoves,
-          isReceived: false
+          isReceived: false,
+          draggable: true
         }));
       }
       movesRecord(moveReceived);
@@ -222,7 +230,8 @@ function Game(props) {
           isBlackRunning: true,
           position: game.current.fen(),
           chessmoves,
-          isReceived: true
+          isReceived: true,
+          draggable: false
         }));
       } else {
         setState(prev => ({...prev,
@@ -230,7 +239,8 @@ function Game(props) {
           isBlackRunning: false,
           position: game.current.fen(),
           chessmoves,
-          isReceived: true
+          isReceived: true,
+          draggable:false
         }));
       }
     } else {
@@ -256,6 +266,10 @@ function Game(props) {
     console.log('You concede!');
     gameover(props.gameInfo.name2);
     sendConcedeMessage(true);
+  }
+
+  if(props.showResign && !state.isResign){
+    setResign(true);
   }
   
   // when your opponent concedes
@@ -321,14 +335,17 @@ function Game(props) {
               <p className="card-text">ELO rank/10mins: {opponentRanked10}</p>
               <p className="card-text">ELO rank/30mins: {opponentRanked30}</p>
               <p className="card-text">ELO casual: {opponentCasual}</p>
-              <p className="card-text">Game Mode: Ranked/Casual</p>
+              <p className="card-text">Game Mode: {matchType}</p>
               <p className="card-text">Time Limit: {timeLimitShow}</p>
               <button type="button" class="btn btn-outline-danger" onClick={() => setResign(true)}>resign</button>
             </div>
           </div>
         </div>
       <div className="chessboard">
-        <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
+        <ChessBoard position={state.position} 
+        orientation={chessboardOrientation}
+        draggable={state.draggable}
+        onDrop={onDrop} roomId={state.roomId}/>
         <div className="move-chat">
           <div className="move_log">
             <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
