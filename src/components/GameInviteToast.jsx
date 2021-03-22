@@ -23,7 +23,7 @@ export default function GameInviteToast(props) {
   const loadGame = function (data, currentUser, opponent, timeLimit) {
     setGameInfo({
       matchId : data.matchId,
-      colors : data.colors, // { white : id, black : id }
+      colors : data.colors,
       name1 : currentUser.username,
       name2 : opponent.username,
       timeLimit
@@ -45,10 +45,8 @@ export default function GameInviteToast(props) {
       }
 
       if (!invitedStatus) {
-        console.log("listening for invites");
         //listen for game inv message from server
         socketRef.current.on(GAME_INVITE, data => {
-          console.log("invite received");
           const {gameOptions} = data;
           setIncomingGameInfo(gameOptions);
           setInvitedStatus(true);
@@ -67,10 +65,8 @@ export default function GameInviteToast(props) {
 
         //listen for match confim msg from server
         socketRef.current.on(MATCH_CONFIRM, data => {
-          console.log("making match");
           const {matchId} = data;
-          if (!matchId) console.log("match declined");
-          else {
+          if(matchId) {
             loadGame(
               data, 
               incomingGameInfo.opponent,
