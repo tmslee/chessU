@@ -256,6 +256,10 @@ function Game(props) {
     gameover(props.gameInfo.name2);
     sendConcedeMessage(true);
   }
+
+  if(props.showResign){
+    setResign(true);
+  }
   
   // when your opponent concedes
   console.log(concede);
