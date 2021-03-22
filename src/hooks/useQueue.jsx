@@ -49,7 +49,6 @@ const useQueue = (gameOptions, setGameOptions, goToView) => {
   
 
       } else if(currentUser) {
-        console.log("dequeuing yourself");
         //send a dequeue messsage to socket 
         socketRef.current.emit(DEQUEUE, {
           timeLimit,
