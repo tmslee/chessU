@@ -267,8 +267,10 @@ function Game(props) {
     sendConcedeMessage(true);
   }
 
+  console.log(props.showResign, !state.isResign, 'nav bar resign')
   if(props.showResign && !state.isResign){
     setResign(true);
+    setShowResign(false);
   }
   
   // when your opponent concedes
