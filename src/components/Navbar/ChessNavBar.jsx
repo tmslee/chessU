@@ -11,20 +11,21 @@ export default function ChessNavBar(props) {
     setActive,
     active,
     logout,
-    inGame
+    inGame,
+    setShowResign
   } = props;
 
   // let { concede, sendConcedeMessage } = useResign(roomId);
 
   const history = useHistory();
-  const [show, setShow] = useState(false);
-
+  // const [show, setShow] = useState(false);
   
   const handleClick = function(url) {
     if (!inGame) {
       history.push(url);
     } else {
-        setShow(true);
+      // setShowResign(true);
+      alert("You have to resign before back to lobby!")
       }
     }
   
@@ -32,11 +33,11 @@ export default function ChessNavBar(props) {
 
   return (
     <Navbar bg="light" expand="lg" style={{...{zIndex:1}, ...{background:'#F0F0D8'}}} className="navbar">
-      {show && <Modal>
+      {/* {show && <Modal>
         <Modal.Header>
           <h4>STOP!</h4>
         </Modal.Header>
-      </Modal> }
+      </Modal> } */}
       <div className="logo" onClick={() => handleClick("/")}>
       <Navbar.Brand >
         <img

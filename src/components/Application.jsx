@@ -33,6 +33,7 @@ export default function Application() {
   const [gameInfo, setGameInfo] = useState();
   const [invitedStatus, setInvitedStatus] = useState(false);
   const [inGame, setInGame] = useState(false);
+  const [showResign, setShowResign] = useState(false);
 
   console.log('re-render application')
   useEffect(()=> {
@@ -78,6 +79,7 @@ export default function Application() {
     active={active}
     logout={logout}
     inGame={inGame}
+    setShowResign={setShowResign}
     />
 
     <GameInviteToast
@@ -117,6 +119,8 @@ export default function Application() {
             gameInfo = {gameInfo}
             currentUser = {currentUser}
             setInGame={setInGame}
+            showResign={showResign}
+            setShowResign={setShowResign}
           />)
         }/>
         <Route path="/aigame/:id" render={(props) => (
