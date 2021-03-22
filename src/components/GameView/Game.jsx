@@ -270,6 +270,7 @@ function Game(props) {
 
   if(props.showResign && !state.isResign){
     setResign(true);
+    setShowResign(false);
   }
   
   // when your opponent concedes
