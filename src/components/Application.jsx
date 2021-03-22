@@ -128,13 +128,12 @@ export default function Application() {
             {...props} 
             gameInfo = {gameInfo}
             currentUser = {currentUser}
-            setGameInfo={setGameInfo}
           />)
         }/>
         }
         { gameInfo &&
           <Route path="/aigame/:id" render={(props) => (
-            <AiGame {...props} currentUser = {currentUser} gameInfo = {gameInfo} setGameInfo={setGameInfo}/>
+            <AiGame {...props} currentUser = {currentUser} gameInfo = {gameInfo} />
           )} />
         }
         <Route path="/login" component={LoginForm} />
