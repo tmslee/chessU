@@ -24,12 +24,8 @@ export default function ChessNavBar(props) {
     if (!inGame) {
       history.push(url);
     } else {
-<<<<<<< HEAD
-        alert("Finish the GAME!!!!");
-=======
       setShowResign(true);
       // alert("You have to resign before back to lobby!")
->>>>>>> efd841bf08d18fefdfd29e52f6882087f8045429
       }
     }
   
