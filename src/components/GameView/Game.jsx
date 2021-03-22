@@ -26,6 +26,7 @@ function Game(props) {
   const opponentRanked30 = props.gameInfo.opponentRanked30;
   const opponentCasual = props.gameInfo.opponentCasual;
   const setInGame = props.setInGame;
+  const setShowResign=props.setShowResign;
 
   setInGame(true);
 
@@ -104,7 +105,8 @@ function Game(props) {
       isBlackRunning: false,
       isGameOver: true,
       modalShow: true,
-      winner
+      winner,
+      isResign: false,
     }));
   }
   const movesRecord = async function(move) {
@@ -265,7 +267,7 @@ function Game(props) {
     sendConcedeMessage(true);
   }
 
-  if(props.showResign){
+  if(props.showResign && !state.isResign){
     setResign(true);
   }
   

@@ -115,7 +115,7 @@ export default function Application() {
         }/>
           <Route exact path="/game/:id" render={(props) => 
           (<Game 
-            {...props} 
+            {...props}
             gameInfo = {gameInfo}
             currentUser = {currentUser}
             setInGame={setInGame}
