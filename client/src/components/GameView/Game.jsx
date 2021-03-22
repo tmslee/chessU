@@ -29,6 +29,8 @@ function Game(props) {
 
   setInGame(true);
 
+  let draggable = false;
+
   const isRanked = true;
   let usernameWhite;
   let usernameBlack;
@@ -42,6 +44,7 @@ function Game(props) {
       usernameBlack = props.gameInfo.name1;
     }
     chessboardOrientation = 'white';
+    draggable=true;
   } else {
     usernameBlack = props.currentUser.username;
     if (usernameBlack === props.gameInfo.name1){
@@ -74,6 +77,7 @@ function Game(props) {
     duration,
     isResign: false,
     isReceivedResign: false,
+    draggable
   })
 
   const roomId = state.roomId;
@@ -171,7 +175,8 @@ function Game(props) {
           isBlackRunning: true,
           position: game.current.fen(),
           chessmoves,
-          isReceived: false
+          isReceived: false,
+          draggable: true
         }));
       } else {
         setState(prev => ({...prev,
@@ -179,7 +184,8 @@ function Game(props) {
           isBlackRunning: false,
           position: game.current.fen(),
           chessmoves,
-          isReceived: false
+          isReceived: false,
+          draggable: true
         }));
       }
       movesRecord(moveReceived);
@@ -221,7 +227,8 @@ function Game(props) {
           isBlackRunning: true,
           position: game.current.fen(),
           chessmoves,
-          isReceived: true
+          isReceived: true,
+          draggable: false
         }));
       } else {
         setState(prev => ({...prev,
@@ -229,7 +236,8 @@ function Game(props) {
           isBlackRunning: false,
           position: game.current.fen(),
           chessmoves,
-          isReceived: true
+          isReceived: true,
+          draggable:false
         }));
       }
     } else {
@@ -331,7 +339,10 @@ function Game(props) {
           </div>
         </div>
       <div className="chessboard">
-        <ChessBoard position={state.position} orientation={chessboardOrientation} onDrop={onDrop} roomId={state.roomId}/>
+        <ChessBoard position={state.position} 
+        orientation={chessboardOrientation}
+        draggable={state.draggable}
+        onDrop={onDrop} roomId={state.roomId}/>
         <div className="move-chat">
           <div className="move_log">
             <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
