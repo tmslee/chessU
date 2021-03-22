@@ -3,7 +3,7 @@ import LoginForm from "./UserAuth/LoginForm";
 import RegisterForm from "./UserAuth/RegisterForm";
 import Game from './GameView/Game';
 import Profile from "./Profile/index";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import HomeMenu from "./Home/HomeMenu";
 import ChessNavBar from "./Navbar/ChessNavBar";
 import Community from "./Community/Community";
@@ -15,6 +15,8 @@ import axios from 'axios';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GameInviteToast from "./GameInviteToast";
+// import ReconnectToast from "./ReconnectToast";
+
 import './Application.scss'
 
 // const SOCKET_SERVER_URL = "http://localhost:8001";
@@ -46,6 +48,8 @@ export default function Application() {
   //   })
   //   history.push(`/game/${matchId}`);
   // }
+
+
 
   console.log('re-render application')
   useEffect(()=> {
@@ -94,7 +98,6 @@ export default function Application() {
       invitedStatus={invitedStatus}
       setInvitedStatus={setInvitedStatus}
     />
-
     <main className="main-container">
       {active.login && 
       <LoginForm 
@@ -119,16 +122,21 @@ export default function Application() {
             setInvitedStatus={setInvitedStatus}
           />)
         }/>
+        { gameInfo &&
           <Route exact path="/game/:id" render={(props) => 
           (<Game 
             {...props} 
             gameInfo = {gameInfo}
             currentUser = {currentUser}
+            setGameInfo={setGameInfo}
           />)
         }/>
-        <Route path="/aigame/:id" render={(props) => (
-          <AiGame {...props} currentUser = {currentUser} gameInfo = {gameInfo} />
-        )} />
+        }
+        { gameInfo &&
+          <Route path="/aigame/:id" render={(props) => (
+            <AiGame {...props} currentUser = {currentUser} gameInfo = {gameInfo} setGameInfo={setGameInfo}/>
+          )} />
+        }
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         
@@ -156,6 +164,7 @@ export default function Application() {
             currentUser={currentUser} 
           />)
         }/>
+        <Route render={() => <Redirect to="/" />} />
       </Switch>
     </main>
     </Router>
