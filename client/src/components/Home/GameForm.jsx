@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import "./styles/GameForm.scss";
 
@@ -18,6 +18,8 @@ export default function GameForm(props) {
     inviteToGame,
     returnToMenu
   } = props;
+
+  const [isValid, setIsValid] = useState(true);
 
   let newGameOptions = {...gameOptions};
 
@@ -84,6 +86,7 @@ export default function GameForm(props) {
                 id="timeSetting2"
                 onClick={() => setTime(30)}
               />
+              {gameOptions.type !== RANKED && 
               <Form.Check
                 type="radio"
                 label="unlimited"
@@ -91,6 +94,7 @@ export default function GameForm(props) {
                 id="timeSetting3"
                 onClick={() => setTime(null)}
               />
+              }
             </Col>
           </Form.Group>
        
@@ -139,22 +143,38 @@ export default function GameForm(props) {
       </Modal.Body>
 
       <Modal.Footer>
+        {!isValid && <div style={{color: "red"}}>Please complete your form!</div>}
         <Button variant="secondary" onClick={returnToMenu}>
           Cancel
         </Button>
         {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && !gameOptions.opponent &&
-          <Button variant="primary" onClick={() => enqueue(gameOptions)}>Queue Up</Button> 
+          <Button 
+            variant="primary" 
+            onClick={() => {
+              if(gameOptions.timeLimit === undefined) {
+                setIsValid(false);
+              } else {
+                setIsValid(true);
+                enqueue(gameOptions);
+              }
+            }}
+          >Queue Up</Button> 
         }
         {(gameOptions.type === RANKED || gameOptions.type === CASUAL) && gameOptions.opponent &&
           <Button variant="primary" onClick={() => inviteToGame(gameOptions)}>Send Invite</Button> 
         }
         {(gameOptions.type === AI) && 
           <Button variant="primary" onClick={() => {
-            gameStartRecord(gameOptions).then(res => {
-            console.log(gameOptions);
-            const matchId = res.data.id;
-            loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
-          });
+            if(gameOptions.timeLimit === undefined || gameOptions.difficulty === null){
+              setIsValid(false);
+            } else {
+              setIsValid(true);
+              gameStartRecord(gameOptions).then(res => {
+                console.log(gameOptions);
+                const matchId = res.data.id;
+                loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
+              });  
+            }
           }}>Start Game</Button> 
         }
       </Modal.Footer>
