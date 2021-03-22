@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "./styles/HomeMenu.scss";
 import GameOptionsModal from "./GameOptionModal";
+import aiIcon from './../../../src/images/vs_ai.png';
+import casualIcon from './../../../src/images/casual.png';
+import rankedIcon from './../../../src/images/ranked.png';
 
 const RANKED = "RANKED";
 const CASUAL = "CASUAL";
@@ -65,13 +68,43 @@ export default function HomeMenu(props) {
     <div className="home-container">
       <div className="menu">
         <button id="ranked" className="lined thin play-btn" onClick={() => {isLoggedIn(RANKED)}}>
+          <img
+            className="btn-icon"
+            alt="icon"
+            src={rankedIcon}  
+          />
           RANKED
+          <img
+            className="btn-icon"
+            alt="icon"
+            src={rankedIcon}  
+          />
         </button>
         <button id= "casual" className="lined thin play-btn" onClick={() => {isLoggedIn(CASUAL)}}>
+          <img
+            className="btn-icon"
+            alt="icon"
+            src={casualIcon}  
+          />
           CASUAL
+          <img
+            className="btn-icon"
+            alt="icon"
+            src={casualIcon}  
+          />
         </button>
         <button id = "ai" className="lined thin play-btn" onClick={() => {isLoggedIn(AI)}}>
+          <img
+            className="btn-icon"
+            alt="icon"
+            src={aiIcon}  
+          />
           vs AI
+          <img
+            className="btn-icon"
+            alt="icon"
+            src={aiIcon}  
+          />
         </button>
       </div>
   

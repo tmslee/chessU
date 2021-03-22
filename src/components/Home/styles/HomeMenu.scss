@@ -17,9 +17,15 @@
     /* bring your own prefixes */
     // transform: translate(-50%, -50%);
     #ranked, #casual, #ai {
+      display:flex;
+      justify-content: space-around;
+      align-items: center;
       width: 100%;
       margin: 0 0 .75em 0;
       font-size: 175%;
+      .btn-icon{
+        height:75px;
+      }
     }
   }
 }
