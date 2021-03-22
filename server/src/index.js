@@ -31,9 +31,6 @@ const GET_OPPONENT_STATUS = "GET_OPPONENT_STATUS"
 const OPPONENT_STATUS = "OPPONENT_STATUS"
 const GAME_INVITE = "GAME_INVITE";
 
-const confirmation = [];
-
-// const rankedQ = [];
 const rankedQ10 = [];
 const rankedQ30 = [];
 const casualQ = [];
