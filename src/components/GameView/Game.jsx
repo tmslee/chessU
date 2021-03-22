@@ -16,7 +16,6 @@ import { eloUpdate } from "../../hooks/eloUpdate";
 function Game(props) {
   const { matchId } = props.match.params;
   const matchType = props.gameInfo.matchType;
-  console.log(props);
 
   const eloRanked10 = props.currentUser.ranked10;
   const eloRanked30 = props.currentUser.ranked30;
@@ -55,7 +54,6 @@ function Game(props) {
     }
     chessboardOrientation = 'black';
   }
-  console.log('white', usernameWhite, 'black', usernameBlack);
 
   let duration;
   if(props.gameInfo.timeLimit === null){
@@ -91,10 +89,6 @@ function Game(props) {
     game.current = new Chess();
   }
 
-  console.log('re-render');
-  console.log(currentMove);
-  console.log('before', state.isReceived);
-
   // when the game is over, nav can be clicked
   if(state.isGameOver){
     setInGame(false);
@@ -119,10 +113,8 @@ function Game(props) {
     }
     record["matchID"] = props.gameInfo.matchId;
     record["action"] = `from: ${move.from}, to: ${move.to}`;
-    console.log('send', record);
     try {
       const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
-      console.log('send successfully');
       return recordMatch;
     } catch (err) {
       console.log(err, "error")
@@ -142,10 +134,8 @@ function Game(props) {
     }
     matchResult["timeLimit"] = state.duration;
     const idMatch = props.gameInfo.matchId;
-    console.log(matchResult);
     try{
       const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
-      console.log('record')
       return result;
     } catch (err) {
       console.log(err, "error")
@@ -155,8 +145,6 @@ function Game(props) {
   // if the move is not made by current user
   // reset the chessboard based on received move made by other user
   if(!currentMove.movedByCurrentUser && currentMove.length !== 0 && state.isReceived){
-    console.log('not my move', !currentMove.movedByCurrentUser);
-    
     const from = currentMove.body.from;
     const to = currentMove.body.to;
     game.current.move({ from, to });
@@ -193,7 +181,6 @@ function Game(props) {
       }
       movesRecord(moveReceived);
     } else {
-      // resultSend();
       gameover(props.gameInfo.name2)
     }
   }
@@ -203,7 +190,6 @@ function Game(props) {
   // current user makes a move
   const onDrop = ({sourceSquare, targetSquare}) => {
     // return position change when the move is valid
-    console.log(sourceSquare, targetSquare);
     let move = game.current.move({
       from: sourceSquare,
       to: targetSquare
@@ -263,19 +249,16 @@ function Game(props) {
 
   // when you concede
   const declareConcede = function(){
-    console.log('You concede!');
     gameover(props.gameInfo.name2);
     sendConcedeMessage(true);
   }
 
-  console.log(props.showResign, !state.isResign, 'nav bar resign')
   if(props.showResign && !state.isResign){
     setResign(true);
     setShowResign(false);
   }
   
   // when your opponent concedes
-  console.log(concede);
   if(!concede.concededByCurrentUser && concede.length !== 0 && !state.isReceivedResign){
     gameover(props.gameInfo.name1);
     setisReceivedResign(true);

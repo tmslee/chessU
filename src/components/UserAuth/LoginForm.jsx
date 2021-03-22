@@ -31,7 +31,6 @@ export default function LoginForm( props ) {
     const validLogin = await loginUser(username, password);
     if (validLogin) {
       setActive({...active, login: false  });
-      console.log('logging in');
     } else {
       setError(true);
     }

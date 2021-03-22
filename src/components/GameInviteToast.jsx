@@ -21,8 +21,6 @@ export default function GameInviteToast(props) {
   socketRef.current = io(SOCKET_SERVER_URL);
 
   const loadGame = function (data, currentUser, opponent, timeLimit) {
-    console.log(currentUser.username);
-    console.log(opponent.username);
     setGameInfo({
       matchId : data.matchId,
       colors : data.colors, // { white : id, black : id }
@@ -58,7 +56,6 @@ export default function GameInviteToast(props) {
       }
 
       if(acceptStatus === 1 || acceptStatus === -1) {
-        console.log(socketRef.current.id);
         //send match accept msg to server
         socketRef.current.emit(MATCH_CONFIRM, {
           currentUser, 
@@ -74,7 +71,6 @@ export default function GameInviteToast(props) {
           const {matchId} = data;
           if (!matchId) console.log("match declined");
           else {
-            console.log(incomingGameInfo);
             loadGame(
               data, 
               incomingGameInfo.opponent,

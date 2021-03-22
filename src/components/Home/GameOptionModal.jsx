@@ -60,8 +60,6 @@ export default function GameOptionsModal(props) {
 
   const history = useHistory();
   const loadGame = async function (data, currentUser, opponent, matchId, timeLimit) {
-    // leaveQueue(gameOptions.currentUserID);
-    console.log("ai loading game...");
     if (opponent.username === 'AI'){
       setGameInfo({
         type: data.type,
@@ -78,17 +76,10 @@ export default function GameOptionsModal(props) {
     } 
 
     dequeue();
-    console.log("loading game...");
-    console.log({
-      matchId : data.matchId,
-      colors : data.colors,
-      name1 : currentUser.username,
-      name2 : opponent.username 
-    });
 
     setGameInfo({
       matchId : data.matchId,
-      colors : data.colors, // { white : id, black : id }
+      colors : data.colors,
       name1 : currentUser.username,
       name2 : opponent.username,
       timeLimit,
@@ -102,17 +93,13 @@ export default function GameOptionsModal(props) {
   }
 
   const returnToGameOptions = function () {
-    // leaveQueue(gameOptions.currentUserID);
     dequeue();
-    console.log("returning to game settings...");
-    console.log("setting opponent to null");
     setGameOptions({...gameOptions, opponent: null, timeLimit: undefined, difficulty: null});
     goToView(SELECT_OPTIONS);
     setInvitedStatus(false);
   }
 
   const returnToMenu = function () {
-    console.log("returning to home page...");
     closeModal();
     setInvitedStatus(false);
   }
@@ -128,35 +115,10 @@ export default function GameOptionsModal(props) {
   const inviteToGame = function (gameOptions) {
     if (gameOptions.opponent && isFriend(gameOptions.opponent.id, friends)) {
       goToView(INVITE_OPPONENT);
-    } else {
-      //display error
-      console.log("this is not your friend");
-    } 
-    
-    /*
-    1. check if opponent is friend.
-    2. check if they are not in queue and not in match accept state
-      - send a message to server asking for this guy's status
-      - if theyre in queue or match accept state
-        - server sends back message saying theyre busy
-      - else 
-        - server sets up matches, matchConfirmStatus, userSockets
-        - server sends inv message to opponent => which will set state and elicit changes to opponent client
-        - @ client side of both opponents, show UI that detects on click which sends confirmation status back 
-          to server
-        - proceed with match making accordingly
-    */
+    }
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
-
- // useEffect(() => {
-   //   goToView(SELECT_OPTIONS);
-  //   //also need to get off the queue.
-  // },[show])
-
-
-  // console.log(gameOptions, "HERE")
 
   return (
     <Modal show={showState} onHide={closeModal} backdrop="static" keyboard={false}>

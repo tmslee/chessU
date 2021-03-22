@@ -32,7 +32,6 @@ export default function GameForm(props) {
     axios.get(`http://localhost:8001/api/users/username/${opponentName}`)
     .then(res => {
       const opponent = res.data;
-      console.log(res.data);
       if(opponent) {
         newGameOptions = {...newGameOptions, opponent};
         setGameOptions(newGameOptions);
@@ -170,7 +169,6 @@ export default function GameForm(props) {
             } else {
               setIsValid(true);
               gameStartRecord(gameOptions).then(res => {
-                console.log(gameOptions);
                 const matchId = res.data.id;
                 loadGame(gameOptions, {username: gameOptions.currentUser.username}, {username: 'AI'}, matchId);
               });  

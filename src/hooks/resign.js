@@ -18,7 +18,6 @@ const useResign = (roomId) => {
         ...message,
         concededByCurrentUser: message.senderId === socketRef.current.id,
       };
-      console.log(incomingConcedeMessage, concede);
       setConcede(incomingConcedeMessage);
     });
 
@@ -34,7 +33,6 @@ const useResign = (roomId) => {
 
   }, [roomId]);
 
-  console.log('re-render in resign')
 
   const sendConcedeMessage = (isResign) => {
     socketRef.current.emit(RESIGN, {

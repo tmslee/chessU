@@ -26,7 +26,6 @@ export default function useUserList(currentUser) {
   const getRank = function (user, sortedUsers) {
     const numUsers = sortedUsers.length;
     const idx = getRankIdx(user, sortedUsers);
-    console.log(idx);
     const increment = Math.floor(numUsers/5);
     const rem = numUsers-increment*5;
     
@@ -85,7 +84,6 @@ export default function useUserList(currentUser) {
     if(currentUser){
       axios.get(`http://localhost:8001/api/friendRequestsByMe/${currentUser.id}`)
       .then( res => {
-        console.log(res.data);
         setMyRequests(res.data)
       });
     }
@@ -93,14 +91,12 @@ export default function useUserList(currentUser) {
   const getRanked30 = function () {
     axios.get(`http://localhost:8001/api/leaderboards/ranked30`)
     .then( res => {
-      console.log("leaderboad users: " , res.data)
       setRanked30(res.data)
     });
   };
   const getRanked10 = function () {
     axios.get(`http://localhost:8001/api/leaderboards/ranked10`)
     .then( res => {
-      console.log("leaderboad users: " , res.data)
       setRanked10(res.data)
     });
   };
