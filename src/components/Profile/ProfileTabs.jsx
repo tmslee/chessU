@@ -1,6 +1,6 @@
 import "./styles/ProfileTabs.scss";
 
-export default function ChangeAvatar (props) {
+export default function ProfileTabs (props) {
 
   const { setTabs } = props;
   

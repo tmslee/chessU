@@ -68,7 +68,7 @@ export default function AiGame(props){
     record["matchID"] = props.match.params.id;
     record["action"] = `from: ${move.from}, to: ${move.to}`;
     try {
-      const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
+      const recordMatch = await axios.post('/api/actions', record)
       return recordMatch;
     } catch (err) {
       console.log(err, "error")
@@ -89,7 +89,7 @@ export default function AiGame(props){
     }
     const idMatch = props.match.params.id;
     try{
-      const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
+      const result = await axios.put(`/api/matches/${idMatch}`, matchResult)
       return result;
     } catch (err) {
       console.log(err, "error")

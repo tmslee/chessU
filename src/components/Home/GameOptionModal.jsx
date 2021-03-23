@@ -51,7 +51,7 @@ export default function GameOptionsModal(props) {
 
   useEffect(() => {
     if(gameOptions.currentUser){
-      axios.get(`http://localhost:8001/api/friends/${gameOptions.currentUser.id}`)
+      axios.get(`/api/friends/${gameOptions.currentUser.id}`)
       .then( res => {
         setFriends(res.data)
       });
