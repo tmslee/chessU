@@ -32,5 +32,23 @@ elo rating method: https://metinmediamath.wordpress.com/2013/11/27/how-to-calcul
 Game Icon (designed by Thomas Lee)
 !["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/chessU.png)
 
+home page
+!["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/home-page.png)
+
+chess game
+!["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/chess-game.png)
+
+AI game
+!["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/AI-game.png)
+
+profile
+!["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/profile.png)
+
+leader-board
+!["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/leader-board.png)
+
+community
+!["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/community.png)
+
 ## Sreenshots
 
