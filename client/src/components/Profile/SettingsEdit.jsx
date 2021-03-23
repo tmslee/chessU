@@ -16,7 +16,7 @@ export default function SettingsEdit(props) {
   };
 
   const updateUser = function(newUserInfo, id) {
-    return axios.put(`http://localhost:8001/api/users/${id}`, newUserInfo)
+    return axios.put(`/api/users/${id}`, newUserInfo)
     .then( res => {
       if(!res.data.id) {
         return false;

@@ -66,7 +66,7 @@ export default function useUserList(currentUser) {
 
   const getFriends = function () {
     if(currentUser){
-      axios.get(`http://localhost:8001/api/friends/${currentUser.id}`)
+      axios.get(`/api/friends/${currentUser.id}`)
       .then( res => {
         setFriends(res.data)
       });
@@ -74,7 +74,7 @@ export default function useUserList(currentUser) {
   };
   const getFriendRequests = function (){
     if(currentUser){
-      axios.get(`http://localhost:8001/api/friendRequests/${currentUser.id}`)
+      axios.get(`/api/friendRequests/${currentUser.id}`)
       .then( res => {
         setRequests(res.data)
       });
@@ -82,45 +82,45 @@ export default function useUserList(currentUser) {
   };
   const getFriendRequestsByMe = function (){
     if(currentUser){
-      axios.get(`http://localhost:8001/api/friendRequestsByMe/${currentUser.id}`)
+      axios.get(`/api/friendRequestsByMe/${currentUser.id}`)
       .then( res => {
         setMyRequests(res.data)
       });
     }
   };
   const getRanked30 = function () {
-    axios.get(`http://localhost:8001/api/leaderboards/ranked30`)
+    axios.get(`/api/leaderboards/ranked30`)
     .then( res => {
       setRanked30(res.data)
     });
   };
   const getRanked10 = function () {
-    axios.get(`http://localhost:8001/api/leaderboards/ranked10`)
+    axios.get(`/api/leaderboards/ranked10`)
     .then( res => {
       setRanked10(res.data)
     });
   };
 
   const removeFriend = async function (currentUserID, userID) {
-    await axios.delete(`http://localhost:8001/api/friends/${currentUserID}/${userID}`)
+    await axios.delete(`/api/friends/${currentUserID}/${userID}`)
     getFriends();
     getFriendRequests();
     getFriendRequestsByMe();
   }
   const sendFriendRequest = async function (currentUserID, userID) {
-    await axios.post(`http://localhost:8001/api/friends/${currentUserID}/${userID}`);
+    await axios.post(`/api/friends/${currentUserID}/${userID}`);
     getFriends();
     getFriendRequests();
     getFriendRequestsByMe();
   }
   const acceptFriendRequest = async function (currentUserID, userID) {
-    await axios.post(`http://localhost:8001/api/friendRequests/${currentUserID}/${userID}`);
+    await axios.post(`/api/friendRequests/${currentUserID}/${userID}`);
     getFriends();
     getFriendRequests();
     getFriendRequestsByMe();
   }
   const declineFriendRequest = async function (currentUserID, userID) {
-    await axios.delete(`http://localhost:8001/api/friendRequests/${currentUserID}/${userID}`);
+    await axios.delete(`/api/friendRequests/${currentUserID}/${userID}`);
     getFriends();
     getFriendRequests();
     getFriendRequestsByMe();
