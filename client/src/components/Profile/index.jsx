@@ -46,8 +46,11 @@ export default function Profile (props) {
           setCurrentUser={setCurrentUser}
         />}
         <UserInfo
+          token={token}
           currentUser={currentUser}
           setSettings={setSettings}
+          getCurrentUser={getCurrentUser}
+          setCurrentUser={setCurrentUser}
         />
         <ProfileTabs 
           setTabs={setTabs}

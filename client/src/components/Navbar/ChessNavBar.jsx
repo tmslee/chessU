@@ -51,8 +51,8 @@ export default function ChessNavBar(props) {
         </Nav>
         {username && onProfile &&
           <div className="user-login">
-            <p className="user-login-name">Logged in as: {username}</p>
-            <Button
+            <h6 className="user-login-name">Logged in as: {username}</h6>
+            <Button 
               onClick={ () => {
                 handleClick("/")
                 logout()
@@ -63,7 +63,7 @@ export default function ChessNavBar(props) {
         }
         {username && !onProfile &&
           <div className="user-login">
-            <h6>Logged in as: {username}</h6>
+            <h6 className="user-login-name">Logged in as: {username}</h6>
             <Button 
               variant="outline-success"
               onClick={

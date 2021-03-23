@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./styles/MatchHistoryItem.scss";
 import bronze from './../../../src/images/bronze.png'
 import silver from './../../../src/images/silver.png'
@@ -14,8 +14,35 @@ export default function MatchHistoryItem(props) {
     currentUser
   } = props;
 
+  const [state, setState] = useState({
+    winner: match.winner,
+    loser: match.loser,
+    backColor: {},
+    winnerImg : match.winner_img,
+    loserImg : match.loser_img,
+    username: currentUser.username
+  });
+
   const gameType = match.type;
-  const backColor = currentUser.username === match.winner? {backgroundColor: "limegreen" } : {backgroundColor: "indianred"};
+
+  useEffect(() => {
+    state.username === state.winner ?
+     setState( prev => 
+      ({...prev, 
+      backColor: {backgroundColor: "limegreen"},
+      winner: currentUser.username,
+      winnerImg: currentUser.profile_img,
+      username : currentUser.username
+    })) : 
+     setState( prev => 
+      ({...prev, 
+      backColor: {backgroundColor: "indianred"},
+      loser: currentUser.username,
+      loserImg: currentUser.profile_img,
+      username : currentUser.username
+    }))
+  }, [currentUser])
+
   let winnerElo;
   let loserElo;
 
@@ -59,31 +86,31 @@ export default function MatchHistoryItem(props) {
   }
 
   return (
-  <div className="match" style={backColor} >
+  <div className="match" style={state.backColor} >
     <span>{gameType}</span>
     <img 
       alt="profile_img"
       className="profile-img"
-      src={match.winner_img} 
+      src={state.winnerImg} 
     />
     <img 
       className="rank-img"
       alt='rank icon' 
       src={getRankImg(getRanking(winnerElo))} 
     />
-    <span> {match.winner} </span>
+    <span> {state.winner} </span>
     <span> {winnerElo}</span>
     <img 
       alt="profile_img"
       className="profile-img"
-      src={match.loser_img} 
+      src={state.loserImg} 
     />
     <img
       className="rank-img"
       alt='rank icon' 
       src={getRankImg(getRanking(loserElo))} 
     />
-    <span> {match.loser} </span>
+    <span> {state.loser} </span>
     <span> {loserElo}</span>
   </div>
   )

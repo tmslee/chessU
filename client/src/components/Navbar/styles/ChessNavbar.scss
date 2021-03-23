@@ -1,21 +1,18 @@
 .navbar{
-  height: 15vh;
-  font-size: 150%;
-
+  height: 100%;
+  font-size: 2.5vh;
   .logo {
     display:flex;
     flex-direction: row;
     align-items: center;
-    height:100%;
 
     .logo-img{
-      margin: 0 0 0 -.5em;
-      height:13.5vh;
+      height:12vh;
     }
     .logo-name{
-      font-size: 5vh;
-      margin: 0 1em 0 -.25em;
-      cursor: pointer;
+      margin: 0 .75em 0 -.25em;
+      font-size: 4.5vh;
+      cursors: pointer;
     }
   }
 
@@ -23,9 +20,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 2.5vh;
+    margin: .5em 0;
     .user-login-name{
-      margin: 0 0 0 0;
+      margin : 0 0 0 0;
     }
   }
 }
