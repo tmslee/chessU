@@ -17,7 +17,7 @@ export default function LoginForm( props ) {
 
   const loginUser = async function(username, password) {
     try {
-      const user = await axios.post('http://localhost:8001/api/login', {username, password});
+      const user = await axios.post('/api/login', {username, password});
       await setToken(user.data.token);
       return user;
     } catch (err) {

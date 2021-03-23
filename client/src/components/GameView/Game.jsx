@@ -114,7 +114,7 @@ function Game(props) {
     record["matchID"] = props.gameInfo.matchId;
     record["action"] = `from: ${move.from}, to: ${move.to}`;
     try {
-      const recordMatch = await axios.post('http://localhost:8001/api/actions', record)
+      const recordMatch = await axios.post('/api/actions', record)
       return recordMatch;
     } catch (err) {
       console.log(err, "error")
@@ -135,7 +135,7 @@ function Game(props) {
     matchResult["timeLimit"] = state.duration;
     const idMatch = props.gameInfo.matchId;
     try{
-      const result = await axios.put(`http://localhost:8001/api/matches/${idMatch}`, matchResult)
+      const result = await axios.put(`/api/matches/${idMatch}`, matchResult)
       return result;
     } catch (err) {
       console.log(err, "error")
