@@ -33,8 +33,7 @@ export default function ChessNavBar(props) {
         <img
           alt="logo"
           src={logo}
-          height="75"
-          className="d-inline-block align-top"
+          className="logo-img"
         />
       </Navbar.Brand>
       <h3 className="logo-name">ChessU</h3>
@@ -43,17 +42,17 @@ export default function ChessNavBar(props) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-        <Nav.Link onClick={() => handleClick("/")}>Play</Nav.Link>
-        {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
-        {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
-        <Nav.Link onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
-        {username && <Nav.Link onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
-        {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
+        <Nav.Link className="nav-btn" onClick={() => handleClick("/")}>Play</Nav.Link>
+        {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
+        {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
+        <Nav.Link className="nav-btn" onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
+        {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
+        {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
-          <div>
-            <p>Logged in as: {username}</p>
-            <Button className="user-login"
+          <div className="user-login">
+            <h6 className="user-login-name">Logged in as: {username}</h6>
+            <Button 
               onClick={ () => {
                 handleClick("/")
                 logout()
@@ -63,9 +62,9 @@ export default function ChessNavBar(props) {
           </div>
         }
         {username && !onProfile &&
-          <div>
-            <h6>Logged in as: {username}</h6>
-            <Button className="user-login"
+          <div className="user-login">
+            <h6 className="user-login-name">Logged in as: {username}</h6>
+            <Button 
               variant="outline-success"
               onClick={
                 () => {
