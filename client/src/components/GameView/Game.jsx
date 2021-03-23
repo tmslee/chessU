@@ -247,7 +247,7 @@ function Game(props) {
     setState(prev => ({...prev, isReceivedResign: bool}))
   }
 
-  // when you concede
+  // when you concede and game is over, send concede msg
   const declareConcede = function(){
     if(!state.isGameOver){
       gameover(props.gameInfo.name2);
