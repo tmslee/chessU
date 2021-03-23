@@ -29,7 +29,7 @@ export default function GameForm(props) {
   };
 
   const setOpponent = (opponentName) => {
-    axios.get(`http://localhost:8001/api/users/username/${opponentName}`)
+    axios.get(`/api/users/username/${opponentName}`)
     .then(res => {
       const opponent = res.data;
       if(opponent) {
@@ -55,7 +55,7 @@ export default function GameForm(props) {
       user2ID: null
     };
     try{
-      const createMatchInDB = await axios.post("http://localhost:8001/api/matches", gameinfo);
+      const createMatchInDB = await axios.post("/api/matches", gameinfo);
       return createMatchInDB;
     } catch(err) {
       console.log(err, "error");

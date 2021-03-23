@@ -20,7 +20,7 @@ export default function LeaderBoards(props) {
   } = useUserState(currentUser);
 
   useEffect( () => {
-    axios.get(`http://localhost:8001/api/leaderboards/${gameType}`)
+    axios.get(`/api/leaderboards/${gameType}`)
     .then( res => {
       setUsers(res.data)
     });

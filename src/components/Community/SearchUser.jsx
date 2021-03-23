@@ -59,7 +59,7 @@ export default function SearchUser(props) {
   })
 
   const search = function (searchTerm) {
-    axios.get(`http://localhost:8001/api/user_search/${currentUser.id}/${searchTerm}`).then(searchRes => 
+    axios.get(`/api/user_search/${currentUser.id}/${searchTerm}`).then(searchRes => 
     {
       setSearchResult(searchRes.data);
     })

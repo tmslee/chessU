@@ -51,7 +51,7 @@ export default function Application() {
       'Content-Type': 'application/json',
       'Authorization': token
     }
-    return axios.get('http://localhost:8001/api/me', {
+    return axios.get('/api/me', {
       headers: headers
     }).then( res => {
       return res.data;
