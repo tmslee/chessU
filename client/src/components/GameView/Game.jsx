@@ -249,17 +249,19 @@ function Game(props) {
 
   // when you concede
   const declareConcede = function(){
-    gameover(props.gameInfo.name2);
-    sendConcedeMessage(true);
+    if(!state.isGameOver){
+      gameover(props.gameInfo.name2);
+      sendConcedeMessage(true);
+    }
   }
 
-  if(props.showResign && !state.isResign){
+  if(props.showResign && !state.isResign && !state.isGameOver){
     setResign(true);
     setShowResign(false);
   }
   
   // when your opponent concedes
-  if(!concede.concededByCurrentUser && concede.length !== 0 && !state.isReceivedResign){
+  if(!concede.concededByCurrentUser && concede.length !== 0 && !state.isReceivedResign && !state.isGameOver){
     gameover(props.gameInfo.name1);
     setisReceivedResign(true);
     resultRecord();
