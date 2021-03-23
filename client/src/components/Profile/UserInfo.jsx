@@ -12,20 +12,13 @@ export default function UserInfo (props) {
 
   const {
     currentUser, 
-    setSettings,
-    ranked10,
-    ranked30,
-    getOverallRank
+    setSettings
   } = props;
   const [active, setActive] = useState(false);
   const [avatar, setAvatar] = useState({
     current: currentUser.profile_img,
     new: ''
   });
-
-  useEffect( () => {
-
-  }, currentUser)
 
   const getRankImg = function (rank) {
     switch(rank) {
@@ -44,6 +37,16 @@ export default function UserInfo (props) {
       default:
         return bronze;
     }
+  }
+
+  const getRanking = function (elo30, elo10) {
+    const elo = elo30 <= elo10 ? elo10 : elo30;
+    if(0 <= elo && elo <= 1149) return 'bronze';
+    else if (1150 <= elo && elo <= 1499) return 'silver';
+    else if (1500 <= elo && elo <= 1849) return 'gold';
+    else if (1850 <= elo && elo <= 2199) return 'plat';
+    else if (2200 <= elo && elo <= 2500) return 'diamond';
+    else return 'master';
   }
 
   return (
@@ -65,7 +68,7 @@ export default function UserInfo (props) {
         <img
           className="rank-img"
           alt="rank icon"
-          src={getRankImg(getOverallRank(ranked30, ranked10, currentUser))}
+          src={getRankImg(getRanking(currentUser.ranked30, currentUser.ranked10))}
         />
         <span>{currentUser.username}</span>
         </div>

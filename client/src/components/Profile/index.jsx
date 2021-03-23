@@ -6,7 +6,6 @@ import ProfileTabs from "./ProfileTabs";
 import axios from "axios";
 import MatchHistory from './MatchHistory';
 import './styles/index.scss'
-import useGetRank from '../../hooks/useGetRank';
 
 export default function Profile (props) {
   const {token, currentUser, setActive, getCurrentUser, setCurrentUser} = props
@@ -16,13 +15,6 @@ export default function Profile (props) {
     stats: true,
     history: false
   });
-  
-  const{
-    ranked10,
-    ranked30,
-    getOverallRank,
-    getOverallRankByUserName
-  } = useGetRank(currentUser);
 
   useEffect(() => {
     if (!currentUser){
@@ -56,9 +48,6 @@ export default function Profile (props) {
         <UserInfo
           currentUser={currentUser}
           setSettings={setSettings}
-          ranked10={ranked10}
-          ranked30={ranked30}
-          getOverallRank={getOverallRank}
         />
         <ProfileTabs 
           setTabs={setTabs}
@@ -73,9 +62,6 @@ export default function Profile (props) {
         {tabs.history &&
         <MatchHistory
           currentUser={currentUser}
-          ranked10={ranked10}
-          ranked30={ranked30}
-          getOverallRankByUserName={getOverallRankByUserName}
         />
         }
       </>

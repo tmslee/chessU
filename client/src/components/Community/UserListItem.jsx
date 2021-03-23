@@ -19,8 +19,7 @@ export default function UserListItem(props) {
     sendFriendRequest,
     acceptFriendRequest,
     declineFriendRequest,
-    gameType,
-    rank
+    gameType
   } = props;
 
   const currentUserID = currentUser? currentUser.id : null;
@@ -43,7 +42,21 @@ export default function UserListItem(props) {
         return bronze;
     }
   }
-  
+
+  const getRanking = function (elo) {
+    if(0 <= elo && elo <= 1149) return 'bronze';
+    else if (1150 <= elo && elo <= 1499) return 'silver';
+    else if (1500 <= elo && elo <= 1849) return 'gold';
+    else if (1850 <= elo && elo <= 2199) return 'plat';
+    else if (2200 <= elo && elo <= 2500) return 'diamond';
+    else return 'master';
+  }
+
+  let userElo;
+  if (!gameType) userElo = user.ranked10 <= user.ranked30 ? user.ranked30 : user.ranked10; 
+  else if (gameType === "ranked30") userElo = user.ranked30;
+  else userElo = user.ranked10;
+
   return (
     <Container className="user-item-container">
       <Row className="user-item-row">
@@ -61,7 +74,7 @@ export default function UserListItem(props) {
           <img
               height={50}
               className="align-self-start mr-3"
-              src={getRankImg(rank)}
+              src={getRankImg(getRanking(userElo))}
               alt="rank"
             />
         </Col>
