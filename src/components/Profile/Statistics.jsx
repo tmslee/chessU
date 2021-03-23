@@ -9,9 +9,9 @@ export default function Statistics(props) {
     losses,
     matches,
     actions,
-    whiteWins,
-    blackWins,
-    avgMatch
+    // whiteWins,
+    // blackWins,
+    // avgMatch
   } = statsInfo.data;
 
   return (
@@ -45,15 +45,6 @@ export default function Statistics(props) {
           </tr>
           </tbody>
         </table>
-        {/* <a>W/L:  {wins}/{losses} </a>
-        <a>Ranked 30 Elo: {currentUser.ranked30} </a>
-        <a>Ranked 10 Elo: {currentUser.ranked10} </a>
-        <a>Casual Elo: {currentUser.casual} </a>
-        <a>Total Matches Played: {matches}</a>
-        <a>Avg Moves Per Match: {actions/matches} </a>  */}
-        {/* <a>Percent Wins On White: {whiteWins/matches * 100} </a>  */}
-        {/* <a>Percent Wins On Black: {blackWins/matches * 100} </a>  */}
-        {/* <a>Avg Match Length: {avgMatch.minutes}.{avgMatch.seconds} </a> */}
       </div>
     </div>
   )
