@@ -29,7 +29,7 @@ elo rating method: https://metinmediamath.wordpress.com/2013/11/27/how-to-calcul
 
 ## Icon
 
-Game Icon (design by Thomas Lee)
+Game Icon (designed by Thomas Lee)
 !["icon"](https://github.com/tmslee/chessU/blob/feature/readme/server/screenshots/chessU.png)
 
 ## Sreenshots
