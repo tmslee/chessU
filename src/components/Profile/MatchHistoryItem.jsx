@@ -11,10 +11,7 @@ export default function MatchHistoryItem(props) {
 
   const { 
     match, 
-    currentUser,
-    ranked10,
-    ranked30,
-    getOverallRankByUserName
+    currentUser
   } = props;
 
   const gameType = match.type;
@@ -52,6 +49,15 @@ export default function MatchHistoryItem(props) {
     }
   }
 
+  const getRanking = function (elo) {
+    if(0 <= elo && elo <= 1149) return 'bronze';
+    else if (1150 <= elo && elo <= 1499) return 'silver';
+    else if (1500 <= elo && elo <= 1849) return 'gold';
+    else if (1850 <= elo && elo <= 2199) return 'plat';
+    else if (2200 <= elo && elo <= 2500) return 'diamond';
+    else return 'master';
+  }
+
   return (
   <div className="match" style={backColor} >
     <span>{gameType}</span>
@@ -63,7 +69,7 @@ export default function MatchHistoryItem(props) {
     <img 
       className="rank-img"
       alt='rank icon' 
-      src={getRankImg(getOverallRankByUserName(ranked30, ranked10, match.winner))} 
+      src={getRankImg(getRanking(winnerElo))} 
     />
     <span> {match.winner} </span>
     <span> {winnerElo}</span>
@@ -75,7 +81,7 @@ export default function MatchHistoryItem(props) {
     <img
       className="rank-img"
       alt='rank icon' 
-      src={getRankImg(getOverallRankByUserName(ranked30, ranked10, match.loser))} 
+      src={getRankImg(getRanking(loserElo))} 
     />
     <span> {match.loser} </span>
     <span> {loserElo}</span>

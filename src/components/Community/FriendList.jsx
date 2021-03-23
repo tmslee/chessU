@@ -10,9 +10,6 @@ export default function FriendList(props) {
     sendFriendRequest,
     acceptFriendRequest,
     declineFriendRequest,
-    ranked10,
-    ranked30,
-    getOverallRank
   } = props;
   
   const parsedFriendList = friends.map(friend => {
@@ -30,7 +27,6 @@ export default function FriendList(props) {
           sendFriendRequest={sendFriendRequest}
           acceptFriendRequest={acceptFriendRequest}
           declineFriendRequest={declineFriendRequest}
-          rank={getOverallRank(ranked30, ranked10, friend)}
         />
       </ListGroup.Item>
     );

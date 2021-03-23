@@ -11,10 +11,7 @@ const getHistory = (id) => {
 export default function MatchHistory(props) {
 
   const { 
-    currentUser,
-    ranked10,
-    ranked30,
-    getOverallRankByUserName
+    currentUser
   } = props;
 
   const [history, setHistory] = useState();
@@ -32,9 +29,6 @@ export default function MatchHistory(props) {
         <MatchHistoryItem
         match={match}
         currentUser={currentUser}
-        ranked10={ranked10}
-        ranked30={ranked30}
-        getOverallRankByUserName={getOverallRankByUserName}
         />
       );
     });
