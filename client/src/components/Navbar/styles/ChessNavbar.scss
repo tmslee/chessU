@@ -12,8 +12,11 @@
     .logo-name{
       margin: 0 .75em 0 -.25em;
       font-size: 4.5vh;
-      cursors: pointer;
     }
+  }
+
+  .nav-btn{
+    margin: 0 .5vw;
   }
 
   .user-login{
@@ -23,6 +26,7 @@
     margin: .5em 0;
     .user-login-name{
       margin : 0 0 0 0;
+    font-size: 2vh;
     }
   }
 }
