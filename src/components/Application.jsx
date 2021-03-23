@@ -12,15 +12,13 @@ import useToken from "../hooks/useToken";
 
 import AiGame from "./AiGame/AiGame";
 import axios from 'axios';
+
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GameInviteToast from "./GameInviteToast";
-// import ReconnectToast from "./ReconnectToast";
 
 import './Application.scss'
 
-// const SOCKET_SERVER_URL = "http://localhost:8001";
-// const LOGIN = "LOGIN";
 import "bootswatch/dist/sketchy/bootstrap.min.css";
 
 export default function Application() {
@@ -37,9 +35,6 @@ export default function Application() {
   const [inGame, setInGame] = useState(false);
   const [showResign, setShowResign] = useState(false);
 
-
-
-  console.log('re-render application')
   useEffect(()=> {
     if(token){
       getCurrentUser(token).then( res => {
@@ -52,7 +47,6 @@ export default function Application() {
 
 
   const getCurrentUser = function(token) {
-    console.log("getting curent user...");
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': token
