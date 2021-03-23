@@ -11,7 +11,7 @@ export default function ChangeAvatar (props) {
   const [error, setError] = useState();
   
   const updateAvatar = function(newAvatar, id) {
-    axios.put(`http://localhost:8001/api/users/${id}/avatar`, newAvatar)
+    axios.put(`/api/users/${id}/avatar`, newAvatar)
     .then( () => setAvatar({...avatar, current: avatar.new})); 
   }
 
