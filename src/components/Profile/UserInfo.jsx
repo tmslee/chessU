@@ -12,7 +12,10 @@ export default function UserInfo (props) {
 
   const {
     currentUser, 
-    setSettings
+    setSettings,
+    getCurrentUser, 
+    setCurrentUser,
+    token
   } = props;
   const [active, setActive] = useState(false);
   const [avatar, setAvatar] = useState({
@@ -57,6 +60,9 @@ export default function UserInfo (props) {
     currentUser={currentUser}
     setAvatar={setAvatar}
     avatar={avatar}
+    getCurrentUser={getCurrentUser}
+    setCurrentUser={setCurrentUser}
+    token={token}
     />
     }
     <div className="user-box">
