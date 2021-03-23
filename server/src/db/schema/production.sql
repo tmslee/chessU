@@ -1,20 +1,20 @@
-INSERT INTO users (username, email, password, elo) VALUES (
-  'alvin', 'alvin@gmail.com', 'password', 1800
+INSERT INTO users (username, email, profile_img, password, ranked30, ranked10, casual) VALUES (
+  'alvin', 'alvin@gmail.com','https://www.w3schools.com/w3images/avatar2.png', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1800, 1200, 1700
 );
-INSERT INTO users (username, email, password, elo) VALUES (
-  'thomas', 'thomas@gmail.com', 'password', 900
+INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
+  'thomas', 'thomas@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 900, 1200, 1800
 );
-INSERT INTO users (username, email, password, elo) VALUES (
-  'haopeng', 'haopeng@gmail.com', 'password', 1400
+INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
+  'haopeng', 'haopeng@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1400, 1200, 900
 );
-INSERT INTO users (username, email, password, elo) VALUES (
-  'user4', 'user4@gmail.com', 'password', 1500
+INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
+  'user4', 'user4@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1500, 1600, 1700
 );
-INSERT INTO users (username, email, password, elo) VALUES (
-  'user5', 'user5@gmail.com', 'password', 3000
+INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
+  'user5', 'user5@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 3000, 3100, 3200
 );
-INSERT INTO users (username, email, password, elo) VALUES (
-  'user6', 'user6@gmail.com', 'password', 50
+INSERT INTO users (username, email, password, ranked30, ranked10, casual) VALUES (
+  'user6', 'user6@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 50, 20, 15
 );
 
 -- casual/ranked/ai
@@ -121,3 +121,4 @@ INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
 INSERT INTO friends (user1_id, user2_id, created_at) VALUES (
   4, 2, '2001-11-13 12:46:20'
 );
+
