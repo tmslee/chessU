@@ -2,7 +2,7 @@
 
 ## multiplayer chess game platform
 
-TRY TO PLAY IN: https://www.playchessu.com/
+Try to sign up and play in: https://www.playchessu.com/
 
 - chess.js and chessboardjsx npm packages are being used
 - The connection between react client side and express server side is using socket.io.
