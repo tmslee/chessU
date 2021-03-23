@@ -62,9 +62,7 @@ export default function Application() {
     if (!inGame) {
       localStorage.clear();
       setToken(getToken());
-    } else {
-      alert("You must finish the game before you logout!!!")
-    }
+    };
   };
 
   return (
