@@ -21,8 +21,8 @@ export default function ChessNavBar(props) {
       history.push(url);
     } else {
       setShowResign(true);
-      }
-    }
+      };
+    };
   
   const onProfile = window.location.pathname === "/profile";
 
