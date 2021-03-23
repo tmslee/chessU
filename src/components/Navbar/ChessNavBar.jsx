@@ -42,12 +42,12 @@ export default function ChessNavBar(props) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-        <Nav.Link onClick={() => handleClick("/")}>Play</Nav.Link>
-        {username && <Nav.Link onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
-        {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
-        <Nav.Link onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
-        {username && <Nav.Link onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
-        {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
+        <Nav.Link className="nav-btn" onClick={() => handleClick("/")}>Play</Nav.Link>
+        {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
+        {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
+        <Nav.Link className="nav-btn" onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
+        {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
+        {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
           <div className="user-login">
