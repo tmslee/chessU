@@ -6,7 +6,7 @@ import useMatchInvite from "../../hooks/useMatchInvite";
 
 export default function InviteOpponent(props) {
   const {goToView, gameOptions} = props;
-  const {opponentStatus} = useMatchInvite(gameOptions.currentUser, gameOptions, goToView);
+  useMatchInvite(gameOptions.currentUser, gameOptions, goToView);
   
   return (
     <>

@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import logo from './../../../src/images/logo.png'
 import "./styles/ChessNavbar.scss"
-import {Navbar, Nav, Button, Modal} from "react-bootstrap";
+import {Navbar, Nav, Button } from "react-bootstrap";
 import {useHistory} from "react-router-dom";
-import useResign from "../../hooks/resign";
 
 export default function ChessNavBar(props) {
   const {
@@ -15,17 +14,13 @@ export default function ChessNavBar(props) {
     setShowResign
   } = props;
 
-  // let { concede, sendConcedeMessage } = useResign(roomId);
-
   const history = useHistory();
-  // const [show, setShow] = useState(false);
   
   const handleClick = function(url) {
     if (!inGame) {
       history.push(url);
     } else {
       setShowResign(true);
-      // alert("You have to resign before back to lobby!")
       }
     }
   
@@ -33,11 +28,6 @@ export default function ChessNavBar(props) {
 
   return (
     <Navbar bg="light" expand="lg" style={{...{zIndex:1}, ...{background:'#F0F0D8'}}} className="navbar">
-      {/* {show && <Modal>
-        <Modal.Header>
-          <h4>STOP!</h4>
-        </Modal.Header>
-      </Modal> } */}
       <div className="logo" onClick={() => handleClick("/")}>
       <Navbar.Brand >
         <img
@@ -69,7 +59,6 @@ export default function ChessNavBar(props) {
                 logout()
               }}
               variant="outline-success"
-              // onClick={() => logout()}
             >Log out</Button>
           </div>
         }
