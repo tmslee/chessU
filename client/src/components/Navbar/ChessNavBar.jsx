@@ -33,8 +33,7 @@ export default function ChessNavBar(props) {
         <img
           alt="logo"
           src={logo}
-          height="75"
-          className="d-inline-block align-top"
+          className="logo-img"
         />
       </Navbar.Brand>
       <h3 className="logo-name">ChessU</h3>
@@ -51,9 +50,9 @@ export default function ChessNavBar(props) {
         {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
-          <div>
-            <p>Logged in as: {username}</p>
-            <Button className="user-login"
+          <div className="user-login">
+            <p className="user-login-name">Logged in as: {username}</p>
+            <Button
               onClick={ () => {
                 handleClick("/")
                 logout()
@@ -63,9 +62,9 @@ export default function ChessNavBar(props) {
           </div>
         }
         {username && !onProfile &&
-          <div>
+          <div className="user-login">
             <h6>Logged in as: {username}</h6>
-            <Button className="user-login"
+            <Button 
               variant="outline-success"
               onClick={
                 () => {
