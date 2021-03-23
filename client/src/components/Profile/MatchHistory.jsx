@@ -4,7 +4,7 @@ import MatchHistoryItem from "./MatchHistoryItem";
 import "./styles/MatchHistory.scss";
 
 const getHistory = (id) => {
-  return axios.get(`http://localhost:8001/api/users/${id}/matches`)
+  return axios.get(`/api/users/${id}/matches`)
   .then( res => res.data);
 };
 

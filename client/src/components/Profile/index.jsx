@@ -21,7 +21,7 @@ export default function Profile (props) {
       setActive(prev => ({...prev, login: true }));
     } else {
       setActive(prev => ({...prev, login: false }));
-      axios.get(`http://localhost:8001/api/stats/${currentUser.id}`)
+      axios.get(`/api/stats/${currentUser.id}`)
       .then( res => setStatsInfo(res));
     }
   }, [currentUser]);
@@ -46,8 +46,11 @@ export default function Profile (props) {
           setCurrentUser={setCurrentUser}
         />}
         <UserInfo
+          token={token}
           currentUser={currentUser}
           setSettings={setSettings}
+          getCurrentUser={getCurrentUser}
+          setCurrentUser={setCurrentUser}
         />
         <ProfileTabs 
           setTabs={setTabs}
