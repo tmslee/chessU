@@ -21,8 +21,8 @@ export default function ChessNavBar(props) {
       history.push(url);
     } else {
       setShowResign(true);
-      }
-    }
+      };
+    };
   
   const onProfile = window.location.pathname === "/profile";
 
@@ -33,8 +33,7 @@ export default function ChessNavBar(props) {
         <img
           alt="logo"
           src={logo}
-          height="75"
-          className="d-inline-block align-top"
+          className="logo-img"
         />
       </Navbar.Brand>
       <h3 className="logo-name">ChessU</h3>
@@ -51,9 +50,9 @@ export default function ChessNavBar(props) {
         {!username && <Nav.Link onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
         </Nav>
         {username && onProfile &&
-          <div>
+          <div className="user-login">
             <p>Logged in as: {username}</p>
-            <Button className="user-login"
+            <Button 
               onClick={ () => {
                 handleClick("/")
                 logout()
@@ -63,9 +62,9 @@ export default function ChessNavBar(props) {
           </div>
         }
         {username && !onProfile &&
-          <div>
-            <h6>Logged in as: {username}</h6>
-            <Button className="user-login"
+          <div className="user-login">
+            <h6 className="user-login-name">Logged in as: {username}</h6>
+            <Button 
               variant="outline-success"
               onClick={
                 () => {
