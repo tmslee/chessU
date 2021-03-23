@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import "./styles/HomeMenu.scss";
 import GameOptionsModal from "./GameOptionModal";
 import aiIcon from './../../../src/images/vs_ai.png';
