@@ -9,7 +9,8 @@ import io from "socket.io-client";
 // redirect user to matchiD
 
 const MATCH_CONFIRM = "MATCH_CONFIRM";
-const SOCKET_SERVER_URL = "http://localhost:8001";
+const SOCKET_SERVER_URL = process.env.REACT_APP_WEBSOCKET_URL ? 
+  process.env.REACT_APP_WEBSOCKET_URL : "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
 const useAcceptStatus = (
