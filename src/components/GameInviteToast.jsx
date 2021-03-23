@@ -3,7 +3,8 @@ import {useHistory} from "react-router-dom";
 import {Toast, Button} from "react-bootstrap";
 import io from "socket.io-client";
 
-const SOCKET_SERVER_URL = "http://localhost:8001";
+const SOCKET_SERVER_URL = process.env.REACT_APP_WEBSOCKET_URL ? 
+  process.env.REACT_APP_WEBSOCKET_URL : "http://localhost:8001";
 const GAME_INVITE = "GAME_INVITE";
 const MATCH_CONFIRM = "MATCH_CONFIRM";
 const SOCKET_INIT ="SOCKET_INIT";

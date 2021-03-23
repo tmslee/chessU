@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
 const RESIGN = "RESIGN";
-const SOCKET_SERVER_URL = "http://localhost:8001";
+const SOCKET_SERVER_URL = process.env.REACT_APP_WEBSOCKET_URL ? 
+  process.env.REACT_APP_WEBSOCKET_URL : "http://localhost:8001";
 
 const useResign = (roomId) => {
   const [concede, setConcede] = useState([]);

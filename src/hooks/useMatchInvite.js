@@ -7,7 +7,8 @@ const OPPONENT_UNAVAIL = 'OPPONENT_UNAVAIL';
 const GET_OPPONENT_STATUS = "GET_OPPONENT_STATUS"
 const OPPONENT_STATUS = "OPPONENT_STATUS"
 
-const SOCKET_SERVER_URL = "http://localhost:8001";
+const SOCKET_SERVER_URL = process.env.REACT_APP_WEBSOCKET_URL ? 
+  process.env.REACT_APP_WEBSOCKET_URL : "http://localhost:8001";
 
 const useMatchInvite = (currentUser, gameOptions, goToView) => {
   const socketRef = useRef();

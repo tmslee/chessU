@@ -5,7 +5,8 @@ const ACCEPT_MATCH = "ACCEPT_MATCH";
 
 const ENQUEUE = "ENQUEUE"
 const DEQUEUE = "DEQUEUE";
-const SOCKET_SERVER_URL = "http://localhost:8001";
+const SOCKET_SERVER_URL = process.env.REACT_APP_WEBSOCKET_URL ? 
+  process.env.REACT_APP_WEBSOCKET_URL : "http://localhost:8001";
 
 //  userInfo = { userId, type, elo }
 const useQueue = (gameOptions, setGameOptions, goToView) => {
