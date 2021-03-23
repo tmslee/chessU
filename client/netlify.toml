@@ -14,3 +14,4 @@
 [build.environment]
   REACT_APP_API_BASE_URL = "https://chessu-app.herokuapp.com/"
   REACT_APP_WEBSOCKET_URL = "wss://chessu-app.herokuapp.com/"
+  CI = false
