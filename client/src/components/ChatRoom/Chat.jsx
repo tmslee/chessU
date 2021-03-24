@@ -30,7 +30,8 @@ const Chat = (props) => {
     setNewMessage(event.target.value);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e) => {
+    e.preventDefault();
     sendMessage(newMessage);
     setNewMessage("");
   };
@@ -81,15 +82,17 @@ const Chat = (props) => {
       <div className="messages-container">
         <ol className="messages-list">{messageShow()}</ol>
       </div>
-      <div class="text-send">
-        <textarea
+      <div>
+        <form onSubmit={handleSendMessage} class="text-send">
+        <input
           value={newMessage}
           onChange={handleNewMessageChange}
           placeholder="Write message..."
           className="new-message-input-field"
-        />
-        <button onClick={handleSendMessage} type="button" className="btn btn-outline-success send-message-button">Send</button>
+        /> 
+        <button type="submit" className="btn btn-outline-success send-message-button">Send</button>
         <button onClick={handleChat} type="button" className="btn btn-outline-danger send-message-button">Close</button>
+        </form>
       </div>
     </div>
     </div>
