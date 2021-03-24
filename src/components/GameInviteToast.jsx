@@ -14,7 +14,9 @@ export default function GameInviteToast(props) {
     currentUser,
     setGameInfo,
     invitedStatus,
-    setInvitedStatus
+    setInvitedStatus,
+    incomingGameInfo,
+    setIncomingGameInfo
   } = props;
 
   const history = useHistory();
@@ -33,9 +35,10 @@ export default function GameInviteToast(props) {
   }
 
   const [acceptStatus, setAcceptStatus] = useState(0);
-  const [incomingGameInfo, setIncomingGameInfo] = useState(null);
 
   useEffect(()=> {
+    console.log("invitedStatus: ", invitedStatus);
+
     socketRef.current.on("connect", () => {
       if(currentUser && socketRef.current.id){
         socketRef.current.emit(SOCKET_INIT, {
@@ -48,6 +51,7 @@ export default function GameInviteToast(props) {
       if (!invitedStatus) {
         //listen for game inv message from server
         socketRef.current.on(GAME_INVITE, data => {
+          console.log("invite received")
           const {gameOptions} = data;
           setIncomingGameInfo(gameOptions);
           setInvitedStatus(true);

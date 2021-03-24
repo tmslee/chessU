@@ -32,6 +32,7 @@ export default function Application() {
   const [currentUser, setCurrentUser] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [invitedStatus, setInvitedStatus] = useState(false);
+  const [incomingGameInfo, setIncomingGameInfo] = useState(null);
   const [inGame, setInGame] = useState(false);
   const [showResign, setShowResign] = useState(false);
 
@@ -82,6 +83,8 @@ export default function Application() {
       setGameInfo={setGameInfo}
       invitedStatus={invitedStatus}
       setInvitedStatus={setInvitedStatus}
+      incomingGameInfo={incomingGameInfo}
+      setIncomingGameInfo={setIncomingGameInfo}
     />
     <main className="main-container">
       {active.login && 
@@ -104,6 +107,7 @@ export default function Application() {
             setGameInfo={setGameInfo}
             setActive={setActive} 
             active={active}
+            setIncomingGameInfo={setIncomingGameInfo} 
             setInvitedStatus={setInvitedStatus}
           />)
         }/>

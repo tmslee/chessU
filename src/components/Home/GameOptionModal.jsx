@@ -38,7 +38,8 @@ export default function GameOptionsModal(props) {
     setGameOptions, 
     closeModal,
     setGameInfo,
-    setInvitedStatus
+    setInvitedStatus,
+    setIncomingGameInfo
   } = props;
 
   const {
@@ -96,12 +97,10 @@ export default function GameOptionsModal(props) {
     await dequeue();
     await setGameOptions({...gameOptions, opponent: null, timeLimit: undefined, difficulty: null});
     goToView(SELECT_OPTIONS);
-    setInvitedStatus(false);
   }
 
   const returnToMenu = function () {
     closeModal();
-    setInvitedStatus(false);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -153,6 +152,8 @@ export default function GameOptionsModal(props) {
           loadGame = {loadGame}
           returnToGameOptions={returnToGameOptions}
           setGameInfo = {setGameInfo}
+          setIncomingGameInfo={setIncomingGameInfo} 
+          setInvitedStatus={setInvitedStatus}
         />
       }     
       {mode === INVITE_OPPONENT &&
@@ -168,6 +169,8 @@ export default function GameOptionsModal(props) {
         loadGame = {loadGame}
         returnToGameOptions={returnToGameOptions}
         setGameInfo = {setGameInfo}
+        setIncomingGameInfo={setIncomingGameInfo} 
+        setInvitedStatus={setInvitedStatus}
         />
       }
       {mode === OPPONENT_UNAVAIL &&

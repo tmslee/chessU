@@ -7,6 +7,7 @@ import io from "socket.io-client";
 // will send back user1 { matchID }
 // will send back user2 { matchID } 
 // redirect user to matchiD
+const GAME_INVITE = "GAME_INVITE";
 
 const MATCH_CONFIRM = "MATCH_CONFIRM";
 const SOCKET_SERVER_URL = process.env.REACT_APP_WEBSOCKET_URL ? 
@@ -18,7 +19,9 @@ const useAcceptStatus = (
   returnToGameOptions,
    loadGame, 
    setGameInfo,
-   initialAcceptStatus
+   initialAcceptStatus,
+   setIncomingGameInfo,
+   setInvitedStatus
    ) => {
   const socketRef = useRef();
 
@@ -36,6 +39,12 @@ const useAcceptStatus = (
   const declineThenGameOptions = async function () {
     await opponentDecline();
     returnToGameOptions();
+    socketRef.current.on(GAME_INVITE, data => {
+      console.log("invite received")
+      const {gameOptions} = data;
+      setIncomingGameInfo(gameOptions);
+      setInvitedStatus(true);
+    });
   }
 
   useEffect(() => {
