@@ -9,7 +9,9 @@ export default function GameAccept(props) {
     gameOptions, 
     returnToGameOptions, 
     loadGame, 
-    setGameInfo
+    setGameInfo,
+    setIncomingGameInfo, 
+    setInvitedStatus
   } = props;
 
   return (
@@ -19,6 +21,8 @@ export default function GameAccept(props) {
       returnToGameOptions = {returnToGameOptions}
       loadGame = {loadGame}
       setGameInfo = {setGameInfo}
+      setIncomingGameInfo={setIncomingGameInfo} 
+      setInvitedStatus={setInvitedStatus}
     />
   );
 };

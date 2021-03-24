@@ -23,7 +23,8 @@ export default function HomeMenu(props) {
     setGameInfo,
     setActive,
     active,
-    setInvitedStatus
+    setInvitedStatus,
+    setIncomingGameInfo
   } = props; 
 
   const [showState, setShowState] = useState(false);
@@ -41,7 +42,6 @@ export default function HomeMenu(props) {
     setShowState(false);
     //also need to set currentUser when we reset
     setGameOptions({...EMPTY_GAME, currentUser});
-    setInvitedStatus(false);
   };
 
   const isLoggedIn = (type) => {
@@ -105,6 +105,7 @@ export default function HomeMenu(props) {
         setGameOptions={setGameOptions}
         closeModal={closeModal}
         setGameInfo={setGameInfo}
+        setIncomingGameInfo={setIncomingGameInfo} 
         setInvitedStatus={setInvitedStatus}
       />
     </div>

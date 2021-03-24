@@ -30,6 +30,7 @@ const useMatchInvite = (currentUser, gameOptions, goToView) => {
       //listen for server response about opponent status
       socketRef.current.on(OPPONENT_STATUS, (data) => {
         const {status} = data;
+        console.log("opponent status is: ", status);
         //update state accordingly
         if (status) setOpponentStatus(1);
         else setOpponentStatus(-1);

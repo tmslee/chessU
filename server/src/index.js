@@ -230,6 +230,7 @@ io.on("connection", (socket) => {
 
       io.to(socketId).emit(OPPONENT_STATUS, {status: true});
       io.to(opponentSocket).emit(GAME_INVITE, {gameOptions});
+      console.log(`sent game invite to ${opponent.username} at ${opponentSocket}`)
     } else {
       io.to(socketId).emit(OPPONENT_STATUS, {status: false});
     }
