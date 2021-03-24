@@ -10,6 +10,7 @@ export default function Countdown(props) {
   const isGameOver = props.isGameOver;
   const timeout = props.timeout;
   const duration = props.duration;
+  const opponent = props.opponent;
 
   return (
     <div className = "timer">
@@ -24,7 +25,7 @@ export default function Countdown(props) {
           checkpoints={[{
             time: 0,
             callback: () => {
-              timeout();
+              timeout(opponent);
             },}
         ]}>
       {({ resume, pause, reset, start }) => (
