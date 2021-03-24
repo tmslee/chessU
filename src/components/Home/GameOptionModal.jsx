@@ -39,7 +39,8 @@ export default function GameOptionsModal(props) {
     closeModal,
     setGameInfo,
     setInvitedStatus,
-    setIncomingGameInfo
+    setIncomingGameInfo,
+    invitedStatus
   } = props;
 
   const {
@@ -154,6 +155,7 @@ export default function GameOptionsModal(props) {
           setGameInfo = {setGameInfo}
           setIncomingGameInfo={setIncomingGameInfo} 
           setInvitedStatus={setInvitedStatus}
+          invitedStatus={invitedStatus}
         />
       }     
       {mode === INVITE_OPPONENT &&
@@ -171,6 +173,7 @@ export default function GameOptionsModal(props) {
         setGameInfo = {setGameInfo}
         setIncomingGameInfo={setIncomingGameInfo} 
         setInvitedStatus={setInvitedStatus}
+        invitedStatus={invitedStatus}
         />
       }
       {mode === OPPONENT_UNAVAIL &&

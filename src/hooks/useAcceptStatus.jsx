@@ -21,7 +21,8 @@ const useAcceptStatus = (
    setGameInfo,
    initialAcceptStatus,
    setIncomingGameInfo,
-   setInvitedStatus
+   setInvitedStatus,
+   invitedStatus
    ) => {
   const socketRef = useRef();
 
@@ -39,12 +40,14 @@ const useAcceptStatus = (
   const declineThenGameOptions = async function () {
     await opponentDecline();
     returnToGameOptions();
-    socketRef.current.on(GAME_INVITE, data => {
-      console.log("invite received")
-      const {gameOptions} = data;
-      setIncomingGameInfo(gameOptions);
-      setInvitedStatus(true);
-    });
+    if(!invitedStatus){
+      socketRef.current.on(GAME_INVITE, data => {
+        console.log("invite received")
+        const {gameOptions} = data;
+        setIncomingGameInfo(gameOptions);
+        setInvitedStatus(true);
+      });
+    }
   }
 
   useEffect(() => {

@@ -24,7 +24,8 @@ export default function HomeMenu(props) {
     setActive,
     active,
     setInvitedStatus,
-    setIncomingGameInfo
+    setIncomingGameInfo,
+    invitedStatus
   } = props; 
 
   const [showState, setShowState] = useState(false);
@@ -107,6 +108,7 @@ export default function HomeMenu(props) {
         setGameInfo={setGameInfo}
         setIncomingGameInfo={setIncomingGameInfo} 
         setInvitedStatus={setInvitedStatus}
+        invitedStatus={invitedStatus}
       />
     </div>
   );

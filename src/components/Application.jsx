@@ -109,6 +109,7 @@ export default function Application() {
             active={active}
             setIncomingGameInfo={setIncomingGameInfo} 
             setInvitedStatus={setInvitedStatus}
+            invitedStatus={invitedStatus}
           />)
         }/>
         { gameInfo &&
