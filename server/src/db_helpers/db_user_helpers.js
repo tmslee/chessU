@@ -59,7 +59,7 @@ exports.deleteUser = deleteUser;
 const getUserWithName = function(name) {
   return db.query(`
   SELECT * FROM users
-  where username = $1
+  where username ILIKE $1
   `,
   [name]
   ).then(res => res.rows[0])
