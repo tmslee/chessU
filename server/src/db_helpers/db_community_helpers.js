@@ -101,7 +101,7 @@ exports.declineFriendRequest = declineFriendRequest;
 const searchUser = function(searchTerm, currentUserID) {
   return db.query(`
   SELECT *  FROM users
-  WHERE username LIKE '%${searchTerm}%' AND id != ${currentUserID};
+  WHERE username ILIKE '%${searchTerm}%' AND id != ${currentUserID};
 
   `)
   .then(res => res.rows)
