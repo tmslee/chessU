@@ -14,7 +14,7 @@ import useResign from "../../hooks/resign";
 import { eloUpdate } from "../../hooks/eloUpdate";
 
 function Game(props) {
-  const { matchId } = props.match.params;
+  const matchId = props.gameInfo.matchId;
   const matchType = props.gameInfo.matchType;
 
   const eloRanked10 = props.currentUser.ranked10;
@@ -79,9 +79,8 @@ function Game(props) {
     draggable
   })
 
-  const roomId = state.roomId;
-  let { currentMove, sendMove } = useMove(roomId);
-  let { concede, sendConcedeMessage } = useResign(roomId);
+  let { currentMove, sendMove } = useMove(matchId);
+  let { concede, sendConcedeMessage } = useResign(matchId);
 
   // set current positions from Chess.js
   let game = useRef(null);
@@ -297,17 +296,21 @@ function Game(props) {
         {state.duration &&  
         <Countdown color={"white"} 
         username={usernameWhite}
+        opponent={usernameBlack}
         isGameOver={state.isGameOver}
         isRunning={state.isWhiteRunning}
         duration={state.duration}
-        timeout={gameover}/>}
+        timeout={gameover}
+        />}
         {state.duration &&  
         <Countdown color={"black"}
         username={usernameBlack}
+        opponent={usernameWhite}
         isGameOver={state.isGameOver}
         isRunning={state.isBlackRunning}
         duration={state.duration}
-        timeout={gameover}/>}
+        timeout={gameover}
+        />}
       </div>
       <div className="chess-main">
         <div className="gameInfo">
@@ -337,7 +340,7 @@ function Game(props) {
           <div className="move_log">
             <MovesLog moves={state.chessmoves} roomId={state.roomId}/>
           </div>
-          <Chat roomId={state.roomId}/>
+          <Chat roomId={matchId}/>
         </div>
       </div>
       <PopupWin
