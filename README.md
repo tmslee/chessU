@@ -87,7 +87,7 @@ Try to sign up and play in: https://www.playchessu.com/
   - inside the player information block there is a resignation button that both players can click at any time to resign
   - the game will conclude when a player confirms the resign
 
-!["confirm resign"](https://github.com/tmslee/chessU/blob/main/server/screenshots/resign_confirm.png)
+!["confirm resign"](https://github.com/tmslee/chessU/blob/main/server/screenshots/confirm_resign.png)
 
 - Action log
   - on the right side of the board is an action log that keeps track of every mode made by both players
