@@ -46,8 +46,8 @@ export default function ChessNavBar(props) {
         {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/profile")}>Profile</Nav.Link>}
         {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Profile</Nav.Link>}
         <Nav.Link className="nav-btn" onClick={() => handleClick("/leaderboards")}>LeaderBoards</Nav.Link>
-        {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/community")}>Commnity</Nav.Link>}
-        {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Commnity</Nav.Link>}
+        {username && <Nav.Link className="nav-btn" onClick={() => handleClick("/community")}>Community</Nav.Link>}
+        {!username && <Nav.Link className="nav-btn" onClick={() => setActive({...active, login: true  })} >Community</Nav.Link>}
         </Nav>
         {username && onProfile &&
           <div className="user-login">
