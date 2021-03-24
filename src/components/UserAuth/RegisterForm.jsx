@@ -11,7 +11,7 @@ export default function RegisterForm(props) {
     setToken
   } = props;
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [newUser, setNewUser] = useState({
     username: '',
     email: '',
@@ -25,13 +25,16 @@ export default function RegisterForm(props) {
   const registerUser = function(newUser) {
     axios.post('/api/users', newUser)
     .then( result => {
-      if (!result.data.token) {
-        setError(true);
+      if (result.data.routine === "varchar") {
+        setError("Max username length is 12.")
+      }
+      else if (!result.data.token) {
+        setError("Username already exists.");
       } else {
         setToken(result.data.token);
         setActive({...active, register: false  });
-      }
-    })
+      };
+    });
   };
   
   const handleSubmit = function(e) {
@@ -46,7 +49,7 @@ export default function RegisterForm(props) {
       <div className="modal-register-content">
       <h1>Register</h1>
       <form className="modal-register-form" onSubmit={handleSubmit}>
-      {error && <FormError message="Username already exists." />}
+      {error && <FormError message={error} />}
         <label>
           <p>Username</p>
           <input 
