@@ -3,13 +3,10 @@ DROP TABLE IF EXISTS matches CASCADE;
 DROP TABLE IF EXISTS action_logs CASCADE;
 DROP TABLE IF EXISTS chat_logs CASCADE;
 DROP TABLE IF EXISTS friends CASCADE;
-
--- CREATE EXTENSION IF NOT EXISTS citext;   
-
-
+  
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  username varchar(255) NOT NULL CHECK (username <> ''),
+  username varchar(12) NOT NULL CHECK (username <> ''),
   email varchar(255) NOT NULL CHECK (email <> ''),
   password varchar(255) NOT NULL CHECK (password <> ''),
   profile_img TEXT DEFAULT 'https://www.w3schools.com/w3images/avatar2.png',
